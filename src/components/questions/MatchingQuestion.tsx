@@ -23,10 +23,6 @@ interface Match {
     right: string | null;
 }
 
-/**
- * ✅ Estende QuestionProps mantenendo i campi originali (id, type, timeLimit, ecc.)
- * ma aggiunge la struttura specifica per MatchingQuestion
- */
 interface MatchingQuestionProps extends Omit<QuestionProps, 'question'> {
     question: QuestionProps['question'] & {
         options: {
@@ -38,7 +34,6 @@ interface MatchingQuestionProps extends Omit<QuestionProps, 'question'> {
 
 interface DroppableBoxProps {
     id: string;
-    droppableId: string;
     label: string;
     assigned?: string | null;
     disabled?: boolean;
@@ -48,7 +43,6 @@ interface DroppableBoxProps {
 
 interface DraggableBoxProps {
     id: string;
-    draggableId: string;
     label: string;
     disabled?: boolean;
     isOverlay?: boolean;
@@ -60,21 +54,18 @@ export default function MatchingQuestion({
                                              onAnswer,
                                              disabled,
                                          }: MatchingQuestionProps) {
+    // Stato principale (rigenerato ad ogni nuova domanda)
     const [pairs, setPairs] = useState<Match[]>(
         question.options.map(opt => ({ left: opt.left, right: null }))
     );
+    const [submitted, setSubmitted] = useState(false);
+    const [activeId, setActiveId] = useState<string | null>(null);
+    const [snapBack, setSnapBack] = useState(false);
 
     const allRightOptions: string[] = question.options[0]?.rightOptions ?? [];
-    const [submitted, setSubmitted] = useState<boolean>(false);
 
-    const sensors = useSensors(
-        useSensor(PointerSensor, {
-            activationConstraint: { distance: 6 },
-        })
-    );
-
-    const [activeId, setActiveId] = useState<string | null>(null);
-    const [snapBack, setSnapBack] = useState<boolean>(false);
+    // Sensori drag
+    const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }));
 
     const handleDragStart = (event: DragStartEvent) => {
         if (disabled || submitted) return;
@@ -92,8 +83,13 @@ export default function MatchingQuestion({
             return;
         }
 
-        const leftValue = String(over.id);
-        const rightValue = String(active.id);
+        const leftValue = over.data.current?.value as string;
+        const rightValue = active.data.current?.value as string;
+
+        if (!leftValue || !rightValue) {
+            setActiveId(null);
+            return;
+        }
 
         setPairs(prev => {
             const cleared = prev.map(p =>
@@ -118,7 +114,7 @@ export default function MatchingQuestion({
         onAnswer(pairs);
     };
 
-    // forza refresh linee su scroll/resize
+    // 🔹 Forza refresh linee su scroll/resize
     const [, setTick] = useState(0);
     useEffect(() => {
         const onChange = () => setTick(t => t + 1);
@@ -131,7 +127,10 @@ export default function MatchingQuestion({
     }, []);
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+        <div
+            key={question.id ?? question.question} // ✅ forza reset completo a ogni nuova domanda
+            style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}
+        >
             <h2 style={{ fontSize: '1.125rem', fontWeight: 600 }}>{question.question}</h2>
             <p style={{ fontSize: '0.875rem', color: '#6b7280' }}>
                 Trascina o seleziona manualmente per creare gli abbinamenti.
@@ -158,34 +157,18 @@ export default function MatchingQuestion({
                         }}
                     >
                         {/* SINISTRA */}
-                        <div
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'space-between',
-                                gap: '1rem',
-                            }}
-                        >
-                            <p
-                                style={{
-                                    fontWeight: 600,
-                                    color: '#4b5563',
-                                    marginBottom: '0.25rem',
-                                }}
-                            >
-                                Da abbinare:
-                            </p>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            <p style={{ fontWeight: 600, color: '#4b5563' }}>Da abbinare:</p>
 
                             {pairs.map(({ left, right }) => (
                                 <DroppableBox
                                     key={left}
                                     id={`left-${left}`}
-                                    droppableId={left}
                                     label={left}
                                     assigned={right}
                                     disabled={disabled || submitted}
                                     allRightOptions={allRightOptions.filter(
-                                        (opt: string) =>
+                                        opt =>
                                             !pairs.some(p => p.right === opt) || opt === right
                                     )}
                                     onManualSelect={(selectedLeft, newRight) => {
@@ -219,19 +202,17 @@ export default function MatchingQuestion({
                                 style={{
                                     fontWeight: 600,
                                     color: '#4b5563',
-                                    marginBottom: '0.25rem',
                                     textAlign: 'center',
                                 }}
                             >
                                 Risposte:
                             </p>
-                            {allRightOptions.map((right: string) => {
+                            {allRightOptions.map(right => {
                                 const isUsed = pairs.some(p => p.right === right);
                                 return (
                                     <DraggableBox
                                         key={right}
                                         id={`right-${right}`}
-                                        draggableId={right}
                                         label={right}
                                         disabled={disabled || submitted || isUsed}
                                     />
@@ -268,8 +249,7 @@ export default function MatchingQuestion({
                         {activeId ? (
                             <DraggableBox
                                 id={`overlay-${activeId}`}
-                                draggableId={activeId}
-                                label={activeId}
+                                label={activeId.replace('right-', '')}
                                 disabled
                                 isOverlay
                                 snapBack={snapBack}
@@ -307,8 +287,11 @@ export default function MatchingQuestion({
 /* ---------------------------- COMPONENTI UI ---------------------------- */
 
 const DroppableBox = React.forwardRef<HTMLDivElement, DroppableBoxProps>(
-    ({ id, droppableId, label, assigned, disabled, allRightOptions = [], onManualSelect }, ref) => {
-        const { setNodeRef, isOver } = useDroppable({ id: droppableId });
+    ({ id, label, assigned, disabled, allRightOptions = [], onManualSelect }, ref) => {
+        const { setNodeRef, isOver } = useDroppable({
+            id,
+            data: { type: 'left', value: label },
+        });
 
         return (
             <div
@@ -329,14 +312,10 @@ const DroppableBox = React.forwardRef<HTMLDivElement, DroppableBoxProps>(
                     justifyContent: 'space-between',
                     transition: 'all 0.15s ease',
                     opacity: disabled ? 0.6 : 1,
-                    touchAction: 'none',
                 }}
             >
-                <span style={{ fontWeight: 500, color: '#374151', marginBottom: '0.25rem' }}>
-                    {label}
-                </span>
+                <span style={{ fontWeight: 500, color: '#374151' }}>{label}</span>
 
-                {/* Select interattiva */}
                 {disabled ? (
                     <span
                         style={{
@@ -353,7 +332,7 @@ const DroppableBox = React.forwardRef<HTMLDivElement, DroppableBoxProps>(
                 ) : (
                     <select
                         value={assigned ?? ''}
-                        onChange={e => onManualSelect?.(droppableId, e.target.value || null)}
+                        onChange={e => onManualSelect?.(label, e.target.value || null)}
                         style={{
                             fontSize: '0.875rem',
                             textAlign: 'center',
@@ -364,7 +343,6 @@ const DroppableBox = React.forwardRef<HTMLDivElement, DroppableBoxProps>(
                             border: '1px solid #d1d5db',
                             borderRadius: '0.375rem',
                             backgroundColor: '#fff',
-                            textTransform: 'none',
                         }}
                     >
                         <option value="">— Seleziona —</option>
@@ -381,10 +359,11 @@ const DroppableBox = React.forwardRef<HTMLDivElement, DroppableBoxProps>(
 );
 
 const DraggableBox = React.forwardRef<HTMLDivElement, DraggableBoxProps>(
-    ({ id, draggableId, label, disabled, isOverlay, snapBack }, ref) => {
+    ({ id, label, disabled, isOverlay, snapBack }, ref) => {
         const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
-            id: draggableId,
+            id,
             disabled: !!disabled,
+            data: { type: 'right', value: label },
         });
 
         const style: React.CSSProperties = {
@@ -410,7 +389,6 @@ const DraggableBox = React.forwardRef<HTMLDivElement, DraggableBoxProps>(
                 : '0 1px 2px rgba(0, 0, 0, 0.05)',
             opacity: disabled && !isOverlay ? 0.5 : 1,
             userSelect: 'none',
-            touchAction: 'none',
         };
 
         return (
