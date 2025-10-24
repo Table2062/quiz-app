@@ -1,12 +1,25 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { QuestionProps } from '@/types/QuestionProps';
-import { DndContext, closestCenter, useDraggable, useDroppable } from '@dnd-kit/core';
+import {
+    DndContext,
+    closestCenter,
+    useDraggable,
+    useDroppable,
+    useSensor,
+    useSensors,
+    MouseSensor,
+    TouchSensor,
+    DragOverlay,
+} from '@dnd-kit/core';
 import Xarrow, { Xwrapper } from 'react-xarrows';
 import { restrictToWindowEdges } from '@dnd-kit/modifiers';
+import { QuestionProps } from '@/types/QuestionProps';
 
-interface Match { left: string; right: string | null }
+interface Match {
+    left: string;
+    right: string | null;
+}
 
 export default function MatchingQuestion({ question, onAnswer, disabled }: QuestionProps) {
     const [pairs, setPairs] = useState<Match[]>(
@@ -15,17 +28,32 @@ export default function MatchingQuestion({ question, onAnswer, disabled }: Quest
     const allRightOptions = question.options[0]?.rightOptions ?? [];
     const [submitted, setSubmitted] = useState(false);
 
-    const handleSubmit = () => {
+    // Sensori per mouse e touch
+    const sensors = useSensors(
+        useSensor(MouseSensor, { activationConstraint: { distance: 5 } }),
+        useSensor(TouchSensor, { activationConstraint: { delay: 150, tolerance: 5 } })
+    );
+
+    const [activeId, setActiveId] = useState<string | null>(null);
+    const [snapBack, setSnapBack] = useState(false);
+
+    const handleDragStart = (event: any) => {
         if (disabled || submitted) return;
-        setSubmitted(true);
-        onAnswer(pairs);
+        setActiveId(event.active.id);
+        setSnapBack(false);
     };
 
-    // gestione drag/drop
     const handleDragEnd = (event: any) => {
         if (disabled || submitted) return;
         const { over, active } = event;
-        if (!over) return;
+
+        if (!over) {
+            // Snap-back: torna indietro se non c'è un target valido
+            setSnapBack(true);
+            setTimeout(() => setActiveId(null), 200);
+            return;
+        }
+
         const leftValue = over.id as string;
         const rightValue = active.id as string;
 
@@ -33,6 +61,19 @@ export default function MatchingQuestion({ question, onAnswer, disabled }: Quest
             const cleared = prev.map(p => (p.right === rightValue ? { ...p, right: null } : p));
             return cleared.map(p => (p.left === leftValue ? { ...p, right: rightValue } : p));
         });
+
+        setActiveId(null);
+    };
+
+    const handleDragCancel = () => {
+        setSnapBack(true);
+        setTimeout(() => setActiveId(null), 200);
+    };
+
+    const handleSubmit = () => {
+        if (disabled || submitted) return;
+        setSubmitted(true);
+        onAnswer(pairs);
     };
 
     // forza refresh linee su scroll/resize
@@ -48,20 +89,50 @@ export default function MatchingQuestion({ question, onAnswer, disabled }: Quest
     }, []);
 
     return (
-        <div className="space-y-5">
-            <h2 className="text-lg font-semibold">{question.question}</h2>
-            <p className="text-sm text-gray-500">Trascina una risposta a destra su un elemento a sinistra per abbinarli.</p>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <h2 style={{ fontSize: '1.125rem', fontWeight: 600 }}>{question.question}</h2>
+            <p style={{ fontSize: '0.875rem', color: '#6b7280' }}>
+                Trascina una risposta a destra su un elemento a sinistra per abbinarli.
+            </p>
 
             <Xwrapper>
                 <DndContext
+                    sensors={sensors}
                     collisionDetection={closestCenter}
+                    onDragStart={handleDragStart}
                     onDragEnd={handleDragEnd}
+                    onDragCancel={handleDragCancel}
                     modifiers={[restrictToWindowEdges]}
                 >
-                    <div className="relative grid grid-cols-2 gap-12 items-stretch min-h-[350px]">
+                    <div
+                        style={{
+                            position: 'relative',
+                            display: 'grid',
+                            gridTemplateColumns: '1fr 1fr',
+                            gap: '3rem',
+                            alignItems: 'stretch',
+                            minHeight: '350px',
+                            touchAction: 'none',
+                        }}
+                    >
                         {/* SINISTRA */}
-                        <div className="flex flex-col justify-between space-y-4">
-                            <p className="font-semibold text-gray-600 mb-1">Da abbinare:</p>
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-between',
+                                gap: '1rem',
+                            }}
+                        >
+                            <p
+                                style={{
+                                    fontWeight: 600,
+                                    color: '#4b5563',
+                                    marginBottom: '0.25rem',
+                                }}
+                            >
+                                Da abbinare:
+                            </p>
                             {pairs.map(({ left, right }) => (
                                 <DroppableBox
                                     key={left}
@@ -75,8 +146,24 @@ export default function MatchingQuestion({ question, onAnswer, disabled }: Quest
                         </div>
 
                         {/* DESTRA */}
-                        <div className="flex flex-col justify-center space-y-6">
-                            <p className="font-semibold text-gray-600 mb-1 text-center">Risposte:</p>
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                gap: '1.5rem',
+                            }}
+                        >
+                            <p
+                                style={{
+                                    fontWeight: 600,
+                                    color: '#4b5563',
+                                    marginBottom: '0.25rem',
+                                    textAlign: 'center',
+                                }}
+                            >
+                                Risposte:
+                            </p>
                             {allRightOptions.map((right: any) => {
                                 const isUsed = pairs.some(p => p.right === right);
                                 return (
@@ -92,26 +179,61 @@ export default function MatchingQuestion({ question, onAnswer, disabled }: Quest
                         </div>
 
                         {/* LINEE */}
-                        {pairs.filter(p => p.right).map(({ left, right }) => (
-                            <Xarrow
-                                key={`${left}-${right}`}
-                                start={`left-${left}`}
-                                end={`right-${right}`}
-                                color="#2563eb"
-                                showHead={false}
-                                strokeWidth={3}
-                                dashness={{ animation: 1 }}
-                                curveness={0.3}
-                            />
-                        ))}
+                        {pairs
+                            .filter(p => p.right)
+                            .map(({ left, right }) => (
+                                <Xarrow
+                                    key={`${left}-${right}`}
+                                    start={`left-${left}`}
+                                    end={`right-${right}`}
+                                    color="#2563eb"
+                                    showHead={false}
+                                    strokeWidth={3}
+                                    dashness={{ animation: 1 }}
+                                    curveness={0.3}
+                                />
+                            ))}
                     </div>
+
+                    {/* 👇 DragOverlay con animazione snap-back */}
+                    <DragOverlay
+                        dropAnimation={{
+                            duration: 200,
+                            easing: 'ease-out',
+                        }}
+                    >
+                        {activeId ? (
+                            <DraggableBox
+                                id={`overlay-${activeId}`}
+                                draggableId={activeId}
+                                label={activeId}
+                                disabled
+                                isOverlay
+                                snapBack={snapBack}
+                            />
+                        ) : null}
+                    </DragOverlay>
                 </DndContext>
             </Xwrapper>
 
             <button
                 onClick={handleSubmit}
                 disabled={disabled || submitted || pairs.some(p => !p.right)}
-                className="mt-4 bg-[var(--color-secondary)] hover:bg-[var(--color-secondary-hover)] text-white px-4 py-2 rounded-md font-medium disabled:opacity-50"
+                style={{
+                    marginTop: '1rem',
+                    backgroundColor: 'var(--color-secondary)',
+                    color: 'white',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '0.375rem',
+                    fontWeight: 500,
+                    opacity: disabled || submitted || pairs.some(p => !p.right) ? 0.5 : 1,
+                    cursor:
+                        disabled || submitted || pairs.some(p => !p.right)
+                            ? 'not-allowed'
+                            : 'pointer',
+                    border: 'none',
+                    transition: 'background-color 0.2s ease',
+                }}
             >
                 Conferma abbinamenti
             </button>
@@ -121,55 +243,106 @@ export default function MatchingQuestion({ question, onAnswer, disabled }: Quest
 
 /* ---------------------------- COMPONENTI UI ---------------------------- */
 
-const DroppableBox = React.forwardRef<HTMLDivElement, {
-    id: string; droppableId: string; label: string; assigned?: string | null; disabled?: boolean;
-}>(({ id, droppableId, label, assigned, disabled }, ref) => {
+const DroppableBox = React.forwardRef<
+    HTMLDivElement,
+    {
+        id: string;
+        droppableId: string;
+        label: string;
+        assigned?: string | null;
+        disabled?: boolean;
+    }
+>(({ id, droppableId, label, assigned, disabled }, ref) => {
     const { setNodeRef, isOver } = useDroppable({ id: droppableId });
     return (
         <div
             id={id}
-            ref={(node) => { setNodeRef(node); if (ref) (ref as any)(node); }}
-            className={`relative p-3 border rounded-md min-h-[90px] flex flex-col justify-between transition-all duration-150 ${
-                isOver ? 'bg-blue-50 border-blue-500 shadow-sm' : 'bg-white border-gray-300'
-            } ${disabled ? 'opacity-60' : ''}`}
+            ref={node => {
+                setNodeRef(node);
+                if (ref) (ref as any)(node);
+            }}
+            style={{
+                position: 'relative',
+                padding: '0.75rem',
+                borderRadius: '0.375rem',
+                border: `2px solid ${isOver ? '#3b82f6' : '#d1d5db'}`,
+                backgroundColor: isOver ? '#eff6ff' : '#ffffff',
+                minHeight: '90px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                transition: 'all 0.15s ease',
+                opacity: disabled ? 0.6 : 1,
+            }}
         >
-            <span className="font-medium text-gray-700 mb-1">{label}</span>
-
+            <span style={{ fontWeight: 500, color: '#374151', marginBottom: '0.25rem' }}>
+                {label}
+            </span>
             <span
-                className={`text-sm text-center mt-2 font-semibold ${
-                    assigned
-                        ? 'text-[var(--color-primary)]'
-                        : 'text-gray-400 italic'
-                }`}
+                style={{
+                    fontSize: '0.875rem',
+                    textAlign: 'center',
+                    marginTop: '0.5rem',
+                    fontWeight: 600,
+                    color: assigned ? 'var(--color-primary)' : '#9ca3af',
+                    fontStyle: assigned ? 'normal' : 'italic',
+                }}
             >
-        {assigned || '–'}
-      </span>
+                {assigned || '–'}
+            </span>
         </div>
     );
 });
 
-const DraggableBox = React.forwardRef<HTMLDivElement, {
-    id: string; draggableId: string; label: string; disabled?: boolean;
-}>(({ id, draggableId, label, disabled }, ref) => {
-    const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({ id: draggableId });
-    const style = {
+const DraggableBox = React.forwardRef<
+    HTMLDivElement,
+    {
+        id: string;
+        draggableId: string;
+        label: string;
+        disabled?: boolean;
+        isOverlay?: boolean;
+        snapBack?: boolean;
+    }
+>(({ id, draggableId, label, disabled, isOverlay, snapBack }, ref) => {
+    const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+        id: draggableId,
+    });
+    const style: React.CSSProperties = {
         transform: transform
             ? `translate3d(${transform.x}px, ${transform.y}px, 0) scale(${isDragging ? 1.05 : 1})`
             : undefined,
-        transition: isDragging ? 'none' : 'transform 0.15s ease',
+        transition:
+            isDragging || isOverlay
+                ? snapBack
+                    ? 'transform 0.2s ease-out'
+                    : 'none'
+                : 'transform 0.15s ease',
+        padding: '1rem',
+        borderRadius: '0.375rem',
+        border: '2px solid #e5e7eb',
+        backgroundColor: isDragging || isOverlay ? 'var(--color-primary)' : '#ffffff',
+        color: isDragging || isOverlay ? 'white' : '#374151',
+        fontWeight: 500,
+        textAlign: 'center',
+        cursor: disabled ? 'not-allowed' : 'grab',
+        boxShadow: isDragging || isOverlay
+            ? '0 4px 10px rgba(0, 0, 0, 0.15)'
+            : '0 1px 2px rgba(0, 0, 0, 0.05)',
+        opacity: disabled && !isOverlay ? 0.5 : 1,
+        userSelect: 'none',
+        touchAction: 'none',
     };
     return (
         <div
             id={id}
-            ref={(node) => { setNodeRef(node); if (ref) (ref as any)(node); }}
-            {...listeners}
+            ref={node => {
+                setNodeRef(node);
+                if (ref) (ref as any)(node);
+            }}
+            {...(!disabled ? listeners : {})}
             {...attributes}
             style={style}
-            className={`p-4 border rounded-md bg-white text-gray-700 font-medium cursor-grab shadow-sm transition-all duration-150 text-center ${
-                isDragging
-                    ? 'bg-[var(--color-primary)] text-white shadow-lg border-[var(--color-primary-hover)] scale-105'
-                    : 'hover:shadow-md hover:border-[var(--color-primary)]'
-            } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
             {label}
         </div>

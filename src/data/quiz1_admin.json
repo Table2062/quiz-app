@@ -1,5 +1,5 @@
 {
-  "name": "quiz1",
+  "name": "Test Quiz",
   "title": "Quiz di Cultura Generale",
   "questions": [
     {
@@ -8,7 +8,7 @@
       "question": "Qual è la capitale dell’Italia?",
       "options": ["Roma", "Milano", "Napoli", "Torino"],
       "correctAnswers": ["Roma"],
-      "timeLimit": 15,
+      "timeLimit": 5,
       "points": 10,
       "speedBonus": {
         "mode": "linear",
@@ -21,7 +21,7 @@
       "question": "Quali di questi sono linguaggi di programmazione?",
       "options": ["HTML", "Python", "CSS", "Java"],
       "correctAnswers": ["Python", "Java"],
-      "timeLimit": 20,
+      "timeLimit": 5,
       "points": 12,
       "speedBonus": {
         "mode": "linear",
@@ -44,7 +44,7 @@
         "Rivoluzione Francese",
         "Prima Guerra Mondiale"
       ],
-      "timeLimit": 25,
+      "timeLimit": 5,
       "points": 15,
       "speedBonus": {
         "mode": "linear",
@@ -74,7 +74,7 @@
         { "left": "Thomas Edison", "right": "Lampadina" },
         { "left": "Karl Benz", "right": "Automobile" }
       ],
-      "timeLimit": 30,
+      "timeLimit": 5,
       "points": 20,
       "speedBonus": {
         "mode": "linear",
@@ -93,7 +93,7 @@
         "Freddie Mercury"
       ],
       "correctAnswers": ["Freddie Mercury"],
-      "timeLimit": 20,
+      "timeLimit": 5,
       "points": 10,
       "speedBonus": {
         "mode": "linear",

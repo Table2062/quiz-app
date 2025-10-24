@@ -10,7 +10,7 @@
         "Napoli",
         "Torino"
       ],
-      "timeLimit": 15
+      "timeLimit": 5
     },
     {
       "id": "q2",
@@ -22,7 +22,7 @@
         "CSS",
         "Java"
       ],
-      "timeLimit": 20
+      "timeLimit": 5
     },
     {
       "id": "q3",
@@ -34,7 +34,7 @@
         "Rivoluzione Francese",
         "Prima Guerra Mondiale"
       ],
-      "timeLimit": 25
+      "timeLimit": 5
     },
     {
       "id": "q4",
@@ -66,7 +66,7 @@
           ]
         }
       ],
-      "timeLimit": 30
+      "timeLimit": 5
     },
     {
       "id": "q5",
@@ -79,7 +79,7 @@
         "Michael Jackson",
         "Freddie Mercury"
       ],
-      "timeLimit": 20
+      "timeLimit": 5
     }
   ]
 }
