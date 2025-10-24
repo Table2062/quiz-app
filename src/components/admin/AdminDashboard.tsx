@@ -12,10 +12,12 @@ export default function AdminDashboard() {
     const [timeLeft, setTimeLeft] = useState<number>(0);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [showAudio, setShowAudio] = useState(false);
+    const [leaderboard, setLeaderboard] = useState<any[]>([]);
+    const [activeTab, setActiveTab] = useState<'question' | 'leaderboard'>('question');
 
-    // 🔹 Multi-quiz
     const [availableQuizzes] = useState<string[]>(['quiz1', 'quiz2', 'quiz3']);
     const [selectedQuiz, setSelectedQuiz] = useState<string>('quiz1');
+    const audioRef = useRef<HTMLAudioElement | null>(null);
 
     // 🔹 Recupera ruolo admin
     useEffect(() => {
@@ -61,10 +63,8 @@ export default function AdminDashboard() {
 
         const channel = supabase
             .channel('quiz_state_updates')
-            .on(
-                'postgres_changes',
-                { event: 'UPDATE', schema: 'public', table: 'quiz_state' },
-                (payload) => setQuizState(payload.new)
+            .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'quiz_state' }, (payload) =>
+                setQuizState(payload.new)
             )
             .subscribe();
 
@@ -90,48 +90,28 @@ export default function AdminDashboard() {
         return () => clearInterval(interval);
     }, [quizState]);
 
-    // 🔊 Audio management
-    const audioRef = useRef<HTMLAudioElement | null>(null);
-    const currentQuestion =
-        questions.length && quizState?.current_question != null
-            ? questions[quizState.current_question]
-            : null;
-
+    // 🔹 Aggiorna classifica
     useEffect(() => {
-        if (!currentQuestion?.audioPath || !quizState?.is_active) {
-            setShowAudio(false);
-            return;
-        }
+        if (!quizState?.id) return;
 
-        setShowAudio(true);
-
-        const playTimeout = setTimeout(() => {
-            audioRef.current?.play().catch(() => {
-                console.warn('Audio non riproducibile automaticamente (autoplay limit).');
+        const loadLeaderboard = async () => {
+            const { data, error } = await supabase.rpc('get_quiz_leaderboard', {
+                p_session_id: quizState.id,
             });
-        }, 1000);
-
-        const stopTimeout = setTimeout(() => {
-            if (audioRef.current) {
-                audioRef.current.pause();
-                audioRef.current.currentTime = 0;
-            }
-            setShowAudio(false);
-        }, (currentQuestion.timeLimit ?? 0) * 1000);
-
-        return () => {
-            clearTimeout(playTimeout);
-            clearTimeout(stopTimeout);
-            if (audioRef.current) {
-                audioRef.current.pause();
-                audioRef.current.currentTime = 0;
-            }
-            setShowAudio(false);
+            if (!error && data) setLeaderboard(data);
         };
-    }, [currentQuestion, quizState?.is_active]);
+
+        const shouldUpdate =
+            (quizState.current_question + 1) % 5 === 0 || !quizState.is_active;
+
+        if (shouldUpdate) loadLeaderboard();
+
+        const poll = setInterval(loadLeaderboard, 30000);
+        return () => clearInterval(poll);
+    }, [quizState?.current_question, quizState?.is_active]);
 
     // ==========================================================
-    // 🔹 Funzione per popolare correct_answers da quiz_admin.json
+    // 🔹 Funzione per popolare correct_answers
     // ==========================================================
     const uploadCorrectAnswers = async (quizName: string) => {
         try {
@@ -147,12 +127,10 @@ export default function AdminDashboard() {
                 points_base: q.points ?? 0,
                 time_limit: q.timeLimit ?? 0,
                 bonus_mode: q.speedBonus?.mode ?? 'none',
-                bonus_max: q.speedBonus?.maxBonus ?? 0
+                bonus_max: q.speedBonus?.maxBonus ?? 0,
             }));
 
-            // Cancella risposte precedenti di quello stesso quiz
             await supabase.from('correct_answers').delete().eq('quiz_id', quizName);
-
             const { error } = await supabase.from('correct_answers').insert(rows);
             if (error) throw error;
         } catch (err) {
@@ -161,19 +139,14 @@ export default function AdminDashboard() {
     };
 
     // ==========================================================
-    // 🔹 Avvia un nuovo quiz (crea sessione + popola correct_answers)
+    // 🔹 Avvia quiz
     // ==========================================================
     const startQuiz = async () => {
         if (!questions.length) return alert('Quiz non caricato.');
-
         try {
-            // Chiude eventuali sessioni precedenti
             await supabase.from('quiz_state').update({ is_active: false }).eq('is_active', true);
-
-            // Popola risposte corrette PRIMA di creare la sessione
             await uploadCorrectAnswers(selectedQuiz);
 
-            // Crea nuova sessione
             const { data, error } = await supabase
                 .from('quiz_state')
                 .insert({
@@ -187,17 +160,15 @@ export default function AdminDashboard() {
                 .single();
 
             if (error) throw error;
-
             setQuizState(data);
         } catch (err) {
             console.error('Errore creazione quiz:', err);
         }
     };
 
-    // 🔹 Passa alla prossima domanda o chiudi quiz
+    // 🔹 Prossima domanda
     const nextQuestion = async () => {
         if (!quizState || !questions.length) return;
-
         const next = quizState.current_question + 1;
 
         if (next >= questions.length) {
@@ -256,121 +227,125 @@ export default function AdminDashboard() {
         );
     }
 
-    // 🔸 Nessun quiz attivo
-    if (!quizState) {
-        return (
-            <main className="max-w-4xl mx-auto p-6 text-center">
-                <h1 className="text-2xl font-bold text-gray-800 mb-6">Dashboard Admin</h1>
-                <div className="bg-white shadow-lg rounded-lg p-8 border border-gray-200">
-                    <h2 className="text-lg font-semibold text-gray-700 mb-4">Nessun quiz attivo</h2>
-                    <p className="text-gray-600 mb-6">
-                        Seleziona un quiz dal menu qui sotto e avvialo per iniziare una nuova sessione.
-                    </p>
-
-                    <div className="flex flex-col items-center gap-4">
-                        <label className="text-gray-700 font-medium">
-                            Seleziona un quiz:
-                            <select
-                                value={selectedQuiz}
-                                onChange={(e) => setSelectedQuiz(e.target.value)}
-                                className="ml-2 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
-                            >
-                                {availableQuizzes.map((quiz) => (
-                                    <option key={quiz} value={quiz}>
-                                        {quiz}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
-
-                        <button
-                            onClick={startQuiz}
-                            className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-6 py-3 rounded-md font-semibold transition-all"
-                        >
-                            Avvia quiz
-                        </button>
-                    </div>
-                </div>
-            </main>
-        );
-    }
-
-    // 🔸 Quiz terminato
-    if (!quizState.is_active) {
-        return (
-            <main className="max-w-4xl mx-auto p-6 text-center">
-                <h1 className="text-2xl font-bold text-gray-800 mb-4">Quiz dashboard</h1>
-                <div className="bg-white shadow-lg rounded-lg p-8 border border-gray-200">
-                    <h2 className="text-xl font-semibold text-green-600 mb-2">✅ Quiz completato!</h2>
-                    <p className="text-gray-600 mb-6">
-                        Il quiz <span className="font-semibold text-gray-800">{quizState.quiz_name}</span> è
-                        terminato. Puoi avviarne un altro quando vuoi.
-                    </p>
-                    <button
-                        onClick={() => setQuizState(null)}
-                        className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-6 py-3 rounded-md font-medium transition-all"
-                    >
-                        Avvia nuovo quiz
-                    </button>
-                </div>
-            </main>
-        );
-    }
-
-    // 🔸 Quiz attivo
-    const currentIndex = quizState.current_question + 1;
+    const currentIndex = ((quizState?.current_question ?? -1) + 1);
+    const currentQuestion =
+        questions.length && quizState?.current_question != null
+            ? questions[quizState.current_question]
+            : null;
 
     return (
         <main className="max-w-4xl mx-auto p-6">
-            <h1 className="text-2xl font-bold text-gray-800 mb-6">Quiz dashboard</h1>
+            <h1 className="text-2xl font-bold text-gray-800 mb-6">Dashboard Admin</h1>
 
-            <p className="text-sm text-green-600 mb-4">
-                🟢 Quiz attivo — Domanda {currentIndex} di {questions.length}
-            </p>
-
-            <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-                <h2 className="text-lg font-semibold text-gray-700 mb-2">
-                    {currentQuestion?.question || 'Nessuna domanda disponibile.'}
-                </h2>
-
-                {showAudio && currentQuestion?.audioPath && (
-                    <div className="mt-4 flex items-center gap-2">
-                        <audio ref={audioRef} src={currentQuestion.audioPath} />
-                        <div className="flex items-center text-blue-600 font-medium animate-pulse">
-                            <span className="inline-block w-2 h-2 bg-blue-500 rounded-full mr-2 animate-bounce"></span>
-                            Audio in riproduzione...
-                        </div>
-                    </div>
-                )}
-
-                <ul className="list-disc list-inside text-gray-600 mb-4">
-                    {currentQuestion?.options?.map((opt: any, idx: number) => (
-                        <li key={idx}>{typeof opt === 'string' ? opt : opt.left ? `${opt.left}` : JSON.stringify(opt)}</li>
-                    ))}
-                </ul>
-                {currentQuestion?.options[0]?.rightOptions && currentQuestion?.options[0]?.rightOptions.map((opt: any, idx: number) => (
-                    <li key={idx}>{typeof opt === 'string' ? opt : JSON.stringify(opt)}</li>
-                ))}
-
-                <div className="flex items-center gap-3 mt-3 mb-6">
-                    <span className="text-gray-600">Tempo rimanente:</span>
-                    <span
-                        className={`font-semibold ${
-                            timeLeft <= 5 ? 'text-red-500' : 'text-[var(--color-secondary)]'
-                        }`}
-                    >
-                        {timeLeft}s
-                    </span>
-                </div>
-
+            {/* Tabs */}
+            <div className="flex mb-4 border-b border-gray-300">
                 <button
-                    onClick={nextQuestion}
-                    disabled={timeLeft > 0}
-                    className="bg-[var(--color-secondary)] text-white px-4 py-2 rounded-md font-medium hover:bg-[var(--color-secondary-hover)] disabled:bg-gray-300 disabled:cursor-not-allowed transition-all"
+                    className={`px-4 py-2 font-medium ${
+                        activeTab === 'question'
+                            ? 'border-b-2 border-[var(--color-primary)] text-[var(--color-primary)]'
+                            : 'text-gray-600 hover:text-gray-800'
+                    }`}
+                    onClick={() => setActiveTab('question')}
                 >
-                    {currentIndex === questions.length ? 'Termina quiz' : 'Prossima domanda'}
+                    Domanda corrente
+                </button>
+                <button
+                    className={`ml-4 px-4 py-2 font-medium ${
+                        activeTab === 'leaderboard'
+                            ? 'border-b-2 border-[var(--color-primary)] text-[var(--color-primary)]'
+                            : 'text-gray-600 hover:text-gray-800'
+                    }`}
+                    onClick={() => setActiveTab('leaderboard')}
+                >
+                    Classifica
                 </button>
             </div>
+
+            {/* TAB 1: DOMANDA */}
+            {activeTab === 'question' && quizState?.is_active && (
+                <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
+                    <h2 className="text-lg font-semibold text-gray-700 mb-2">
+                        Domanda {currentIndex} di {questions.length}
+                    </h2>
+                    <p className="text-gray-600 mb-4">{currentQuestion?.question}</p>
+
+                    {showAudio && currentQuestion?.audioPath && (
+                        <div className="mt-4 flex items-center gap-2">
+                            <audio ref={audioRef} src={currentQuestion.audioPath} />
+                            <div className="flex items-center text-blue-600 font-medium animate-pulse">
+                                <span className="inline-block w-2 h-2 bg-blue-500 rounded-full mr-2 animate-bounce"></span>
+                                Audio in riproduzione...
+                            </div>
+                        </div>
+                    )}
+
+                    <ul className="list-disc list-inside text-gray-600 mb-4">
+                        {currentQuestion?.options?.map((opt: any, idx: number) => (
+                            <li key={idx}>{typeof opt === 'string' ? opt : JSON.stringify(opt)}</li>
+                        ))}
+                    </ul>
+
+                    <div className="flex items-center gap-3 mt-3 mb-6">
+                        <span className="text-gray-600">Tempo rimanente:</span>
+                        <span
+                            className={`font-semibold ${
+                                timeLeft <= 5 ? 'text-red-500' : 'text-[var(--color-secondary)]'
+                            }`}
+                        >
+                            {timeLeft}s
+                        </span>
+                    </div>
+
+                    <button
+                        onClick={nextQuestion}
+                        disabled={timeLeft > 0}
+                        className="bg-[var(--color-secondary)] text-white px-4 py-2 rounded-md font-medium hover:bg-[var(--color-secondary-hover)] disabled:bg-gray-300 disabled:cursor-not-allowed transition-all"
+                    >
+                        {currentIndex === questions.length ? 'Termina quiz' : 'Prossima domanda'}
+                    </button>
+                </div>
+            )}
+
+            {/* TAB 2: CLASSIFICA */}
+            {activeTab === 'leaderboard' && (
+                <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
+                    <h2 className="text-lg font-semibold text-gray-700 mb-4">
+                        {quizState?.is_active ? 'Classifica parziale' : 'Classifica finale'}
+                    </h2>
+
+                    {leaderboard.length === 0 ? (
+                        <p className="text-gray-500 text-center py-4">
+                            Nessun dato disponibile
+                        </p>
+                    ) : (
+                        <table className="min-w-full border border-gray-200 text-sm">
+                            <thead className="bg-gray-50 border-b">
+                            <tr>
+                                <th className="px-4 py-2 text-left font-semibold text-gray-600">#</th>
+                                <th className="px-4 py-2 text-left font-semibold text-gray-600">Utente</th>
+                                <th className="px-4 py-2 text-left font-semibold text-gray-600">Punti</th>
+                                <th className="px-4 py-2 text-left font-semibold text-gray-600">Corrette</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {leaderboard.map((row, idx) => (
+                                <tr
+                                    key={row.user_id}
+                                    className={`${
+                                        idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+                                    } border-b`}
+                                >
+                                    <td className="px-4 py-2">{idx + 1}</td>
+                                    <td className="px-4 py-2">{row.user_id}</td>
+                                    <td className="px-4 py-2 font-medium">{row.total_points}</td>
+                                    <td className="px-4 py-2">{row.correct_answers}</td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+            )}
         </main>
     );
 }
