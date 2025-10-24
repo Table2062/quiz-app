@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
 import LoadingScreen from '@/components/LoadingScreen';
 import styles from './RegisterPage.module.css';
-import TrimmedInput from "@/components/TrimmedInput.tsx";
+import TrimmedInput from "@/components/TrimmedInput";
 
 export default function RegisterPage() {
     const [email, setEmail] = useState('');

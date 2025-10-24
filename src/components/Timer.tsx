@@ -1,7 +1,12 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-export default function Timer({ time, onTimeUp }) {
+interface TimerProps {
+    time: number;               // es. tempo in secondi
+    onTimeUp: () => void;       // callback quando finisce
+}
+
+export default function Timer({ time, onTimeUp }: TimerProps) {
     const [seconds, setSeconds] = useState(time);
 
     useEffect(() => {

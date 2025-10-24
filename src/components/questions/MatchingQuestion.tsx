@@ -77,7 +77,7 @@ export default function MatchingQuestion({ question, onAnswer, disabled }: Quest
                         {/* DESTRA */}
                         <div className="flex flex-col justify-center space-y-6">
                             <p className="font-semibold text-gray-600 mb-1 text-center">Risposte:</p>
-                            {allRightOptions.map((right) => {
+                            {allRightOptions.map((right: any) => {
                                 const isUsed = pairs.some(p => p.right === right);
                                 return (
                                     <DraggableBox

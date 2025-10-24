@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
 import LoadingScreen from '@/components/LoadingScreen';
 import styles from './LoginPage.module.css';
-import TrimmedInput from "@/components/TrimmedInput.tsx"; // Importa stili modulari CSS
+import TrimmedInput from "@/components/TrimmedInput"; // Importa stili modulari CSS
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');

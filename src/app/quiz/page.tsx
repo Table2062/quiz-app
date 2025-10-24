@@ -1,4 +1,4 @@
-import ProtectedRoute from '@/components/auth/ProtectedRoute.tsx';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import QuizPageContent from '@/components/quiz/QuizPageContent';
 
 export default function QuizPage() {
