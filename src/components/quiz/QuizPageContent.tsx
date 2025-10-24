@@ -256,9 +256,6 @@ export default function QuizPageContent() {
     return (
         <main className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
             <div className="flex justify-between items-center mb-4">
-                <h1 className="text-lg font-semibold text-gray-800">
-                    Quiz: {quizState.quiz_name}
-                </h1>
                 <div
                     className={`font-medium ${
                         timeLeft <= 5 ? 'text-red-600' : 'text-gray-600'

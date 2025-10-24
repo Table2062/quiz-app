@@ -9,9 +9,9 @@ export function renderQuestion(question: Question, props: Omit<QuestionProps, 'q
     const key = question.id ?? question.question; // fallback di sicurezza
     switch (question.type) {
         case 'MULTIPLE_CHOICE':
-            return <MultipleChoiceQuestion key={key}  question={question} {...props} />;
+            return <MultipleChoiceQuestion key={key} question={question} {...props} />;
         case 'MULTIPLE_SELECT':
-            return <MultipleSelectQuestion key={key}  question={question} {...props} />;
+            return <MultipleSelectQuestion key={key} question={question} {...props} />;
         case 'ORDERING':
             return <OrderingQuestion key={key} question={question} {...props} />;
         case 'MATCHING':
