@@ -1,0 +1,144 @@
+{
+  "name": "Quiz Disney",
+  "title": "Quiz Disney",
+  "questions": [
+    {
+      "id": "disney-q1",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quali sono i nomi dei due cani protagonisti in \"La carica dei 101\"?",
+      "options": ["Lilli e il Vagabondo", "Pongo e Peggie", "Simba e Nala", "Matilda e Paloma"],
+      "correctAnswers": ["Pongo e Peggie"],
+      "timeLimit": 30,
+      "points": 10,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 5
+      }
+    },
+    {
+      "id": "disney-q2",
+      "type": "MULTIPLE_CHOICE",
+      "question": "In che città si svolge Aladdin?",
+      "options": ["Bagdad", "Corona", "Arendelle", "Agrabah"],
+      "correctAnswers": ["Agrabah"],
+      "timeLimit": 30,
+      "points": 10,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 5
+      }
+    },
+    {
+      "id": "disney-q3",
+      "type": "MULTIPLE_CHOICE",
+      "question": "A cosa deve rinunciare Ariel per diventare umana?",
+      "options": ["Alla sua voce", "Al suo tridente", "Alla sua famiglia", "Alla sua coda"],
+      "correctAnswers": ["Alla sua voce"],
+      "timeLimit": 30,
+      "points": 10,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 5
+      }
+    },
+    {
+      "id": "disney-q4",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Come si chiama il personaggio che non può essere nominato in Encanto?",
+      "options": ["Mariano", "Félix", "Bruno", "Pedro"],
+      "correctAnswers": ["Bruno"],
+      "timeLimit": 30,
+      "points": 10,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 5
+      }
+    },
+    {
+      "id": "disney-q5",
+      "type": "MULTIPLE_SELECT",
+      "question": "Perché Mulan parte per la guerra? (Seleziona tutte le risposte corrette)",
+      "options": ["Per salvare suo padre", "Per diventare principessa", "Per onorare la sua famiglia", "Per dimostrare che una donna può essere coraggiosa quanto un uomo"],
+      "correctAnswers": ["Per salvare suo padre", "Per onorare la sua famiglia"],
+      "timeLimit": 60,
+      "points": 15,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 10
+      }
+    },
+    {
+      "id": "disney-q6",
+      "type": "MULTIPLE_SELECT",
+      "question": "Da chi è doppiato il Genio della lampada, nel classico Aladdin del 1993? (Seleziona tutte le risposte corrette)",
+      "options": ["Robin Williams", "Massimo Lopez", "Eddie Murphy", "Gigi Proietti"],
+      "correctAnswers": ["Robin Williams", "Gigi Proietti"],
+      "timeLimit": 60,
+      "points": 15,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 10
+      }
+    },
+    {
+      "id": "disney-q7",
+      "type": "MATCHING",
+      "question": "Abbina i seguenti personaggi ai loro oggetti.",
+      "options": [
+        {
+          "left": "Woody",
+          "rightOptions": ["Polvere di fata", "Cappello da cowboy", "Collana con piuma"]
+        },
+        {
+          "left": "Pocahontas",
+          "rightOptions": ["Polvere di fata", "Cappello da cowboy", "Collana con piuma"]
+        },
+        {
+          "left": "Campanellino",
+          "rightOptions": ["Polvere di fata", "Cappello da cowboy", "Collana con piuma"]
+        }
+      ],
+      "correctAnswers": [
+        { "left": "Woody", "right": "Cappello da cowboy" },
+        { "left": "Pocahontas", "right": "Collana con piuma" },
+        { "left": "Campanellino", "right": "Polvere di fata" }
+      ],
+      "timeLimit": 90,
+      "points": 15,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 10
+      }
+    },
+    {
+      "id": "disney-q7",
+      "type": "MATCHING",
+      "question": "Abbina i seguenti personaggi ai loro oggetti.",
+      "options": [
+        {
+          "left": "Jack Sparrow",
+          "rightOptions": ["Vasetto di miele", "Arco e frecce", "Bussola"]
+        },
+        {
+          "left": "Winnie the Pooh",
+          "rightOptions": ["Vasetto di miele", "Arco e frecce", "Bussola"]
+        },
+        {
+          "left": "Merida",
+          "rightOptions": ["Vasetto di miele", "Arco e frecce", "Bussola"]
+        }
+      ],
+      "correctAnswers": [
+        { "left": "Jack Sparrow", "right": "Bussola" },
+        { "left": "Winnie the Pooh", "right": "Vasetto di miele" },
+        { "left": "Merida", "right": "Arco e frecce" }
+      ],
+      "timeLimit": 90,
+      "points": 15,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 10
+      }
+    }
+  ]
+}
