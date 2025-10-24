@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+:root {
+    --color-primary: #2563eb;
+    --color-primary-hover: #1e40af;
+    --color-secondary: #16a34a;
+    --color-secondary-hover: #15803d;
+    --color-bg: #f9fafb;
+    --color-text: #1f2937;
+    --color-border: #e5e7eb;
+    --color-placeholder: #6b7280;
+    --color-error: #dc2626;
+    --color-white: #ffffff;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+input, button {
+    font-family: inherit;
+}
+
+button {
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+@keyframes bounce-dot {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+.animate-bounce {
+    animation: bounce-dot 0.6s infinite ease-in-out;
+}

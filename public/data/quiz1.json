@@ -1,0 +1,85 @@
+{
+  "questions": [
+    {
+      "id": "q1",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Qual è la capitale dell’Italia?",
+      "options": [
+        "Roma",
+        "Milano",
+        "Napoli",
+        "Torino"
+      ],
+      "timeLimit": 15
+    },
+    {
+      "id": "q2",
+      "type": "MULTIPLE_SELECT",
+      "question": "Quali di questi sono linguaggi di programmazione?",
+      "options": [
+        "HTML",
+        "Python",
+        "CSS",
+        "Java"
+      ],
+      "timeLimit": 20
+    },
+    {
+      "id": "q3",
+      "type": "ORDERING",
+      "question": "Ordina questi eventi storici in ordine cronologico (dal meno al più recente).",
+      "options": [
+        "Caduta dell’Impero Romano",
+        "Scoperta dell’America",
+        "Rivoluzione Francese",
+        "Prima Guerra Mondiale"
+      ],
+      "timeLimit": 25
+    },
+    {
+      "id": "q4",
+      "type": "MATCHING",
+      "question": "Abbina l’inventore alla sua invenzione.",
+      "options": [
+        {
+          "left": "Alexander Graham Bell",
+          "rightOptions": [
+            "Telefono",
+            "Lampadina",
+            "Automobile"
+          ]
+        },
+        {
+          "left": "Thomas Edison",
+          "rightOptions": [
+            "Lampadina",
+            "Telefono",
+            "Automobile"
+          ]
+        },
+        {
+          "left": "Karl Benz",
+          "rightOptions": [
+            "Automobile",
+            "Lampadina",
+            "Telefono"
+          ]
+        }
+      ],
+      "timeLimit": 30
+    },
+    {
+      "id": "q5",
+      "type": "AUDIO_MULTIPLE_CHOICE",
+      "question": "Ascolta e scegli il cantante corretto.",
+      "audioPath": "/audio/brano1.mp3",
+      "options": [
+        "Elvis Presley",
+        "Frank Sinatra",
+        "Michael Jackson",
+        "Freddie Mercury"
+      ],
+      "timeLimit": 20
+    }
+  ]
+}
