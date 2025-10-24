@@ -13,7 +13,7 @@ export default function AudioMultipleChoiceQuestion({ question, onAnswer, disabl
     const handleSubmit = () => {
         if (selected === null || disabled || submitted) return;
         const selectedValue = question.options[selected];
-        onAnswer(selectedValue); // 🔹 inviamo il testo, es. "Freddie Mercury"
+        onAnswer([selectedValue]); // ✅ invia come array, coerente con le altre domande
         setSubmitted(true);
     };
 
