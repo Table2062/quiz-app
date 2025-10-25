@@ -27,21 +27,27 @@ export default function QuizPageContent() {
     // ==============================================================
     useEffect(() => {
         const fetchStates = async () => {
-            const [{ data: quiz }, { data: contest }] = await Promise.all([
-                supabase.from('quiz_state').select('*').eq('is_active', true).single(),
-                supabase.from('contest_state').select('*').eq('is_active', true).single(),
-            ]);
+            try {
+                const [{ data: quiz }, { data: contest }] = await Promise.all([
+                    supabase.from('quiz_state').select('*').eq('is_active', true).single(),
+                    supabase.from('contest_state').select('*').eq('is_active', true).single(),
+                ]);
 
-            setQuizState(quiz ?? null);
-            setContestState(contest ?? null);
-            setLoading(false);
+                setQuizState(quiz ?? null);
+                setContestState(contest ?? null);
+                setLoading(false);
 
-            if (!quiz && !contest) fetchLastSessionScore();
+                if (!quiz && !contest) {
+                    fetchLastSessionScore();
+                }
+            } catch (err) {
+                console.error('Errore fetchStates:', err);
+                setLoading(false);
+            }
         };
 
         fetchStates();
 
-        // Realtime solo per quiz (contest cambia raramente)
         const quizChannel = supabase
             .channel('quiz_state_realtime')
             .on('postgres_changes', { event: '*', schema: 'public', table: 'quiz_state' }, (payload) => {
@@ -61,7 +67,10 @@ export default function QuizPageContent() {
             })
             .subscribe();
 
-        return () => supabase.removeChannel(quizChannel);
+        // 🧩 Cleanup sincrona (NON async)
+        return () => {
+            supabase.removeChannel(quizChannel);
+        };
     }, []);
 
     // ==============================================================
