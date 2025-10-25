@@ -10,7 +10,7 @@
         "Simba e Nala",
         "Matilda e Paloma"
       ],
-      "timeLimit": 30
+      "timeLimit": 25
     },
     {
       "id": "disney-q2",
@@ -22,7 +22,7 @@
         "Arendelle",
         "Agrabah"
       ],
-      "timeLimit": 30
+      "timeLimit": 25
     },
     {
       "id": "disney-q3",
@@ -34,7 +34,7 @@
         "Alla sua famiglia",
         "Alla sua coda"
       ],
-      "timeLimit": 30
+      "timeLimit": 25
     },
     {
       "id": "disney-q4",
@@ -46,7 +46,7 @@
         "Bruno",
         "Pedro"
       ],
-      "timeLimit": 30
+      "timeLimit": 25
     },
     {
       "id": "disney-q5",
@@ -58,7 +58,7 @@
         "Per onorare la sua famiglia",
         "Per dimostrare che una donna può essere coraggiosa quanto un uomo"
       ],
-      "timeLimit": 60
+      "timeLimit": 55
     },
     {
       "id": "disney-q6",
@@ -70,7 +70,7 @@
         "Eddie Murphy",
         "Gigi Proietti"
       ],
-      "timeLimit": 60
+      "timeLimit": 55
     },
     {
       "id": "disney-q7",
@@ -102,10 +102,10 @@
           ]
         }
       ],
-      "timeLimit": 90
+      "timeLimit": 85
     },
     {
-      "id": "disney-q7",
+      "id": "disney-q8",
       "type": "MATCHING",
       "question": "Abbina i seguenti personaggi ai loro oggetti.",
       "options": [
@@ -134,7 +134,234 @@
           ]
         }
       ],
-      "timeLimit": 90
+      "timeLimit": 85
+    },
+    {
+      "id": "disney-q9",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Qual è il nome della madre di Bambi?",
+      "options": [
+        "Fiore",
+        "Mamma Cerva",
+        "Non viene mai detto",
+        "Luna"
+      ],
+      "timeLimit": 25
+    },
+    {
+      "id": "disney-q10",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Che animale è Sebastian ne 'La Sirenetta'?",
+      "options": [
+        "Un pesce",
+        "Un granchio",
+        "Un'aragosta",
+        "Un cavalluccio marino"
+      ],
+      "timeLimit": 25
+    },
+    {
+      "id": "disney-q11",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Chi è il cattivo principale de 'Il Re Leone'?",
+      "options": [
+        "Jafar",
+        "Scar",
+        "Hades",
+        "Shere Khan"
+      ],
+      "timeLimit": 25
+    },
+    {
+      "id": "disney-q12",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Dove vive Olaf, il pupazzo di neve?",
+      "options": [
+        "Arendelle",
+        "Atlantica",
+        "Agrabah",
+        "Corona"
+      ],
+      "timeLimit": 25
+    },
+    {
+      "id": "disney-q13",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Qual è il nome del drago amico di Mulan?",
+      "options": [
+        "Mushu",
+        "Ping",
+        "Li Shang",
+        "Shan Yu"
+      ],
+      "timeLimit": 25
+    },
+    {
+      "id": "disney-q14",
+      "type": "MATCHING",
+      "question": "Abbina l’eroe al suo antagonista.",
+      "options": [
+        {
+          "left": "Peter Pan",
+          "rightOptions": [
+            "Capitan Uncino",
+            "Ursula",
+            "Jafar"
+          ]
+        },
+        {
+          "left": "Aladdin",
+          "rightOptions": [
+            "Capitan Uncino",
+            "Ursula",
+            "Jafar"
+          ]
+        },
+        {
+          "left": "Ariel",
+          "rightOptions": [
+            "Capitan Uncino",
+            "Ursula",
+            "Jafar"
+          ]
+        }
+      ],
+      "timeLimit": 85
+    },
+    {
+      "id": "disney-q15",
+      "type": "MULTIPLE_SELECT",
+      "question": "Quali tra questi personaggi sono topi? (Seleziona tutte le risposte corrette)",
+      "options": [
+        "Jerry",
+        "Minnie",
+        "Topolino",
+        "Pluto"
+      ],
+      "timeLimit": 55
+    },
+    {
+      "id": "disney-q16",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Chi è l’aiutante della Fata Madrina in Cenerentola?",
+      "options": [
+        "Lucifero",
+        "Gas Gas",
+        "Gus e Jaq",
+        "Sebastian"
+      ],
+      "timeLimit": 25
+    },
+    {
+      "id": "disney-q17",
+      "type": "ORDERING",
+      "question": "Ordina questi film Pixar in base all’anno di uscita (dal più vecchio al più recente).",
+      "options": [
+        "Toy Story",
+        "Alla ricerca di Nemo",
+        "Up",
+        "Inside Out"
+      ],
+      "timeLimit": 60
+    },
+    {
+      "id": "disney-q18",
+      "type": "ORDERING",
+      "question": "Ordina le trasformazioni della Bestia nella sequenza corretta della storia.",
+      "options": [
+        "Principe maledetto",
+        "Bestia",
+        "Si innamora di Belle",
+        "Ritorna umano"
+      ],
+      "timeLimit": 60
+    },
+    {
+      "id": "disney-q19",
+      "type": "ORDERING",
+      "question": "Ordina gli eventi principali di 'Il Re Leone' (dal primo all’ultimo).",
+      "options": [
+        "Simba nasce",
+        "Morte di Mufasa",
+        "Simba incontra Timon e Pumbaa",
+        "Simba torna a Pride Rock"
+      ],
+      "timeLimit": 60
+    },
+    {
+      "id": "disney-q20",
+      "type": "AUDIO_MULTIPLE_CHOICE",
+      "question": "Ascolta e indica da quale film proviene questa canzone.",
+      "audioPath": "/audio/disney-song1.mp3",
+      "options": [
+        "Il Re Leone",
+        "Aladdin",
+        "Frozen",
+        "La Sirenetta"
+      ],
+      "timeLimit": 45
+    },
+    {
+      "id": "disney-q21",
+      "type": "AUDIO_MULTIPLE_CHOICE",
+      "question": "Ascolta e scegli chi canta questo brano.",
+      "audioPath": "/audio/disney-song2.mp3",
+      "options": [
+        "Elsa",
+        "Ariel",
+        "Rapunzel",
+        "Anna"
+      ],
+      "timeLimit": 45
+    },
+    {
+      "id": "disney-q22",
+      "type": "AUDIO_MULTIPLE_CHOICE",
+      "question": "Ascolta e indica il titolo della canzone.",
+      "audioPath": "/audio/disney-song3.mp3",
+      "options": [
+        "Il mondo è mio",
+        "Hakuna Matata",
+        "Let It Go",
+        "In fondo al mar"
+      ],
+      "timeLimit": 45
+    },
+    {
+      "id": "disney-q23",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Chi è l’aiutante di Hercules?",
+      "options": [
+        "Pegaso",
+        "Filottete",
+        "Ade",
+        "Zeus"
+      ],
+      "timeLimit": 25
+    },
+    {
+      "id": "disney-q24",
+      "type": "MULTIPLE_SELECT",
+      "question": "Quali di questi film sono della Pixar? (Seleziona tutte le risposte corrette)",
+      "options": [
+        "Inside Out",
+        "Ratatouille",
+        "La Sirenetta",
+        "Zootropolis"
+      ],
+      "timeLimit": 55
+    },
+    {
+      "id": "disney-q25",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Chi dice la celebre frase \"Verso l’infinito e oltre!\"?",
+      "options": [
+        "Buzz Lightyear",
+        "Woody",
+        "Mr. Potato",
+        "Sully"
+      ],
+      "timeLimit": 25
     }
   ]
 }
