@@ -27,11 +27,18 @@ export default function QuizPageContent() {
     // Contest votes
     const [userVotes, setUserVotes] = useState<ContestVote[]>([]);
     const [candidates, setCandidates] = useState<string[]>([
-        'Chiara',
-        'Davide',
-        'Peppe',
-        'Ignazio',
-        'Vale',
+        "Pepah",
+        "Davide",
+        "Chiara",
+        "Ignazio",
+        "Luca",
+        "Alessio",
+        "Marianna",
+        "Eugenia",
+        "Maurizio",
+        "Flavio",
+        "Mate",
+        "Ginger"
     ]);
     const [selectedContest, setSelectedContest] = useState<'DESSERT' | 'COSPLAY' | null>(null);
 
