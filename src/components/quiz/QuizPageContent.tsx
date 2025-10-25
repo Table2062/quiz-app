@@ -1,71 +1,108 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
+import { Question } from '@/types/QuestionProps';
 import { renderQuestion } from '@/utils/renderQuestion';
 import { useAuth } from '@/store/useUserStore';
-import { Question } from '@/types/QuestionProps';
 
-interface ContestOption {
-    DESSERT: string[];
-    COSPLAY: string[];
+interface ContestState {
+    id: string;
+    category: string;
+    is_active: boolean;
+    started_at?: string;
+    ended_at?: string;
 }
 
 export default function QuizPageContent() {
     const { user } = useAuth();
+
     const [quizState, setQuizState] = useState<any | null>(null);
-    const [contestState, setContestState] = useState<any | null>(null);
+    const [contestState, setContestState] = useState<ContestState | null>(null);
+
     const [questions, setQuestions] = useState<Question[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
+
     const [timeLeft, setTimeLeft] = useState<number>(0);
-    const [submitted, setSubmitted] = useState<boolean>(false);
-    const [finalScore, setFinalScore] = useState<number | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
-    // Contest
-    const [contestOptions, setContestOptions] = useState<ContestOption | null>(null);
-    const [contestVotes, setContestVotes] = useState<string[]>([]);
-    const [voteSubmitted, setVoteSubmitted] = useState<boolean>(false);
+    // Per votazioni contest
+    const [contestCandidates, setContestCandidates] = useState<string[]>([]);
+    const [selectedVotes, setSelectedVotes] = useState<string[]>([]);
+    const [submitted, setSubmitted] = useState<boolean>(false);
 
-    // ============================================================
-    // 🔹 Carica quiz_state e contest_state + realtime
-    // ============================================================
+    // ==============================================================
+    // 🔹 Carica stato iniziale (quiz + contest)
+    // ==============================================================
     useEffect(() => {
         const fetchStates = async () => {
             const [{ data: quiz }, { data: contest }] = await Promise.all([
                 supabase.from('quiz_state').select('*').eq('is_active', true).single(),
                 supabase.from('contest_state').select('*').eq('is_active', true).single(),
             ]);
-
             setQuizState(quiz ?? null);
             setContestState(contest ?? null);
             setLoading(false);
-
-            if (!quiz && !contest) fetchLastSessionScore();
         };
-
         fetchStates();
 
-        const channel = supabase
-            .channel('quiz_contest_realtime')
-            .on('postgres_changes', { event: '*', schema: 'public', table: 'quiz_state' }, (payload) => {
-                const newState = payload.new as Record<string, any> | null;
-                setQuizState(newState && newState.is_active ? newState : null);
-            })
-            .on('postgres_changes', { event: '*', schema: 'public', table: 'contest_state' }, (payload) => {
-                const newState = payload.new as Record<string, any> | null;
-                setContestState(newState && newState.is_active ? newState : null);
-            })
+        // ✅ listener separato per quiz_state e contest_state
+        const quizChannel = supabase
+            .channel('quiz_state_realtime')
+            .on(
+                'postgres_changes',
+                { event: 'INSERT', schema: 'public', table: 'quiz_state' },
+                (payload) => {
+                    const newQuiz = payload.new as any;
+                    if (newQuiz?.is_active) {
+                        setQuizState(newQuiz);
+                        setContestState(null);
+                    }
+                }
+            )
+            .on(
+                'postgres_changes',
+                { event: 'UPDATE', schema: 'public', table: 'quiz_state' },
+                (payload) => {
+                    const newQuiz = payload.new as any;
+                    if (newQuiz?.is_active) setQuizState(newQuiz);
+                    else setQuizState(null);
+                }
+            )
+            .subscribe();
+
+        const contestChannel = supabase
+            .channel('contest_state_realtime')
+            .on(
+                'postgres_changes',
+                { event: 'INSERT', schema: 'public', table: 'contest_state' },
+                (payload) => {
+                    const newContest = payload.new as ContestState;
+                    if (newContest?.is_active) {
+                        setContestState(newContest);
+                        setQuizState(null);
+                    }
+                }
+            )
+            .on(
+                'postgres_changes',
+                { event: 'UPDATE', schema: 'public', table: 'contest_state' },
+                (payload) => {
+                    const newContest = payload.new as ContestState;
+                    if (newContest?.is_active) setContestState(newContest);
+                    else setContestState(null);
+                }
+            )
             .subscribe();
 
         return () => {
-            supabase.removeChannel(channel);
+            supabase.removeChannel(quizChannel);
+            supabase.removeChannel(contestChannel);
         };
     }, []);
 
-    // ============================================================
+    // ==============================================================
     // 🔹 Carica quiz JSON
-    // ============================================================
+    // ==============================================================
     useEffect(() => {
         const loadQuiz = async () => {
             if (!quizState?.quiz_name) return;
@@ -82,15 +119,14 @@ export default function QuizPageContent() {
         loadQuiz();
     }, [quizState?.quiz_name]);
 
-    // ============================================================
-    // 🔹 Imposta domanda corrente e timer
-    // ============================================================
+    // ==============================================================
+    // 🔹 Imposta domanda corrente e timer sincronizzato
+    // ==============================================================
     useEffect(() => {
         if (!quizState || !questions.length) return;
 
         const q = questions[quizState.current_question];
         setCurrentQuestion(q);
-        setSubmitted(false);
 
         const start = new Date(quizState.question_start).getTime();
         const duration = quizState.question_duration * 1000;
@@ -106,12 +142,11 @@ export default function QuizPageContent() {
         return () => clearInterval(interval);
     }, [quizState?.current_question, quizState?.question_start, quizState?.question_duration, questions]);
 
-    // ============================================================
-    // 🔹 Invia risposta quiz
-    // ============================================================
+    // ==============================================================
+    // 🔹 Gestione risposta utente per quiz
+    // ==============================================================
     const handleAnswer = async (answer: any) => {
-        if (!quizState || !currentQuestion || !user || submitted) return;
-        setSubmitted(true);
+        if (!quizState || !currentQuestion || !user) return;
 
         try {
             const { error } = await supabase.from('answers').insert({
@@ -121,224 +156,157 @@ export default function QuizPageContent() {
                 selected_options: answer,
                 session_id: quizState.id,
             });
-
             if (error) console.error('Errore salvataggio risposta:', error);
         } catch (err) {
             console.error('Errore invio risposta:', err);
         }
     };
 
-    // ============================================================
-    // 🔹 Recupera punteggio finale quiz
-    // ============================================================
-    const fetchFinalScore = async (sessionId: string) => {
-        if (!user || !sessionId) return;
-        const { data } = await supabase
-            .from('answers')
-            .select('points_awarded')
-            .eq('user_id', user.id)
-            .eq('session_id', sessionId);
-
-        const total = (data ?? []).reduce((sum, r) => sum + (r.points_awarded ?? 0), 0);
-        setFinalScore(total > 0 ? total : 0);
-    };
-
-    const fetchLastSessionScore = async () => {
-        if (!user) return;
-        const { data } = await supabase
-            .from('answers')
-            .select('session_id')
-            .eq('user_id', user.id)
-            .order('created_at', { ascending: false })
-            .limit(1);
-
-        if (data && data[0]?.session_id) fetchFinalScore(data[0].session_id);
-    };
-
-    // ============================================================
-    // 🔹 Carica opzioni contest
-    // ============================================================
+    // ==============================================================
+    // 🔹 Gestione votazioni contest
+    // ==============================================================
     useEffect(() => {
-        const loadOptions = async () => {
+        const loadContestOptions = async () => {
+            if (!contestState?.category) return;
+
             try {
-                const res = await fetch('/data/contest_options.json');
+                const res = await fetch(`/data/contest_options.json`);
                 const json = await res.json();
-                setContestOptions(json);
-            } catch (e) {
-                console.error('Errore caricamento contest_options.json', e);
+                const options = json[contestState.category] ?? [];
+                setContestCandidates(options);
+            } catch (err) {
+                console.error('Errore caricamento opzioni contest:', err);
             }
         };
-        loadOptions();
-    }, []);
+        loadContestOptions();
+    }, [contestState?.category]);
 
-    // ============================================================
-    // 🔹 Invia voto contest
-    // ============================================================
-    const handleVote = async () => {
-        if (!user || !contestState?.category || voteSubmitted) return;
+    const handleContestVote = async () => {
+        if (!contestState || !user || submitted || selectedVotes.length === 0) return;
+        setSubmitted(true);
 
-        try {
-            const category = contestState.category;
-            const votesToInsert =
-                category === 'DESSERT'
-                    ? [{ user_id: user.id, category, candidate: contestVotes[0], points: 12 }]
-                    : [
-                        { user_id: user.id, category, candidate: contestVotes[0], points: 12 },
-                        { user_id: user.id, category, candidate: contestVotes[1], points: 10 },
-                        { user_id: user.id, category, candidate: contestVotes[2], points: 8 },
-                    ];
+        const category = contestState.category;
+        const insertRows =
+            category === 'COSPLAY'
+                ? [
+                    { user_id: user.id, category, candidate: selectedVotes[0], points: 12 },
+                    { user_id: user.id, category, candidate: selectedVotes[1], points: 10 },
+                    { user_id: user.id, category, candidate: selectedVotes[2], points: 8 },
+                ]
+                : [{ user_id: user.id, category, candidate: selectedVotes[0], points: 12 }];
 
-            const { error } = await supabase.from('contest_votes').insert(votesToInsert);
-            if (error) throw error;
-            setVoteSubmitted(true);
-        } catch (err) {
-            console.error('Errore invio voti contest:', err);
-        }
+        const { error } = await supabase.from('contest_votes').insert(insertRows);
+        if (error) console.error('Errore invio voto:', error);
     };
 
-    // ============================================================
-    // 🔹 UI di caricamento
-    // ============================================================
-    if (loading)
+    // ==============================================================
+    // 🔹 UI states
+    // ==============================================================
+    if (loading) {
         return (
             <main className="flex items-center justify-center h-screen text-gray-500">
                 Caricamento...
             </main>
         );
+    }
 
-    // ============================================================
-    // 🔹 Caso: contest attivo
-    // ============================================================
-    if (contestState && contestOptions) {
-        const category = contestState.category as keyof ContestOption;
-        const options = contestOptions[category] || [];
+    // =======================
+    // Contest attivo
+    // =======================
+    if (contestState) {
+        const isCosplay = contestState.category === 'COSPLAY';
+        const maxVotes = isCosplay ? 3 : 1;
 
-        const handleSelect = (candidate: string) => {
-            if (voteSubmitted) return;
-
-            if (category === 'DESSERT') {
-                setContestVotes([candidate]);
-            } else {
-                let updated = [...contestVotes];
-                if (updated.includes(candidate)) {
-                    updated = updated.filter((v) => v !== candidate);
-                } else if (updated.length < 3) {
-                    updated.push(candidate);
-                }
-                setContestVotes(updated);
-            }
+        const toggleSelect = (candidate: string) => {
+            if (submitted) return;
+            setSelectedVotes((prev) => {
+                if (prev.includes(candidate)) return prev.filter((c) => c !== candidate);
+                if (prev.length < maxVotes) return [...prev, candidate];
+                return prev;
+            });
         };
 
-        const getRankLabel = (idx: number) => ['🥇 1°', '🥈 2°', '🥉 3°'][idx];
-
         return (
-            <main className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg text-center">
-                <h1 className="text-2xl font-semibold text-gray-800 mb-4">
-                    {category === 'DESSERT' ? '🍰 Dessert Contest' : '🎭 Cosplay Contest'}
+            <main className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+                <h1 className="text-2xl font-bold text-center mb-4">
+                    {isCosplay ? '🎭 COSPLAY CONTEST' : '🍰 DESSERT CONTEST'}
                 </h1>
-                <p className="text-gray-500 mb-6">
-                    {category === 'DESSERT'
-                        ? 'Scegli il tuo dessert preferito!'
-                        : 'Scegli i tuoi 3 cosplay preferiti (1°, 2°, 3° posto).'}
+                <p className="text-center text-gray-600 mb-6">
+                    {isCosplay
+                        ? 'Scegli i tuoi 3 preferiti (in ordine di preferenza)'
+                        : 'Scegli il tuo dessert preferito'}
                 </p>
 
-                <div className="flex flex-col gap-3 mb-6">
-                    {options.map((opt) => {
-                        const idx = contestVotes.indexOf(opt);
-                        const selected = idx !== -1;
-                        return (
+                <ul className="space-y-3">
+                    {contestCandidates.map((candidate) => (
+                        <li key={candidate}>
                             <button
-                                key={opt}
-                                onClick={() => handleSelect(opt)}
-                                disabled={voteSubmitted}
-                                className={`px-4 py-3 rounded-lg border transition-all ${
-                                    selected
-                                        ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)]'
-                                        : 'border-gray-300 text-gray-700 hover:border-[var(--color-primary)]'
+                                onClick={() => toggleSelect(candidate)}
+                                disabled={submitted}
+                                className={`w-full px-4 py-3 rounded-lg border text-left transition-all ${
+                                    selectedVotes.includes(candidate)
+                                        ? 'bg-green-500 text-white border-green-500'
+                                        : 'bg-gray-50 hover:bg-gray-100 border-gray-300'
                                 }`}
                             >
-                                {opt}
-                                {selected && category === 'COSPLAY' && (
-                                    <span className="ml-2 text-sm opacity-80">{getRankLabel(idx)}</span>
-                                )}
+                                {candidate}
                             </button>
-                        );
-                    })}
-                </div>
+                        </li>
+                    ))}
+                </ul>
 
-                {!voteSubmitted ? (
+                <div className="text-center mt-6">
                     <button
-                        disabled={
-                            (category === 'DESSERT' && contestVotes.length !== 1) ||
-                            (category === 'COSPLAY' && contestVotes.length !== 3)
-                        }
-                        onClick={handleVote}
-                        className="bg-[var(--color-primary)] text-white font-semibold px-6 py-3 rounded-md hover:bg-[var(--color-primary-hover)] disabled:bg-gray-300 disabled:cursor-not-allowed"
+                        onClick={handleContestVote}
+                        disabled={submitted || selectedVotes.length < maxVotes}
+                        className="bg-[var(--color-primary)] text-white px-6 py-3 rounded-md font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed transition-all"
                     >
-                        Invia voto
+                        {submitted ? '✅ Voto registrato' : 'Invia voto'}
                     </button>
-                ) : (
-                    <p className="text-green-600 font-medium mt-4">✅ Voto registrato con successo!</p>
-                )}
+                </div>
             </main>
         );
     }
 
-    // ============================================================
-    // 🔹 Caso: nessun quiz né contest
-    // ============================================================
-    if (!quizState)
+    // =======================
+    // Nessun quiz attivo
+    // =======================
+    if (!quizState) {
         return (
             <main className="flex flex-col items-center justify-center h-screen text-center">
-                {finalScore != null ? (
-                    <>
-                        <h1 className="text-2xl font-semibold text-gray-800 mb-3">🎉 Quiz completato!</h1>
-                        <p className="text-xl font-bold text-green-600 mb-2">
-                            Hai totalizzato {finalScore} punti
-                        </p>
-                        <p className="text-gray-500">
-                            Attendi che l’amministratore avvii un nuovo quiz o una votazione.
-                        </p>
-                    </>
-                ) : (
-                    <>
-                        <h1 className="text-2xl font-semibold text-gray-800 mb-3">
-                            Nessun quiz o contest attivo
-                        </h1>
-                        <p className="text-gray-500">
-                            Attendi che l’amministratore avvii una sessione o una votazione.
-                        </p>
-                    </>
-                )}
+                <h1 className="text-2xl font-semibold text-gray-800 mb-3">Nessun quiz attivo</h1>
+                <p className="text-gray-500">
+                    Attendi che l’amministratore avvii una sessione o una votazione.
+                </p>
             </main>
         );
+    }
 
-    // ============================================================
-    // 🔹 Caso: quiz attivo
-    // ============================================================
-    if (!currentQuestion)
+    // =======================
+    // Quiz attivo → mostra domanda
+    // =======================
+    if (!currentQuestion) {
         return (
             <main className="flex items-center justify-center h-screen">
                 <p className="text-gray-500">Caricamento domanda...</p>
             </main>
         );
+    }
 
     return (
         <main className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
             <div className="flex justify-between items-center mb-4">
-                <div className={`font-medium ${timeLeft <= 5 ? 'text-red-600' : 'text-gray-600'}`}>
+                <div
+                    className={`font-medium ${timeLeft <= 5 ? 'text-red-600' : 'text-gray-600'}`}
+                >
                     ⏱️ {timeLeft}s
                 </div>
             </div>
 
             {renderQuestion(currentQuestion, {
                 onAnswer: handleAnswer,
-                disabled: timeLeft <= 0 || submitted,
+                disabled: timeLeft <= 0,
             })}
-
-            {submitted && (
-                <p className="text-center text-green-600 mt-4 font-medium">✅ Risposta registrata</p>
-            )}
         </main>
     );
 }
