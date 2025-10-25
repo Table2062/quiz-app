@@ -6,58 +6,34 @@ import { Question } from '@/types/QuestionProps';
 import { renderQuestion } from '@/utils/renderQuestion';
 import { useAuth } from '@/store/useUserStore';
 
-// =============================
-// Tipi di supporto
-// =============================
-interface ContestState {
-    id: string;
-    category: 'DESSERT' | 'COSPLAY';
-    is_active: boolean;
-    started_at: string;
-    ended_at?: string | null;
-}
-
-interface VoteCandidate {
+interface ContestVote {
     candidate: string;
     points: number;
+    position: number;
 }
 
 export default function QuizPageContent() {
     const { user } = useAuth();
+    const [quizState, setQuizState] = useState<any>(null);
+    const [contestState, setContestState] = useState<any>(null);
 
-    // Stato quiz e contest
-    const [quizState, setQuizState] = useState<any | null>(null);
-    const [contestState, setContestState] = useState<ContestState | null>(null);
-
-    // Quiz
     const [questions, setQuestions] = useState<Question[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
     const [timeLeft, setTimeLeft] = useState<number>(0);
+    const [loading, setLoading] = useState<boolean>(true);
     const [submitted, setSubmitted] = useState<boolean>(false);
     const [finalScore, setFinalScore] = useState<number | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
 
-    // Contest
-    const [selectedDessert, setSelectedDessert] = useState<string | null>(null);
-    const [selectedCosplay, setSelectedCosplay] = useState<string[]>([]);
-    const [voteSubmitted, setVoteSubmitted] = useState<boolean>(false);
-    const [userVotes, setUserVotes] = useState<VoteCandidate[] | null>(null);
-
-    const dessertOptions = ['Pepa e Igni', 'Luca', 'Eugenia e Maurizio'];
-    const cosplayOptions = [
-        'Pepa',
-        'Davide',
+    // Contest votes
+    const [userVotes, setUserVotes] = useState<ContestVote[]>([]);
+    const [candidates, setCandidates] = useState<string[]>([
         'Chiara',
+        'Davide',
+        'Peppe',
         'Ignazio',
-        'Luca Moon',
-        'Alessio',
-        'Marianna',
-        'Eugenia',
-        'Maurizio',
-        'Flavio',
-        'Mate',
-        'Ginger',
-    ];
+        'Vale',
+    ]);
+    const [selectedContest, setSelectedContest] = useState<'DESSERT' | 'COSPLAY' | null>(null);
 
     // ==============================================================
     // 🔹 Recupera quiz_state e contest_state attivi
@@ -71,45 +47,40 @@ export default function QuizPageContent() {
 
             setQuizState(quiz ?? null);
             setContestState(contest ?? null);
+            setSelectedContest(contest?.category ?? null);
             setLoading(false);
+
+            if (!quiz && !contest) {
+                fetchLastSessionScore();
+            }
         };
 
         fetchStates();
 
-        // ✅ realtime fix tipizzato
-        interface RealtimePayload {
-            new?: Record<string, any> | null;
-            old?: Record<string, any> | null;
-            eventType: string;
-        }
-
-        const quizChannel = supabase
-            .channel('quiz_state_realtime')
+        // Realtime listeners
+        const channel = supabase
+            .channel('quiz_and_contest_realtime')
             .on(
                 'postgres_changes',
                 { event: '*', schema: 'public', table: 'quiz_state' },
-                (payload: RealtimePayload) => {
-                    const newRow = payload.new as { is_active?: boolean } | null;
-                    setQuizState(newRow?.is_active ? newRow : null);
+                (payload) => {
+                    const newState: any = payload.new || {};
+                    setQuizState(newState.is_active ? newState : null);
                 }
             )
-            .subscribe();
-
-        const contestChannel = supabase
-            .channel('contest_state_realtime')
             .on(
                 'postgres_changes',
                 { event: '*', schema: 'public', table: 'contest_state' },
-                (payload: RealtimePayload) => {
-                    const newRow = payload.new as { is_active?: boolean } | null;
-                    setContestState(newRow?.is_active ? (newRow as ContestState) : null);
+                (payload) => {
+                    const newState: any = payload.new || {};
+                    setContestState(newState.is_active ? newState : null);
+                    setSelectedContest(newState.is_active ? newState.category : null);
                 }
             )
             .subscribe();
 
         return () => {
-            supabase.removeChannel(quizChannel);
-            supabase.removeChannel(contestChannel);
+            supabase.removeChannel(channel);
         };
     }, []);
 
@@ -126,16 +97,18 @@ export default function QuizPageContent() {
                 setQuestions(json.questions);
             } catch (err) {
                 console.error('Errore caricamento quiz:', err);
+                setQuestions([]);
             }
         };
         loadQuiz();
     }, [quizState?.quiz_name]);
 
     // ==============================================================
-    // 🔹 Imposta domanda corrente + timer
+    // 🔹 Imposta domanda corrente e timer
     // ==============================================================
     useEffect(() => {
         if (!quizState || !questions.length) return;
+
         const q = questions[quizState.current_question];
         setCurrentQuestion(q);
         setSubmitted(false);
@@ -155,7 +128,7 @@ export default function QuizPageContent() {
     }, [quizState?.current_question, quizState?.question_start, quizState?.question_duration, questions]);
 
     // ==============================================================
-    // 🔹 Gestione risposta quiz
+    // 🔹 Invio risposta quiz
     // ==============================================================
     const handleAnswer = async (answer: any) => {
         if (!quizState || !currentQuestion || !user || submitted) return;
@@ -169,202 +142,233 @@ export default function QuizPageContent() {
                 selected_options: answer,
                 session_id: quizState.id,
             });
-            if (error) console.error('Errore salvataggio risposta:', error);
+            if (error) throw error;
         } catch (err) {
             console.error('Errore invio risposta:', err);
         }
     };
 
     // ==============================================================
-    // 🔹 Controlla se utente ha già votato nel contest attivo
+    // 🔹 Recupera punteggio finale quiz
     // ==============================================================
-    useEffect(() => {
-        const checkExistingVote = async () => {
-            if (!user || !contestState) return;
+    const fetchFinalScore = async (sessionId: string) => {
+        if (!user || !sessionId) return;
+        const { data, error } = await supabase
+            .from('answers')
+            .select('points_awarded')
+            .eq('user_id', user.id)
+            .eq('session_id', sessionId);
 
-            const { data } = await supabase.rpc('get_user_contest_vote', {
-                p_user_id: user.id,
-                p_category: contestState.category,
-            });
+        if (!error && data) {
+            const total = data.reduce((sum, r) => sum + (r.points_awarded ?? 0), 0);
+            setFinalScore(total);
+        }
+    };
 
-            if (data && data.length > 0) {
-                setVoteSubmitted(true);
-                setUserVotes(data[0].votes_with_points ?? null);
-            } else {
-                setVoteSubmitted(false);
-                setUserVotes(null);
-            }
-        };
+    const fetchLastSessionScore = async () => {
+        if (!user) return;
+        const { data, error } = await supabase
+            .from('answers')
+            .select('session_id')
+            .eq('user_id', user.id)
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .single();
 
-        checkExistingVote();
-    }, [contestState, user]);
+        if (!error && data?.session_id) fetchFinalScore(data.session_id);
+    };
 
     // ==============================================================
-    // 🔹 Invio votazione contest
+    // 🔹 Contest: Recupera voti utente
     // ==============================================================
-    const handleSubmitVote = async () => {
-        if (!user || !contestState) return;
+    const fetchUserContestVote = async (category: 'DESSERT' | 'COSPLAY') => {
+        if (!user) return;
 
-        try {
-            let votes: string[] = [];
-            let votesWithPoints: VoteCandidate[] = [];
+        const { data, error } = await supabase.rpc('get_user_contest_vote', {
+            p_user_id: user.id,
+            p_category: category,
+        });
 
-            if (contestState.category === 'DESSERT' && selectedDessert) {
-                votes = [selectedDessert];
-                votesWithPoints = [{ candidate: selectedDessert, points: 12 }];
-            }
-
-            if (contestState.category === 'COSPLAY' && selectedCosplay.length === 3) {
-                votes = selectedCosplay;
-                votesWithPoints = [
-                    { candidate: selectedCosplay[0], points: 12 },
-                    { candidate: selectedCosplay[1], points: 10 },
-                    { candidate: selectedCosplay[2], points: 8 },
-                ];
-            }
-
-            const { error } = await supabase.from('contest_votes').upsert({
-                user_id: user.id,
-                category: contestState.category,
-                contest_id: contestState.id,
-                votes,
-                votes_with_points: votesWithPoints,
-            });
-
-            if (error) throw error;
-            setVoteSubmitted(true);
-            setUserVotes(votesWithPoints);
-        } catch (err) {
-            console.error('Errore invio votazione:', err);
+        if (!error && data && data.length > 0 && data[0].votes) {
+            setUserVotes(data[0].votes);
+        } else {
+            setUserVotes([]);
         }
     };
 
     // ==============================================================
-    // 🔹 Render
+    // 🔹 Contest: Invio voti
     // ==============================================================
-    if (loading) {
-        return <main className="flex items-center justify-center h-screen text-gray-500">Caricamento...</main>;
-    }
+    const submitContestVote = async (category: 'DESSERT' | 'COSPLAY') => {
+        if (!user || userVotes.length === 0) return alert('Seleziona almeno un voto!');
 
-    // --- Caso 1: contest attivo ---
-    if (contestState?.is_active) {
+        try {
+            await supabase.from('contest_votes').delete().eq('user_id', user.id).eq('category', category);
+
+            const rows = userVotes.map((v) => ({
+                user_id: user.id,
+                category,
+                candidate: v.candidate,
+                points: v.points,
+                position: v.position,
+            }));
+
+            const { error } = await supabase.from('contest_votes').insert(rows);
+            if (error) throw error;
+
+            alert('✅ Voto registrato con successo!');
+        } catch (err) {
+            console.error('Errore invio voti:', err);
+            alert('❌ Errore durante il salvataggio dei voti.');
+        }
+    };
+
+    // ==============================================================
+    // 🔹 Interfaccia contest (DESSERT / COSPLAY)
+    // ==============================================================
+    const handleVoteSelect = (candidate: string, position: number) => {
+        let updated = [...userVotes];
+
+        if (selectedContest === 'DESSERT') {
+            updated = [{ candidate, points: 12, position: 1 }];
+        } else if (selectedContest === 'COSPLAY') {
+            updated = updated.filter((v) => v.position !== position);
+            const pointsMap: Record<number, number> = { 1: 12, 2: 10, 3: 8 };
+            updated.push({ candidate, position, points: pointsMap[position] });
+        }
+
+        setUserVotes(updated);
+    };
+
+    // ==============================================================
+    // 🔹 Render – stati principali
+    // ==============================================================
+    if (loading)
+        return <main className="flex items-center justify-center h-screen text-gray-500">Caricamento...</main>;
+
+    // --- Se c'è un contest attivo ---
+    if (contestState && selectedContest) {
         return (
-            <main className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg text-center">
-                <h1 className="text-2xl font-semibold text-gray-800 mb-4">
-                    🗳️ Votazione {contestState.category}
+            <main className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+                <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
+                    🏆 {selectedContest} CONTEST
                 </h1>
 
-                {voteSubmitted && userVotes ? (
-                    <>
-                        <p className="text-green-600 font-medium text-lg mb-4">
-                            ✅ Hai già votato per {contestState.category === 'DESSERT' ? 'questo dessert:' : 'questi partecipanti:'}
-                        </p>
-                        <ul className="text-gray-700 font-medium mb-6">
-                            {userVotes.map((v) => (
-                                <li key={v.candidate}>
-                                    {v.candidate} — <span className="text-gray-500">{v.points} pt</span>
-                                </li>
-                            ))}
-                        </ul>
-                    </>
-                ) : contestState.category === 'DESSERT' ? (
-                    <>
-                        <p className="text-gray-600 mb-4">Scegli il tuo preferito:</p>
-                        <div className="flex flex-col gap-3 mb-6">
-                            {dessertOptions.map((opt) => (
-                                <button
-                                    key={opt}
-                                    onClick={() => setSelectedDessert(opt)}
-                                    className={`px-4 py-2 rounded-md border ${
-                                        selectedDessert === opt
-                                            ? 'bg-green-500 text-white border-green-600'
-                                            : 'bg-gray-100 hover:bg-gray-200 border-gray-300'
-                                    }`}
+                <p className="text-gray-600 mb-6 text-center">
+                    {selectedContest === 'DESSERT'
+                        ? 'Scegli il miglior dessert (12 punti).'
+                        : 'Assegna 12, 10 e 8 punti ai tuoi 3 cosplay preferiti.'}
+                </p>
+
+                {selectedContest === 'COSPLAY' && (
+                    <div className="flex flex-col gap-3 mb-6">
+                        {[1, 2, 3].map((pos) => (
+                            <div key={pos}>
+                                <label className="block text-gray-700 mb-1">
+                                    {pos}° posto ({pos === 1 ? '12pt' : pos === 2 ? '10pt' : '8pt'}):
+                                </label>
+                                <select
+                                    value={userVotes.find((v) => v.position === pos)?.candidate ?? ''}
+                                    onChange={(e) => handleVoteSelect(e.target.value, pos)}
+                                    className="w-full border border-gray-300 rounded-md px-3 py-2"
                                 >
-                                    {opt}
-                                </button>
+                                    <option value="">-- Seleziona --</option>
+                                    {candidates.map((c) => (
+                                        <option key={c} value={c}>
+                                            {c}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {selectedContest === 'DESSERT' && (
+                    <div className="flex flex-col gap-3 mb-6">
+                        <label className="block text-gray-700 mb-1">Miglior dessert (12pt):</label>
+                        <select
+                            value={userVotes[0]?.candidate ?? ''}
+                            onChange={(e) => handleVoteSelect(e.target.value, 1)}
+                            className="w-full border border-gray-300 rounded-md px-3 py-2"
+                        >
+                            <option value="">-- Seleziona --</option>
+                            {candidates.map((c) => (
+                                <option key={c} value={c}>
+                                    {c}
+                                </option>
                             ))}
-                        </div>
-                        <button
-                            onClick={handleSubmitVote}
-                            disabled={!selectedDessert}
-                            className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-6 py-2 rounded-md font-medium disabled:opacity-50"
-                        >
-                            Invia voto
-                        </button>
-                    </>
-                ) : (
-                    <>
-                        <p className="text-gray-600 mb-4">Seleziona i tuoi 3 preferiti (ordine: 1° → 3°):</p>
-                        <div className="grid grid-cols-2 gap-3 mb-6">
-                            {cosplayOptions.map((opt) => {
-                                const idx = selectedCosplay.indexOf(opt);
-                                return (
-                                    <button
-                                        key={opt}
-                                        onClick={() => {
-                                            if (idx >= 0) {
-                                                setSelectedCosplay(selectedCosplay.filter((x) => x !== opt));
-                                            } else if (selectedCosplay.length < 3) {
-                                                setSelectedCosplay([...selectedCosplay, opt]);
-                                            }
-                                        }}
-                                        className={`px-3 py-2 rounded-md border transition ${
-                                            idx >= 0
-                                                ? 'bg-blue-500 text-white border-blue-600'
-                                                : 'bg-gray-100 hover:bg-gray-200 border-gray-300'
-                                        }`}
-                                    >
-                                        {idx >= 0 ? `${idx + 1}° - ${opt}` : opt}
-                                    </button>
-                                );
-                            })}
-                        </div>
-                        <button
-                            onClick={handleSubmitVote}
-                            disabled={selectedCosplay.length !== 3}
-                            className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-6 py-2 rounded-md font-medium disabled:opacity-50"
-                        >
-                            Invia voti
-                        </button>
-                    </>
+                        </select>
+                    </div>
+                )}
+
+                <button
+                    onClick={() => submitContestVote(selectedContest)}
+                    className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white w-full py-3 rounded-md font-semibold transition-all"
+                >
+                    Invia voti
+                </button>
+
+                {userVotes.length > 0 && (
+                    <div className="mt-6">
+                        <h2 className="text-lg font-semibold text-gray-700 mb-2">I tuoi voti:</h2>
+                        <ul className="list-disc list-inside text-gray-600">
+                            {userVotes
+                                .sort((a, b) => a.position - b.position)
+                                .map((v, idx) => (
+                                    <li key={idx}>
+                                        {v.position}° - {v.candidate} ({v.points} punti)
+                                    </li>
+                                ))}
+                        </ul>
+                    </div>
                 )}
             </main>
         );
     }
 
-    // --- Caso 2: quiz attivo ---
-    if (quizState?.is_active && currentQuestion) {
+    // --- Se nessun quiz né contest attivo ---
+    if (!quizState)
         return (
-            <main className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
-                <div className="flex justify-between items-center mb-4">
-                    <div className={`font-medium ${timeLeft <= 5 ? 'text-red-600' : 'text-gray-600'}`}>
-                        ⏱️ {timeLeft}s
-                    </div>
-                </div>
-                {renderQuestion(currentQuestion, {
-                    onAnswer: handleAnswer,
-                    disabled: timeLeft <= 0 || submitted,
-                })}
-                {submitted && <p className="text-center text-green-600 mt-4 font-medium">✅ Risposta registrata</p>}
+            <main className="flex flex-col items-center justify-center h-screen text-center">
+                {finalScore != null ? (
+                    <>
+                        <h1 className="text-2xl font-semibold text-gray-800 mb-3">🎉 Quiz completato!</h1>
+                        <p className="text-xl font-bold text-green-600 mb-2">Hai totalizzato {finalScore} punti</p>
+                        <p className="text-gray-500">Attendi che l’amministratore avvii un nuovo quiz o contest.</p>
+                    </>
+                ) : (
+                    <>
+                        <h1 className="text-2xl font-semibold text-gray-800 mb-3">Nessun quiz attivo</h1>
+                        <p className="text-gray-500">Attendi che l’amministratore avvii una sessione.</p>
+                    </>
+                )}
             </main>
         );
-    }
 
-    // --- Caso 3: nessun quiz o contest attivo ---
+    // --- Quiz attivo ---
+    if (!currentQuestion)
+        return (
+            <main className="flex items-center justify-center h-screen">
+                <p className="text-gray-500">Caricamento domanda...</p>
+            </main>
+        );
+
     return (
-        <main className="flex flex-col items-center justify-center h-screen text-center">
-            {finalScore != null ? (
-                <>
-                    <h1 className="text-2xl font-semibold text-gray-800 mb-3">🎉 Quiz completato!</h1>
-                    <p className="text-xl font-bold text-green-600 mb-2">Hai totalizzato {finalScore} punti</p>
-                    <p className="text-gray-500">Attendi che l’amministratore avvii un nuovo quiz o contest.</p>
-                </>
-            ) : (
-                <>
-                    <h1 className="text-2xl font-semibold text-gray-800 mb-3">Nessun quiz o contest attivo</h1>
-                    <p className="text-gray-500">Attendi che l’amministratore apra una sessione.</p>
-                </>
+        <main className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+            <div className="flex justify-between items-center mb-4">
+                <div className={`font-medium ${timeLeft <= 5 ? 'text-red-600' : 'text-gray-600'}`}>
+                    ⏱️ {timeLeft}s
+                </div>
+            </div>
+
+            {renderQuestion(currentQuestion, {
+                onAnswer: handleAnswer,
+                disabled: timeLeft <= 0 || submitted,
+            })}
+
+            {submitted && (
+                <p className="text-center text-green-600 mt-4 font-medium">✅ Risposta registrata</p>
             )}
         </main>
     );
