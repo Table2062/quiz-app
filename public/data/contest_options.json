@@ -1,34 +1,4 @@
 {
-  "DESSERT": {
-    "title": "Dessert Contest 🍰",
-    "description": "Scegli il miglior dolce della serata! Ogni utente può dare UN solo voto (12 punti).",
-    "maxVotes": 1,
-    "pointsPerVote": [12],
-    "options": [
-      "Pepah e Ignazio",
-      "Luca",
-      "Eugenia e Maurizio"
-    ]
-  },
-
-  "COSPLAY": {
-    "title": "Cosplay Contest 🎭",
-    "description": "Vota i tre migliori cosplay della serata! Ogni utente può scegliere 3 partecipanti (12, 10, 8 punti).",
-    "maxVotes": 3,
-    "pointsPerVote": [12, 10, 8],
-    "options": [
-      "Pepah",
-      "Davide",
-      "Chiara",
-      "Ignazio",
-      "Luca",
-      "Alessio",
-      "Marianna",
-      "Eugenia",
-      "Maurizio",
-      "Flavio",
-      "Mate",
-      "Ginger"
-    ]
-  }
+  "DESSERT": ["Pepa e Igni", "Luca", "Eugenia e Maurizio"],
+  "COSPLAY": ["Pepa", "Davide", "Chiara", "Ignazio", "Luca Moon", "Alessio", "Marianna", "Eugenia", "Maurizio", "Flavio", "Mate", "Ginger"]
 }

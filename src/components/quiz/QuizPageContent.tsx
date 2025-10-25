@@ -2,49 +2,34 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { Question } from '@/types/QuestionProps';
 import { renderQuestion } from '@/utils/renderQuestion';
 import { useAuth } from '@/store/useUserStore';
+import { Question } from '@/types/QuestionProps';
 
-interface ContestVote {
-    candidate: string;
-    points: number;
-    position: number;
+interface ContestOption {
+    DESSERT: string[];
+    COSPLAY: string[];
 }
 
 export default function QuizPageContent() {
     const { user } = useAuth();
-    const [quizState, setQuizState] = useState<any>(null);
-    const [contestState, setContestState] = useState<any>(null);
-
+    const [quizState, setQuizState] = useState<any | null>(null);
+    const [contestState, setContestState] = useState<any | null>(null);
     const [questions, setQuestions] = useState<Question[]>([]);
     const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
     const [timeLeft, setTimeLeft] = useState<number>(0);
-    const [loading, setLoading] = useState<boolean>(true);
     const [submitted, setSubmitted] = useState<boolean>(false);
     const [finalScore, setFinalScore] = useState<number | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
 
-    // Contest votes
-    const [userVotes, setUserVotes] = useState<ContestVote[]>([]);
-    const [candidates, setCandidates] = useState<string[]>([
-        "Pepah",
-        "Davide",
-        "Chiara",
-        "Ignazio",
-        "Luca",
-        "Alessio",
-        "Marianna",
-        "Eugenia",
-        "Maurizio",
-        "Flavio",
-        "Mate",
-        "Ginger"
-    ]);
-    const [selectedContest, setSelectedContest] = useState<'DESSERT' | 'COSPLAY' | null>(null);
+    // Contest
+    const [contestOptions, setContestOptions] = useState<ContestOption | null>(null);
+    const [contestVotes, setContestVotes] = useState<string[]>([]);
+    const [voteSubmitted, setVoteSubmitted] = useState<boolean>(false);
 
-    // ==============================================================
-    // 🔹 Recupera quiz_state e contest_state attivi
-    // ==============================================================
+    // ============================================================
+    // 🔹 Carica quiz_state e contest_state + realtime
+    // ============================================================
     useEffect(() => {
         const fetchStates = async () => {
             const [{ data: quiz }, { data: contest }] = await Promise.all([
@@ -54,36 +39,23 @@ export default function QuizPageContent() {
 
             setQuizState(quiz ?? null);
             setContestState(contest ?? null);
-            setSelectedContest(contest?.category ?? null);
             setLoading(false);
 
-            if (!quiz && !contest) {
-                fetchLastSessionScore();
-            }
+            if (!quiz && !contest) fetchLastSessionScore();
         };
 
         fetchStates();
 
-        // Realtime listeners
         const channel = supabase
-            .channel('quiz_and_contest_realtime')
-            .on(
-                'postgres_changes',
-                { event: '*', schema: 'public', table: 'quiz_state' },
-                (payload) => {
-                    const newState: any = payload.new || {};
-                    setQuizState(newState.is_active ? newState : null);
-                }
-            )
-            .on(
-                'postgres_changes',
-                { event: '*', schema: 'public', table: 'contest_state' },
-                (payload) => {
-                    const newState: any = payload.new || {};
-                    setContestState(newState.is_active ? newState : null);
-                    setSelectedContest(newState.is_active ? newState.category : null);
-                }
-            )
+            .channel('quiz_contest_realtime')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'quiz_state' }, (payload) => {
+                const newState = payload.new as Record<string, any> | null;
+                setQuizState(newState && newState.is_active ? newState : null);
+            })
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'contest_state' }, (payload) => {
+                const newState = payload.new as Record<string, any> | null;
+                setContestState(newState && newState.is_active ? newState : null);
+            })
             .subscribe();
 
         return () => {
@@ -91,9 +63,9 @@ export default function QuizPageContent() {
         };
     }, []);
 
-    // ==============================================================
+    // ============================================================
     // 🔹 Carica quiz JSON
-    // ==============================================================
+    // ============================================================
     useEffect(() => {
         const loadQuiz = async () => {
             if (!quizState?.quiz_name) return;
@@ -110,9 +82,9 @@ export default function QuizPageContent() {
         loadQuiz();
     }, [quizState?.quiz_name]);
 
-    // ==============================================================
+    // ============================================================
     // 🔹 Imposta domanda corrente e timer
-    // ==============================================================
+    // ============================================================
     useEffect(() => {
         if (!quizState || !questions.length) return;
 
@@ -134,9 +106,9 @@ export default function QuizPageContent() {
         return () => clearInterval(interval);
     }, [quizState?.current_question, quizState?.question_start, quizState?.question_duration, questions]);
 
-    // ==============================================================
-    // 🔹 Invio risposta quiz
-    // ==============================================================
+    // ============================================================
+    // 🔹 Invia risposta quiz
+    // ============================================================
     const handleAnswer = async (answer: any) => {
         if (!quizState || !currentQuestion || !user || submitted) return;
         setSubmitted(true);
@@ -149,211 +121,201 @@ export default function QuizPageContent() {
                 selected_options: answer,
                 session_id: quizState.id,
             });
-            if (error) throw error;
+
+            if (error) console.error('Errore salvataggio risposta:', error);
         } catch (err) {
             console.error('Errore invio risposta:', err);
         }
     };
 
-    // ==============================================================
+    // ============================================================
     // 🔹 Recupera punteggio finale quiz
-    // ==============================================================
+    // ============================================================
     const fetchFinalScore = async (sessionId: string) => {
         if (!user || !sessionId) return;
-        const { data, error } = await supabase
+        const { data } = await supabase
             .from('answers')
             .select('points_awarded')
             .eq('user_id', user.id)
             .eq('session_id', sessionId);
 
-        if (!error && data) {
-            const total = data.reduce((sum, r) => sum + (r.points_awarded ?? 0), 0);
-            setFinalScore(total);
-        }
+        const total = (data ?? []).reduce((sum, r) => sum + (r.points_awarded ?? 0), 0);
+        setFinalScore(total > 0 ? total : 0);
     };
 
     const fetchLastSessionScore = async () => {
         if (!user) return;
-        const { data, error } = await supabase
+        const { data } = await supabase
             .from('answers')
             .select('session_id')
             .eq('user_id', user.id)
             .order('created_at', { ascending: false })
-            .limit(1)
-            .single();
+            .limit(1);
 
-        if (!error && data?.session_id) fetchFinalScore(data.session_id);
+        if (data && data[0]?.session_id) fetchFinalScore(data[0].session_id);
     };
 
-    // ==============================================================
-    // 🔹 Contest: Recupera voti utente
-    // ==============================================================
-    const fetchUserContestVote = async (category: 'DESSERT' | 'COSPLAY') => {
-        if (!user) return;
+    // ============================================================
+    // 🔹 Carica opzioni contest
+    // ============================================================
+    useEffect(() => {
+        const loadOptions = async () => {
+            try {
+                const res = await fetch('/data/contest_options.json');
+                const json = await res.json();
+                setContestOptions(json);
+            } catch (e) {
+                console.error('Errore caricamento contest_options.json', e);
+            }
+        };
+        loadOptions();
+    }, []);
 
-        const { data, error } = await supabase.rpc('get_user_contest_vote', {
-            p_user_id: user.id,
-            p_category: category,
-        });
-
-        if (!error && data && data.length > 0 && data[0].votes) {
-            setUserVotes(data[0].votes);
-        } else {
-            setUserVotes([]);
-        }
-    };
-
-    // ==============================================================
-    // 🔹 Contest: Invio voti
-    // ==============================================================
-    const submitContestVote = async (category: 'DESSERT' | 'COSPLAY') => {
-        if (!user || userVotes.length === 0) return alert('Seleziona almeno un voto!');
+    // ============================================================
+    // 🔹 Invia voto contest
+    // ============================================================
+    const handleVote = async () => {
+        if (!user || !contestState?.category || voteSubmitted) return;
 
         try {
-            await supabase.from('contest_votes').delete().eq('user_id', user.id).eq('category', category);
+            const category = contestState.category;
+            const votesToInsert =
+                category === 'DESSERT'
+                    ? [{ user_id: user.id, category, candidate: contestVotes[0], points: 12 }]
+                    : [
+                        { user_id: user.id, category, candidate: contestVotes[0], points: 12 },
+                        { user_id: user.id, category, candidate: contestVotes[1], points: 10 },
+                        { user_id: user.id, category, candidate: contestVotes[2], points: 8 },
+                    ];
 
-            const rows = userVotes.map((v) => ({
-                user_id: user.id,
-                category,
-                candidate: v.candidate,
-                points: v.points,
-                position: v.position,
-            }));
-
-            const { error } = await supabase.from('contest_votes').insert(rows);
+            const { error } = await supabase.from('contest_votes').insert(votesToInsert);
             if (error) throw error;
-
-            alert('✅ Voto registrato con successo!');
+            setVoteSubmitted(true);
         } catch (err) {
-            console.error('Errore invio voti:', err);
-            alert('❌ Errore durante il salvataggio dei voti.');
+            console.error('Errore invio voti contest:', err);
         }
     };
 
-    // ==============================================================
-    // 🔹 Interfaccia contest (DESSERT / COSPLAY)
-    // ==============================================================
-    const handleVoteSelect = (candidate: string, position: number) => {
-        let updated = [...userVotes];
-
-        if (selectedContest === 'DESSERT') {
-            updated = [{ candidate, points: 12, position: 1 }];
-        } else if (selectedContest === 'COSPLAY') {
-            updated = updated.filter((v) => v.position !== position);
-            const pointsMap: Record<number, number> = { 1: 12, 2: 10, 3: 8 };
-            updated.push({ candidate, position, points: pointsMap[position] });
-        }
-
-        setUserVotes(updated);
-    };
-
-    // ==============================================================
-    // 🔹 Render – stati principali
-    // ==============================================================
+    // ============================================================
+    // 🔹 UI di caricamento
+    // ============================================================
     if (loading)
-        return <main className="flex items-center justify-center h-screen text-gray-500">Caricamento...</main>;
-
-    // --- Se c'è un contest attivo ---
-    if (contestState && selectedContest) {
         return (
-            <main className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
-                <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
-                    🏆 {selectedContest} CONTEST
-                </h1>
+            <main className="flex items-center justify-center h-screen text-gray-500">
+                Caricamento...
+            </main>
+        );
 
-                <p className="text-gray-600 mb-6 text-center">
-                    {selectedContest === 'DESSERT'
-                        ? 'Scegli il miglior dessert (12 punti).'
-                        : 'Assegna 12, 10 e 8 punti ai tuoi 3 cosplay preferiti.'}
+    // ============================================================
+    // 🔹 Caso: contest attivo
+    // ============================================================
+    if (contestState && contestOptions) {
+        const category = contestState.category as keyof ContestOption;
+        const options = contestOptions[category] || [];
+
+        const handleSelect = (candidate: string) => {
+            if (voteSubmitted) return;
+
+            if (category === 'DESSERT') {
+                setContestVotes([candidate]);
+            } else {
+                let updated = [...contestVotes];
+                if (updated.includes(candidate)) {
+                    updated = updated.filter((v) => v !== candidate);
+                } else if (updated.length < 3) {
+                    updated.push(candidate);
+                }
+                setContestVotes(updated);
+            }
+        };
+
+        const getRankLabel = (idx: number) => ['🥇 1°', '🥈 2°', '🥉 3°'][idx];
+
+        return (
+            <main className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg text-center">
+                <h1 className="text-2xl font-semibold text-gray-800 mb-4">
+                    {category === 'DESSERT' ? '🍰 Dessert Contest' : '🎭 Cosplay Contest'}
+                </h1>
+                <p className="text-gray-500 mb-6">
+                    {category === 'DESSERT'
+                        ? 'Scegli il tuo dessert preferito!'
+                        : 'Scegli i tuoi 3 cosplay preferiti (1°, 2°, 3° posto).'}
                 </p>
 
-                {selectedContest === 'COSPLAY' && (
-                    <div className="flex flex-col gap-3 mb-6">
-                        {[1, 2, 3].map((pos) => (
-                            <div key={pos}>
-                                <label className="block text-gray-700 mb-1">
-                                    {pos}° posto ({pos === 1 ? '12pt' : pos === 2 ? '10pt' : '8pt'}):
-                                </label>
-                                <select
-                                    value={userVotes.find((v) => v.position === pos)?.candidate ?? ''}
-                                    onChange={(e) => handleVoteSelect(e.target.value, pos)}
-                                    className="w-full border border-gray-300 rounded-md px-3 py-2"
-                                >
-                                    <option value="">-- Seleziona --</option>
-                                    {candidates.map((c) => (
-                                        <option key={c} value={c}>
-                                            {c}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                        ))}
-                    </div>
-                )}
+                <div className="flex flex-col gap-3 mb-6">
+                    {options.map((opt) => {
+                        const idx = contestVotes.indexOf(opt);
+                        const selected = idx !== -1;
+                        return (
+                            <button
+                                key={opt}
+                                onClick={() => handleSelect(opt)}
+                                disabled={voteSubmitted}
+                                className={`px-4 py-3 rounded-lg border transition-all ${
+                                    selected
+                                        ? 'bg-[var(--color-primary)] text-white border-[var(--color-primary)]'
+                                        : 'border-gray-300 text-gray-700 hover:border-[var(--color-primary)]'
+                                }`}
+                            >
+                                {opt}
+                                {selected && category === 'COSPLAY' && (
+                                    <span className="ml-2 text-sm opacity-80">{getRankLabel(idx)}</span>
+                                )}
+                            </button>
+                        );
+                    })}
+                </div>
 
-                {selectedContest === 'DESSERT' && (
-                    <div className="flex flex-col gap-3 mb-6">
-                        <label className="block text-gray-700 mb-1">Miglior dessert (12pt):</label>
-                        <select
-                            value={userVotes[0]?.candidate ?? ''}
-                            onChange={(e) => handleVoteSelect(e.target.value, 1)}
-                            className="w-full border border-gray-300 rounded-md px-3 py-2"
-                        >
-                            <option value="">-- Seleziona --</option>
-                            {candidates.map((c) => (
-                                <option key={c} value={c}>
-                                    {c}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                )}
-
-                <button
-                    onClick={() => submitContestVote(selectedContest)}
-                    className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white w-full py-3 rounded-md font-semibold transition-all"
-                >
-                    Invia voti
-                </button>
-
-                {userVotes.length > 0 && (
-                    <div className="mt-6">
-                        <h2 className="text-lg font-semibold text-gray-700 mb-2">I tuoi voti:</h2>
-                        <ul className="list-disc list-inside text-gray-600">
-                            {userVotes
-                                .sort((a, b) => a.position - b.position)
-                                .map((v, idx) => (
-                                    <li key={idx}>
-                                        {v.position}° - {v.candidate} ({v.points} punti)
-                                    </li>
-                                ))}
-                        </ul>
-                    </div>
+                {!voteSubmitted ? (
+                    <button
+                        disabled={
+                            (category === 'DESSERT' && contestVotes.length !== 1) ||
+                            (category === 'COSPLAY' && contestVotes.length !== 3)
+                        }
+                        onClick={handleVote}
+                        className="bg-[var(--color-primary)] text-white font-semibold px-6 py-3 rounded-md hover:bg-[var(--color-primary-hover)] disabled:bg-gray-300 disabled:cursor-not-allowed"
+                    >
+                        Invia voto
+                    </button>
+                ) : (
+                    <p className="text-green-600 font-medium mt-4">✅ Voto registrato con successo!</p>
                 )}
             </main>
         );
     }
 
-    // --- Se nessun quiz né contest attivo ---
+    // ============================================================
+    // 🔹 Caso: nessun quiz né contest
+    // ============================================================
     if (!quizState)
         return (
             <main className="flex flex-col items-center justify-center h-screen text-center">
                 {finalScore != null ? (
                     <>
                         <h1 className="text-2xl font-semibold text-gray-800 mb-3">🎉 Quiz completato!</h1>
-                        <p className="text-xl font-bold text-green-600 mb-2">Hai totalizzato {finalScore} punti</p>
-                        <p className="text-gray-500">Attendi che l’amministratore avvii un nuovo quiz o contest.</p>
+                        <p className="text-xl font-bold text-green-600 mb-2">
+                            Hai totalizzato {finalScore} punti
+                        </p>
+                        <p className="text-gray-500">
+                            Attendi che l’amministratore avvii un nuovo quiz o una votazione.
+                        </p>
                     </>
                 ) : (
                     <>
-                        <h1 className="text-2xl font-semibold text-gray-800 mb-3">Nessun quiz attivo</h1>
-                        <p className="text-gray-500">Attendi che l’amministratore avvii una sessione.</p>
+                        <h1 className="text-2xl font-semibold text-gray-800 mb-3">
+                            Nessun quiz o contest attivo
+                        </h1>
+                        <p className="text-gray-500">
+                            Attendi che l’amministratore avvii una sessione o una votazione.
+                        </p>
                     </>
                 )}
             </main>
         );
 
-    // --- Quiz attivo ---
+    // ============================================================
+    // 🔹 Caso: quiz attivo
+    // ============================================================
     if (!currentQuestion)
         return (
             <main className="flex items-center justify-center h-screen">
