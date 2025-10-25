@@ -33,11 +33,9 @@ export default function AdminDashboard() {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [showAudio, setShowAudio] = useState(false);
 
-    // Tabs
     const [activeTab, setActiveTab] = useState<'question' | 'leaderboard'>('question');
     const [inactiveTab, setInactiveTab] = useState<'start' | 'leaderboard' | 'contest'>('start');
 
-    // Classifiche
     const [leaderboard, setLeaderboard] = useState<any[]>([]);
     const [lastLeaderboard, setLastLeaderboard] = useState<any[]>([]);
     const [loadingLeaderboard, setLoadingLeaderboard] = useState(false);
@@ -46,7 +44,7 @@ export default function AdminDashboard() {
     const [selectedQuiz, setSelectedQuiz] = useState('quiz1');
 
     // =======================
-    // Ruolo Admin
+    // Ruolo admin
     // =======================
     useEffect(() => {
         const fetchRole = async () => {
@@ -129,7 +127,7 @@ export default function AdminDashboard() {
     }, [quizState]);
 
     // =======================
-    // Audio (solo admin)
+    // Audio
     // =======================
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const currentQuestion =
@@ -168,33 +166,19 @@ export default function AdminDashboard() {
     }, [currentQuestion, quizState?.is_active]);
 
     // =======================
-    // Ultima classifica quiz
+    // Classifica corrente
     // =======================
     useEffect(() => {
-        if (quizState) return;
-
-        const loadLast = async () => {
-            setLoadingLeaderboard(true);
-            const { data: lastSession } = await supabase
-                .from('quiz_state')
-                .select('id')
-                .eq('is_active', false)
-                .order('ended_at', { ascending: false })
-                .limit(1)
-                .single();
-
-            if (lastSession) {
-                const { data } = await supabase.rpc('get_quiz_leaderboard', { p_session_id: lastSession.id });
-                if (data) setLastLeaderboard(data);
-            } else setLastLeaderboard([]);
-            setLoadingLeaderboard(false);
+        const fetchLeaderboard = async () => {
+            if (!quizState?.id) return;
+            const { data } = await supabase.rpc('get_quiz_leaderboard', { p_session_id: quizState.id });
+            if (data) setLeaderboard(data);
         };
-
-        loadLast();
-    }, [quizState]);
+        fetchLeaderboard();
+    }, [quizState?.id, quizState?.current_question]);
 
     // =======================
-    // Avvia nuovo quiz
+    // Avvio / prossima domanda
     // =======================
     const startQuiz = async () => {
         if (contestState) {
@@ -237,38 +221,32 @@ export default function AdminDashboard() {
         }
     };
 
-    // =======================
-    // Contest leaderboard helper
-    // =======================
-    const ContestLeaderboard = ({ category }: { category: string }) => {
-        const [data, setData] = useState<any[]>([]);
-        useEffect(() => {
-            const load = async () => {
-                const { data, error } = await supabase.rpc('get_contest_leaderboard', { p_category: category });
-                if (!error && data) setData(data);
-            };
-            load();
-        }, [category]);
-        return (
-            <table className="min-w-full border border-gray-200 text-sm mt-2">
-                <thead className="bg-gray-50 border-b">
-                <tr>
-                    <th className="px-4 py-2 text-left font-semibold text-gray-600">#</th>
-                    <th className="px-4 py-2 text-left font-semibold text-gray-600">Partecipante</th>
-                    <th className="px-4 py-2 text-left font-semibold text-gray-600">Punti</th>
-                </tr>
-                </thead>
-                <tbody>
-                {data.map((row: any, idx: number) => (
-                    <tr key={idx} className={`${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'} border-b`}>
-                        <td className="px-4 py-2">{idx + 1}</td>
-                        <td className="px-4 py-2">{row.candidate}</td>
-                        <td className="px-4 py-2 font-medium">{row.total_points}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-        );
+    const nextQuestion = async () => {
+        if (!quizState || !questions.length) return;
+        const next = quizState.current_question + 1;
+
+        if (next >= questions.length) {
+            await supabase
+                .from('quiz_state')
+                .update({ is_active: false, ended_at: new Date().toISOString() })
+                .eq('id', quizState.id);
+            setQuizState(null);
+            setInactiveTab('leaderboard');
+            setActiveTab('leaderboard');
+            return;
+        }
+
+        const { data } = await supabase
+            .from('quiz_state')
+            .update({
+                current_question: next,
+                question_start: new Date().toISOString(),
+                question_duration: questions[next].timeLimit ?? 30,
+            })
+            .eq('id', quizState.id)
+            .select()
+            .single();
+        setQuizState(data);
     };
 
     // =======================
@@ -288,15 +266,12 @@ export default function AdminDashboard() {
         );
     }
 
-    // =======================
-    // Nessun quiz o contest attivo → Mostra Tabs
-    // =======================
+    // Nessun quiz o contest attivo
     if (!quizState && !contestState) {
         return (
             <main className="max-w-4xl mx-auto p-6">
                 <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">Dashboard Admin</h1>
 
-                {/* Tabs */}
                 <div className="flex justify-center mb-6 border-b border-gray-300">
                     {['start', 'leaderboard', 'contest'].map((tab) => (
                         <button
@@ -313,51 +288,131 @@ export default function AdminDashboard() {
                     ))}
                 </div>
 
-                {/* TAB contenuti (come prima versione) */}
                 {inactiveTab === 'start' && (
                     <div className="bg-white shadow-lg rounded-lg p-8 border border-gray-200 text-center">
                         <h2 className="text-lg font-semibold text-gray-700 mb-4">Nessun quiz attivo</h2>
-                        <p className="text-gray-600 mb-6">Seleziona un quiz e avvialo per iniziare una nuova sessione.</p>
-                        <div className="flex flex-col items-center gap-4">
-                            <label className="text-gray-700 font-medium">
-                                Seleziona un quiz:
-                                <select
-                                    value={selectedQuiz}
-                                    onChange={(e) => setSelectedQuiz(e.target.value)}
-                                    className="ml-2 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
-                                >
-                                    {availableQuizzes.map((quiz) => (
-                                        <option key={quiz} value={quiz}>
-                                            {quiz}
-                                        </option>
-                                    ))}
-                                </select>
-                            </label>
-                            <button
-                                onClick={startQuiz}
-                                className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-6 py-3 rounded-md font-semibold transition-all"
+                        <label className="text-gray-700 font-medium">
+                            Seleziona un quiz:
+                            <select
+                                value={selectedQuiz}
+                                onChange={(e) => setSelectedQuiz(e.target.value)}
+                                className="ml-2 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
                             >
-                                Avvia quiz
-                            </button>
-                        </div>
+                                {availableQuizzes.map((quiz) => (
+                                    <option key={quiz} value={quiz}>
+                                        {quiz}
+                                    </option>
+                                ))}
+                            </select>
+                        </label>
+                        <button
+                            onClick={startQuiz}
+                            className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-6 py-3 rounded-md font-semibold mt-4 transition-all"
+                        >
+                            Avvia quiz
+                        </button>
                     </div>
                 )}
             </main>
         );
     }
 
-    // =======================
-    // Quiz attivo → interfaccia principale
-    // =======================
+    // Quiz attivo
     const currentIndex = (quizState?.current_question ?? 0) + 1;
 
     return (
         <main className="max-w-4xl mx-auto p-6">
             <h1 className="text-2xl font-bold text-gray-800 mb-6">Dashboard Admin</h1>
-            <p className="text-sm text-green-600 mb-2">
-                🟢 Domanda {currentIndex} di {questions.length}
-            </p>
-            {/* Domanda corrente e classifica come nelle versioni precedenti */}
+
+            <div className="flex mb-6 border-b border-gray-300">
+                {['question', 'leaderboard'].map((tab) => (
+                    <button
+                        key={tab}
+                        className={`px-4 py-2 font-medium ${
+                            activeTab === tab
+                                ? 'border-b-2 border-[var(--color-primary)] text-[var(--color-primary)]'
+                                : 'text-gray-600 hover:text-gray-800'
+                        }`}
+                        onClick={() => setActiveTab(tab as any)}
+                    >
+                        {tab === 'question' ? 'Domanda corrente' : 'Classifica'}
+                    </button>
+                ))}
+            </div>
+
+            {activeTab === 'question' && (
+                <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
+                    <p className="text-sm text-green-600 mb-2">
+                        🟢 Domanda {currentIndex} di {questions.length}
+                    </p>
+                    <h2 className="text-lg font-semibold text-gray-700 mb-2">
+                        {currentQuestion?.question || 'Nessuna domanda disponibile'}
+                    </h2>
+
+                    {showAudio && currentQuestion?.audioPath && (
+                        <div className="mt-4 flex items-center gap-2">
+                            <audio ref={audioRef} src={currentQuestion.audioPath} />
+                            <span className="text-blue-600 font-medium animate-pulse">Audio in riproduzione...</span>
+                        </div>
+                    )}
+
+                    <ul className="list-disc list-inside text-gray-600 mb-4">
+                        {currentQuestion?.options?.map((opt: any, idx: number) => (
+                            <li key={idx}>{typeof opt === 'string' ? opt : opt.left ?? JSON.stringify(opt)}</li>
+                        ))}
+                    </ul>
+
+                    <div className="flex items-center gap-3 mt-3 mb-6">
+                        <span className="text-gray-600">Tempo rimanente:</span>
+                        <span
+                            className={`font-semibold ${timeLeft <= 5 ? 'text-red-500' : 'text-[var(--color-secondary)]'}`}
+                        >
+              {timeLeft}s
+            </span>
+                    </div>
+
+                    <button
+                        onClick={nextQuestion}
+                        disabled={timeLeft > 0}
+                        className="bg-[var(--color-secondary)] text-white px-4 py-2 rounded-md font-medium hover:bg-[var(--color-secondary-hover)] disabled:bg-gray-300 disabled:cursor-not-allowed transition-all"
+                    >
+                        {currentIndex === questions.length ? 'Termina quiz' : 'Prossima domanda'}
+                    </button>
+                </div>
+            )}
+
+            {activeTab === 'leaderboard' && (
+                <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
+                    <h2 className="text-lg font-semibold text-gray-700 mb-4">Classifica parziale</h2>
+                    {leaderboard.length === 0 ? (
+                        <p className="text-gray-500 text-center">Nessun dato disponibile.</p>
+                    ) : (
+                        <table className="min-w-full border border-gray-200 text-sm">
+                            <thead className="bg-gray-50 border-b">
+                            <tr>
+                                <th className="px-4 py-2 text-left font-semibold text-gray-600">#</th>
+                                <th className="px-4 py-2 text-left font-semibold text-gray-600">Utente</th>
+                                <th className="px-4 py-2 text-left font-semibold text-gray-600">Punti</th>
+                                <th className="px-4 py-2 text-left font-semibold text-gray-600">Corrette</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {leaderboard.map((row: any, idx: number) => (
+                                <tr
+                                    key={`${row.user_name}-${idx}`}
+                                    className={`${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'} border-b`}
+                                >
+                                    <td className="px-4 py-2">{idx + 1}</td>
+                                    <td className="px-4 py-2">{row.user_name}</td>
+                                    <td className="px-4 py-2 font-medium">{row.total_points}</td>
+                                    <td className="px-4 py-2">{row.correct_answers}</td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+            )}
         </main>
     );
 }
