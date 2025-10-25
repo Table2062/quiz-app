@@ -3,18 +3,6 @@
     {
       "id": "disney-q1",
       "type": "MULTIPLE_CHOICE",
-      "question": "Quali sono i nomi dei due cani protagonisti in \"La carica dei 101\"?",
-      "options": [
-        "Lilli e il Vagabondo",
-        "Pongo e Peggie",
-        "Simba e Nala",
-        "Matilda e Paloma"
-      ],
-      "timeLimit": 25
-    },
-    {
-      "id": "disney-q2",
-      "type": "MULTIPLE_CHOICE",
       "question": "In che città si svolge Aladdin?",
       "options": [
         "Bagdad",
@@ -25,43 +13,7 @@
       "timeLimit": 25
     },
     {
-      "id": "disney-q3",
-      "type": "MULTIPLE_CHOICE",
-      "question": "A cosa deve rinunciare Ariel per diventare umana?",
-      "options": [
-        "Alla sua voce",
-        "Al suo tridente",
-        "Alla sua famiglia",
-        "Alla sua coda"
-      ],
-      "timeLimit": 25
-    },
-    {
-      "id": "disney-q4",
-      "type": "MULTIPLE_CHOICE",
-      "question": "Come si chiama il personaggio che non può essere nominato in Encanto?",
-      "options": [
-        "Mariano",
-        "Félix",
-        "Bruno",
-        "Pedro"
-      ],
-      "timeLimit": 25
-    },
-    {
-      "id": "disney-q5",
-      "type": "MULTIPLE_SELECT",
-      "question": "Perché Mulan parte per la guerra? (Seleziona tutte le risposte corrette)",
-      "options": [
-        "Per salvare suo padre",
-        "Per diventare principessa",
-        "Per onorare la sua famiglia",
-        "Per dimostrare che una donna può essere coraggiosa quanto un uomo"
-      ],
-      "timeLimit": 55
-    },
-    {
-      "id": "disney-q6",
+      "id": "disney-q2",
       "type": "MULTIPLE_SELECT",
       "question": "Da chi è doppiato il Genio della lampada, nel classico Aladdin del 1993? (Seleziona tutte le risposte corrette)",
       "options": [
@@ -70,134 +22,22 @@
         "Eddie Murphy",
         "Gigi Proietti"
       ],
-      "timeLimit": 55
+      "timeLimit": 50
     },
     {
-      "id": "disney-q7",
-      "type": "MATCHING",
-      "question": "Abbina i seguenti personaggi ai loro oggetti.",
+      "id": "disney-q3",
+      "type": "ORDERING",
+      "question": "Ordina questi eventi della storia di Cenerentola in ordine cronologico (dal meno al più recente).",
       "options": [
-        {
-          "left": "Woody",
-          "rightOptions": [
-            "Polvere di fata",
-            "Cappello da cowboy",
-            "Collana con piuma"
-          ]
-        },
-        {
-          "left": "Pocahontas",
-          "rightOptions": [
-            "Polvere di fata",
-            "Cappello da cowboy",
-            "Collana con piuma"
-          ]
-        },
-        {
-          "left": "Campanellino",
-          "rightOptions": [
-            "Polvere di fata",
-            "Cappello da cowboy",
-            "Collana con piuma"
-          ]
-        }
+        "Cenerentola perde la scarpetta di cristallo",
+        "Gli animali amici le cuciono un abito per il ballo",
+        "Il Granduca prova la scarpetta a tutte le ragazze del regno",
+        "La Fata Madrina trasforma la zucca in carrozza"
       ],
-      "timeLimit": 85
+      "timeLimit": 60
     },
     {
-      "id": "disney-q8",
-      "type": "MATCHING",
-      "question": "Abbina i seguenti personaggi ai loro oggetti.",
-      "options": [
-        {
-          "left": "Jack Sparrow",
-          "rightOptions": [
-            "Vasetto di miele",
-            "Arco e frecce",
-            "Bussola"
-          ]
-        },
-        {
-          "left": "Winnie the Pooh",
-          "rightOptions": [
-            "Vasetto di miele",
-            "Arco e frecce",
-            "Bussola"
-          ]
-        },
-        {
-          "left": "Merida",
-          "rightOptions": [
-            "Vasetto di miele",
-            "Arco e frecce",
-            "Bussola"
-          ]
-        }
-      ],
-      "timeLimit": 85
-    },
-    {
-      "id": "disney-q9",
-      "type": "MULTIPLE_CHOICE",
-      "question": "Qual è il nome della madre di Bambi?",
-      "options": [
-        "Fiore",
-        "Mamma Cerva",
-        "Non viene mai detto",
-        "Luna"
-      ],
-      "timeLimit": 25
-    },
-    {
-      "id": "disney-q10",
-      "type": "MULTIPLE_CHOICE",
-      "question": "Che animale è Sebastian ne 'La Sirenetta'?",
-      "options": [
-        "Un pesce",
-        "Un granchio",
-        "Un'aragosta",
-        "Un cavalluccio marino"
-      ],
-      "timeLimit": 25
-    },
-    {
-      "id": "disney-q11",
-      "type": "MULTIPLE_CHOICE",
-      "question": "Chi è il cattivo principale de 'Il Re Leone'?",
-      "options": [
-        "Jafar",
-        "Scar",
-        "Hades",
-        "Shere Khan"
-      ],
-      "timeLimit": 25
-    },
-    {
-      "id": "disney-q12",
-      "type": "MULTIPLE_CHOICE",
-      "question": "Dove vive Olaf, il pupazzo di neve?",
-      "options": [
-        "Arendelle",
-        "Atlantica",
-        "Agrabah",
-        "Corona"
-      ],
-      "timeLimit": 25
-    },
-    {
-      "id": "disney-q13",
-      "type": "MULTIPLE_CHOICE",
-      "question": "Qual è il nome del drago amico di Mulan?",
-      "options": [
-        "Mushu",
-        "Ping",
-        "Li Shang",
-        "Shan Yu"
-      ],
-      "timeLimit": 25
-    },
-    {
-      "id": "disney-q14",
+      "id": "disney-q4",
       "type": "MATCHING",
       "question": "Abbina l’eroe al suo antagonista.",
       "options": [
@@ -226,72 +66,36 @@
           ]
         }
       ],
-      "timeLimit": 85
+      "timeLimit": 60
     },
     {
-      "id": "disney-q15",
-      "type": "MULTIPLE_SELECT",
-      "question": "Quali tra questi personaggi sono topi? (Seleziona tutte le risposte corrette)",
-      "options": [
-        "Jerry",
-        "Minnie",
-        "Topolino",
-        "Pluto"
-      ],
-      "timeLimit": 55
-    },
-    {
-      "id": "disney-q16",
+      "id": "disney-q5",
       "type": "MULTIPLE_CHOICE",
-      "question": "Chi è l’aiutante della Fata Madrina in Cenerentola?",
+      "question": "Qual è il nome della madre di Bambi?",
       "options": [
-        "Lucifero",
-        "Gas Gas",
-        "Gus e Jaq",
-        "Sebastian"
+        "Fiore",
+        "Mamma Cerva",
+        "Non viene mai detto",
+        "Luna"
       ],
       "timeLimit": 25
     },
     {
-      "id": "disney-q17",
-      "type": "ORDERING",
-      "question": "Ordina questi film Pixar in base all’anno di uscita (dal più vecchio al più recente).",
+      "id": "disney-q6",
+      "type": "MULTIPLE_SELECT",
+      "question": "Perché Mulan parte per la guerra? (Seleziona tutte le risposte corrette)",
       "options": [
-        "Toy Story",
-        "Alla ricerca di Nemo",
-        "Up",
-        "Inside Out"
+        "Per salvare suo padre",
+        "Per diventare principessa",
+        "Per onorare la sua famiglia",
+        "Per dimostrare che una donna può essere coraggiosa quanto un uomo"
       ],
-      "timeLimit": 60
+      "timeLimit": 50
     },
     {
-      "id": "disney-q18",
-      "type": "ORDERING",
-      "question": "Ordina le trasformazioni della Bestia nella sequenza corretta della storia.",
-      "options": [
-        "Principe maledetto",
-        "Bestia",
-        "Si innamora di Belle",
-        "Ritorna umano"
-      ],
-      "timeLimit": 60
-    },
-    {
-      "id": "disney-q19",
-      "type": "ORDERING",
-      "question": "Ordina gli eventi principali di 'Il Re Leone' (dal primo all’ultimo).",
-      "options": [
-        "Simba nasce",
-        "Morte di Mufasa",
-        "Simba incontra Timon e Pumbaa",
-        "Simba torna a Pride Rock"
-      ],
-      "timeLimit": 60
-    },
-    {
-      "id": "disney-q20",
+      "id": "disney-q7",
       "type": "AUDIO_MULTIPLE_CHOICE",
-      "question": "Ascolta e indica da quale film proviene questa canzone.",
+      "question": "Ascolta e indica da quale film Disney proviene questa canzone.",
       "audioPath": "/audio/disney-song1.mp3",
       "options": [
         "Il Re Leone",
@@ -299,10 +103,122 @@
         "Frozen",
         "La Sirenetta"
       ],
-      "timeLimit": 45
+      "timeLimit": 26
     },
     {
-      "id": "disney-q21",
+      "id": "disney-q8",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Chi dice la celebre frase \"Verso l’infinito e oltre!\"?",
+      "options": [
+        "Buzz Lightyear",
+        "Woody",
+        "Mr. Potato",
+        "Sully"
+      ],
+      "timeLimit": 25
+    },
+    {
+      "id": "disney-q9",
+      "type": "MATCHING",
+      "question": "Abbina ciascun personaggio di 'La Bella e la Bestia' al valore o insegnamento che rappresenta nella storia.",
+      "options": [
+        {
+          "left": "Belle",
+          "rightOptions": [
+            "Amore oltre le apparenze",
+            "Lealtà",
+            "Redenzione"
+          ]
+        },
+        {
+          "left": "Lumière",
+          "rightOptions": [
+            "Amore oltre le apparenze",
+            "Lealtà",
+            "Redenzione"
+          ]
+        },
+        {
+          "left": "La Bestia",
+          "rightOptions": [
+            "Amore oltre le apparenze",
+            "Lealtà",
+            "Redenzione"
+          ]
+        }
+      ],
+      "timeLimit": 60
+    },
+    {
+      "id": "disney-q10",
+      "type": "ORDERING",
+      "question": "Ordina questi film Pixar in base all’anno di uscita (dal più vecchio al più recente).",
+      "options": [
+        "Alla ricerca di Nemo",
+        "Inside Out",
+        "Up",
+        "Toy Story"
+      ],
+      "timeLimit": 60
+    },
+    {
+      "id": "disney-q11",
+      "type": "MULTIPLE_SELECT",
+      "question": "Quali di questi film sono della Pixar? (Seleziona tutte le risposte corrette)",
+      "options": [
+        "Inside Out",
+        "Ratatouille",
+        "La Sirenetta",
+        "Zootropolis"
+      ],
+      "timeLimit": 50
+    },
+    {
+      "id": "disney-q12",
+      "type": "MULTIPLE_CHOICE",
+      "question": "In 'Up', qual è il nome dell’esploratore che Carl e Russell inseguono per tutto il film?",
+      "options": [
+        "Charles Muntz",
+        "Doug",
+        "Kevin",
+        "Ernesto de la Cruz"
+      ],
+      "timeLimit": 30
+    },
+    {
+      "id": "disney-q13",
+      "type": "MATCHING",
+      "question": "Abbina i seguenti personaggi ai loro oggetti.",
+      "options": [
+        {
+          "left": "Woody",
+          "rightOptions": [
+            "Polvere di fata",
+            "Cappello da cowboy",
+            "Collana con piuma"
+          ]
+        },
+        {
+          "left": "Pocahontas",
+          "rightOptions": [
+            "Polvere di fata",
+            "Cappello da cowboy",
+            "Collana con piuma"
+          ]
+        },
+        {
+          "left": "Campanellino",
+          "rightOptions": [
+            "Polvere di fata",
+            "Cappello da cowboy",
+            "Collana con piuma"
+          ]
+        }
+      ],
+      "timeLimit": 60
+    },
+    {
+      "id": "disney-q14",
       "type": "AUDIO_MULTIPLE_CHOICE",
       "question": "Ascolta e scegli chi canta questo brano.",
       "audioPath": "/audio/disney-song2.mp3",
@@ -312,54 +228,239 @@
         "Rapunzel",
         "Anna"
       ],
-      "timeLimit": 45
+      "timeLimit": 55
     },
     {
-      "id": "disney-q22",
-      "type": "AUDIO_MULTIPLE_CHOICE",
-      "question": "Ascolta e indica il titolo della canzone.",
-      "audioPath": "/audio/disney-song3.mp3",
+      "id": "disney-q15",
+      "type": "MULTIPLE_SELECT",
+      "question": "Quali tra questi personaggi sono topi? (Seleziona tutte le risposte corrette)",
       "options": [
-        "Il mondo è mio",
-        "Hakuna Matata",
-        "Let It Go",
-        "In fondo al mar"
+        "Remy",
+        "Minnie",
+        "Topolino",
+        "Pluto"
       ],
-      "timeLimit": 45
+      "timeLimit": 50
     },
     {
-      "id": "disney-q23",
+      "id": "disney-q16",
       "type": "MULTIPLE_CHOICE",
-      "question": "Chi è l’aiutante di Hercules?",
+      "question": "A cosa deve rinunciare Ariel per diventare umana?",
       "options": [
-        "Pegaso",
-        "Filottete",
-        "Ade",
-        "Zeus"
+        "Alla sua voce",
+        "Al suo tridente",
+        "Alla sua famiglia",
+        "Alla sua coda"
       ],
       "timeLimit": 25
     },
     {
-      "id": "disney-q24",
-      "type": "MULTIPLE_SELECT",
-      "question": "Quali di questi film sono della Pixar? (Seleziona tutte le risposte corrette)",
+      "id": "disney-q17",
+      "type": "ORDERING",
+      "question": "Ordina questi eventi della storia de 'La Sirenetta' in ordine cronologico (dal meno al più recente).",
       "options": [
-        "Inside Out",
-        "Ratatouille",
-        "La Sirenetta",
-        "Zootropolis"
+        "Ursula viene sconfitta da Eric",
+        "Ariel firma il patto con Ursula",
+        "Ariel salva il principe Eric dal naufragio",
+        "Ariel perde la voce e diventa umana"
       ],
-      "timeLimit": 55
+      "timeLimit": 60
+    },
+    {
+      "id": "disney-q18",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Chi è il cattivo principale de 'Il Re Leone'?",
+      "options": [
+        "Jafar",
+        "Scar",
+        "Ade",
+        "Shere Khan"
+      ],
+      "timeLimit": 25
+    },
+    {
+      "id": "disney-q19",
+      "type": "MATCHING",
+      "question": "Abbina ciascuna emozione di 'Inside Out' al suo colore principale.",
+      "options": [
+        {
+          "left": "Gioia",
+          "rightOptions": [
+            "Giallo",
+            "Blu",
+            "Rosso"
+          ]
+        },
+        {
+          "left": "Tristezza",
+          "rightOptions": [
+            "Giallo",
+            "Blu",
+            "Rosso"
+          ]
+        },
+        {
+          "left": "Rabbia",
+          "rightOptions": [
+            "Giallo",
+            "Blu",
+            "Rosso"
+          ]
+        }
+      ],
+      "timeLimit": 60
+    },
+    {
+      "id": "disney-q20",
+      "type": "MULTIPLE_SELECT",
+      "question": "Da chi è doppiato Filottete, in Hercules del 1997? (Seleziona tutte le risposte corrette)",
+      "options": [
+        "Danny DeVito",
+        "Giancarlo Magalli",
+        "Tom Hanks",
+        "Gigi Proietti"
+      ],
+      "timeLimit": 50
+    },
+    {
+      "id": "disney-q21",
+      "type": "AUDIO_MULTIPLE_CHOICE",
+      "question": "Ascolta e indica il titolo della canzone Disney riprodotta.",
+      "audioPath": "/audio/disney-song3.mp3",
+      "options": [
+        "Figlia del vento",
+        "Ti vada o no",
+        "Riflesso",
+        "Farò di te un uomo"
+      ],
+      "timeLimit": 31
+    },
+    {
+      "id": "disney-q22",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Come si chiama il personaggio che non può essere nominato in Encanto?",
+      "options": [
+        "Mariano",
+        "Félix",
+        "Bruno",
+        "Pedro"
+      ],
+      "timeLimit": 25
+    },
+    {
+      "id": "disney-q23",
+      "type": "MULTIPLE_SELECT",
+      "question": "Quali di questi animali compaiono come personaggi principali in 'Zootropolis'? (Seleziona tutte le risposte corrette)",
+      "options": [
+        "Volpe",
+        "Coniglio",
+        "Leone",
+        "Pinguino"
+      ],
+      "timeLimit": 50
+    },
+    {
+      "id": "disney-q24",
+      "type": "ORDERING",
+      "question": "Ordina gli eventi principali di 'Il Re Leone' (dal primo all’ultimo).",
+      "options": [
+        "Morte di Mufasa",
+        "Simba torna alla Rupe dei Re",
+        "Simba incontra Timon e Pumbaa",
+        "Simba nasce"
+      ],
+      "timeLimit": 60
     },
     {
       "id": "disney-q25",
-      "type": "MULTIPLE_CHOICE",
-      "question": "Chi dice la celebre frase \"Verso l’infinito e oltre!\"?",
+      "type": "AUDIO_MULTIPLE_CHOICE",
+      "question": "Ascolta e indica da quale film Disney proviene questa canzone.",
+      "audioPath": "/audio/disney-song4.mp3",
       "options": [
-        "Buzz Lightyear",
-        "Woody",
-        "Mr. Potato",
-        "Sully"
+        "Encanto",
+        "Raya e l’ultimo drago",
+        "Oceania",
+        "Coco"
+      ],
+      "timeLimit": 45
+    },
+    {
+      "id": "disney-q26",
+      "type": "MATCHING",
+      "question": "Abbina i seguenti personaggi ai loro oggetti.",
+      "options": [
+        {
+          "left": "Jack Sparrow",
+          "rightOptions": [
+            "Vasetto di miele",
+            "Arco e frecce",
+            "Bussola"
+          ]
+        },
+        {
+          "left": "Winnie the Pooh",
+          "rightOptions": [
+            "Vasetto di miele",
+            "Arco e frecce",
+            "Bussola"
+          ]
+        },
+        {
+          "left": "Merida",
+          "rightOptions": [
+            "Vasetto di miele",
+            "Arco e frecce",
+            "Bussola"
+          ]
+        }
+      ],
+      "timeLimit": 60
+    },
+    {
+      "id": "disney-q27",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Che animale è Sebastian ne 'La Sirenetta'?",
+      "options": [
+        "Un pesce",
+        "Un granchio",
+        "Un'aragosta",
+        "Un cavalluccio marino"
+      ],
+      "timeLimit": 25
+    },
+    {
+      "id": "disney-q28",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quali sono i nomi dei due cani protagonisti in \"La carica dei 101\"?",
+      "options": [
+        "Lilli e il Vagabondo",
+        "Pongo e Peggie",
+        "Simba e Nala",
+        "Matilda e Paloma"
+      ],
+      "timeLimit": 25
+    },
+    {
+      "id": "disney-q29",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Dove vive Olaf, il pupazzo di neve?",
+      "options": [
+        "Arendelle",
+        "Atlantica",
+        "Agrabah",
+        "Corona"
+      ],
+      "timeLimit": 25
+    },
+    {
+      "id": "disney-q30",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Qual è il nome del drago amico di Mulan?",
+      "options": [
+        "Mushu",
+        "Ping",
+        "Li Shang",
+        "Shan Yu"
       ],
       "timeLimit": 25
     }
