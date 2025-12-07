@@ -278,7 +278,7 @@ export default function MatchingQuestion({
                     transition: 'background-color 0.2s ease',
                 }}
             >
-                Conferma abbinamenti
+                Invia abbinamenti
             </button>
         </div>
     );

@@ -62,10 +62,22 @@ export default function AdminDashboard() {
         let mounted = true;
 
         const loadStates = async () => {
-            const [{ data: quiz }, { data: contest }] = await Promise.all([
-                supabase.from('quiz_state').select('*').eq('is_active', true).single(),
-                supabase.from('contest_state').select('*').eq('is_active', true).single(),
-            ]);
+            const [{ data: quiz, error: quizError }, { data: contest, error: contestError }] =
+                await Promise.all([
+                    supabase
+                        .from('quiz_state')
+                        .select('*')
+                        .eq('is_active', true)
+                        .maybeSingle(),
+                    supabase
+                        .from('contest_state')
+                        .select('*')
+                        .eq('is_active', true)
+                        .maybeSingle(),
+                ]);
+
+            if (quizError) console.error('quiz_state error:', quizError);
+            if (contestError) console.error('contest_state error:', contestError);
 
             if (mounted) {
                 setQuizState(quiz ?? null);
@@ -79,10 +91,15 @@ export default function AdminDashboard() {
         const channel = supabase
             .channel('quiz_and_contest_updates')
             .on('postgres_changes', { event: '*', schema: 'public', table: 'quiz_state' }, (payload) =>
-                setQuizState((payload.new as QuizState)?.is_active ? (payload.new as QuizState) : null)
+                setQuizState((payload.new as QuizState)?.is_active ? (payload.new as QuizState) : null),
             )
-            .on('postgres_changes', { event: '*', schema: 'public', table: 'contest_state' }, (payload) =>
-                setContestState((payload.new as ContestState)?.is_active ? (payload.new as ContestState) : null)
+            .on(
+                'postgres_changes',
+                { event: '*', schema: 'public', table: 'contest_state' },
+                (payload) =>
+                    setContestState(
+                        (payload.new as ContestState)?.is_active ? (payload.new as ContestState) : null,
+                    ),
             )
             .subscribe();
 
@@ -142,40 +159,75 @@ export default function AdminDashboard() {
         }
 
         setShowAudio(true);
-        const playT = setTimeout(() => {
-            audioRef.current?.play().catch(() => {});
-        }, 1000);
 
-        const stopT = setTimeout(() => {
-            if (audioRef.current) {
-                audioRef.current.pause();
-                audioRef.current.currentTime = 0;
+        const el = audioRef.current;
+        if (!el) return;
+
+        // piccolo delay così l'elemento <audio> è montato
+        const t = setTimeout(() => {
+            const playPromise = el.play();
+            if (playPromise && typeof playPromise.then === 'function') {
+                playPromise.catch((err) => {
+                    console.warn('Autoplay audio bloccato, usa i controlli manuali.', err);
+                });
             }
-            setShowAudio(false);
-        }, (currentQuestion.timeLimit ?? 0) * 1000);
+        }, 500);
 
+        // 🔹 non fermiamo né nascondiamo più l'audio allo scadere del tempo:
+        // rimane finché cambia la domanda o il quiz viene terminato
         return () => {
-            clearTimeout(playT);
-            clearTimeout(stopT);
+            clearTimeout(t);
             if (audioRef.current) {
                 audioRef.current.pause();
                 audioRef.current.currentTime = 0;
             }
             setShowAudio(false);
         };
-    }, [currentQuestion, quizState?.is_active]);
+    }, [currentQuestion?.audioPath, quizState?.is_active]);
 
     // =======================
-    // Classifica corrente
+    // Classifica corrente (quiz attivo)
     // =======================
     useEffect(() => {
         const fetchLeaderboard = async () => {
             if (!quizState?.id) return;
-            const { data } = await supabase.rpc('get_quiz_leaderboard', { p_session_id: quizState.id });
+            const { data, error } = await supabase.rpc('get_quiz_leaderboard', {
+                p_session_id: quizState.id,
+            });
+            if (error) {
+                console.error('Errore get_quiz_leaderboard:', error);
+                return;
+            }
             if (data) setLeaderboard(data);
         };
         fetchLeaderboard();
     }, [quizState?.id, quizState?.current_question]);
+
+    // =======================
+    // Ultima classifica (quiz concluso)
+    // =======================
+    useEffect(() => {
+        const fetchLastLeaderboard = async () => {
+            // vogliamo l'ultima classifica solo quando NON c'è un quiz attivo
+            // e siamo nella tab "Ultima classifica" della schermata senza quiz
+            if (quizState || inactiveTab !== 'leaderboard') return;
+
+            setLoadingLeaderboard(true);
+            const { data, error } = await supabase.rpc('get_last_quiz_leaderboard');
+
+            if (error) {
+                console.error('Errore get_last_quiz_leaderboard:', error);
+                setLastLeaderboard([]);
+                setLoadingLeaderboard(false);
+                return;
+            }
+
+            setLastLeaderboard(data ?? []);
+            setLoadingLeaderboard(false);
+        };
+
+        fetchLastLeaderboard();
+    }, [quizState, inactiveTab]);
 
     // =======================
     // Avvio / prossima domanda
@@ -283,7 +335,11 @@ export default function AdminDashboard() {
                             }`}
                             onClick={() => setInactiveTab(tab as any)}
                         >
-                            {tab === 'start' ? 'Avvia nuovo quiz' : tab === 'leaderboard' ? 'Ultima classifica' : 'Votazioni'}
+                            {tab === 'start'
+                                ? 'Avvia nuovo quiz'
+                                : tab === 'leaderboard'
+                                    ? 'Ultima classifica'
+                                    : 'Votazioni'}
                         </button>
                     ))}
                 </div>
@@ -311,6 +367,52 @@ export default function AdminDashboard() {
                         >
                             Avvia quiz
                         </button>
+                    </div>
+                )}
+
+                {inactiveTab === 'leaderboard' && (
+                    <div className="bg-white shadow-lg rounded-lg p-8 border border-gray-200">
+                        <h2 className="text-lg font-semibold text-gray-700 mb-4">Ultima classifica</h2>
+                        {loadingLeaderboard ? (
+                            <p className="text-gray-500 text-center">Caricamento...</p>
+                        ) : lastLeaderboard.length === 0 ? (
+                            <p className="text-gray-500 text-center">
+                                Nessun quiz concluso con classifica disponibile.
+                            </p>
+                        ) : (
+                            <table className="min-w-full border border-gray-200 text-sm">
+                                <thead className="bg-gray-50 border-b">
+                                <tr>
+                                    <th className="px-4 py-2 text-left font-semibold text-gray-600">#</th>
+                                    <th className="px-4 py-2 text-left font-semibold text-gray-600">Utente</th>
+                                    <th className="px-4 py-2 text-left font-semibold text-gray-600">Punti</th>
+                                    <th className="px-4 py-2 text-left font-semibold text-gray-600">Corrette</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {lastLeaderboard.map((row: any, idx: number) => (
+                                    <tr
+                                        key={`${row.user_name}-${idx}`}
+                                        className={`${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'} border-b`}
+                                    >
+                                        <td className="px-4 py-2">{idx + 1}</td>
+                                        <td className="px-4 py-2">{row.user_name}</td>
+                                        <td className="px-4 py-2 font-medium">{row.total_points}</td>
+                                        <td className="px-4 py-2">{row.correct_answers}</td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </table>
+                        )}
+                    </div>
+                )}
+
+                {inactiveTab === 'contest' && (
+                    <div className="bg-white shadow-lg rounded-lg p-8 border border-gray-200 text-center">
+                        <h2 className="text-lg font-semibold text-gray-700 mb-4">Votazioni</h2>
+                        <p className="text-gray-500">
+                            Qui potrai gestire le votazioni del contest quando le implementerai.
+                        </p>
                     </div>
                 )}
             </main>
@@ -351,8 +453,7 @@ export default function AdminDashboard() {
 
                     {showAudio && currentQuestion?.audioPath && (
                         <div className="mt-4 flex items-center gap-2">
-                            <audio ref={audioRef} src={currentQuestion.audioPath} />
-                            <span className="text-blue-600 font-medium animate-pulse">Audio in riproduzione...</span>
+                            <audio ref={audioRef} src={currentQuestion.audioPath} controls />
                         </div>
                     )}
 
@@ -365,7 +466,9 @@ export default function AdminDashboard() {
                     <div className="flex items-center gap-3 mt-3 mb-6">
                         <span className="text-gray-600">Tempo rimanente:</span>
                         <span
-                            className={`font-semibold ${timeLeft <= 5 ? 'text-red-500' : 'text-[var(--color-secondary)]'}`}
+                            className={`font-semibold ${
+                                timeLeft <= 5 ? 'text-red-500' : 'text-[var(--color-secondary)]'
+                            }`}
                         >
               {timeLeft}s
             </span>

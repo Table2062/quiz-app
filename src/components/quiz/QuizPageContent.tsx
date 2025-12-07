@@ -25,6 +25,11 @@ export default function QuizPageContent() {
     const [timeLeft, setTimeLeft] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
 
+    // Punteggio finale + info ultimo quiz
+    const [finalPoints, setFinalPoints] = useState<number | null>(null);
+    const [lastQuizName, setLastQuizName] = useState<string | null>(null);
+    const [finalLoading, setFinalLoading] = useState(false);
+
     // Per votazioni contest
     const [contestCandidates, setContestCandidates] = useState<string[]>([]);
     const [selectedVotes, setSelectedVotes] = useState<string[]>([]);
@@ -36,16 +41,17 @@ export default function QuizPageContent() {
     useEffect(() => {
         const fetchStates = async () => {
             const [{ data: quiz }, { data: contest }] = await Promise.all([
-                supabase.from('quiz_state').select('*').eq('is_active', true).single(),
-                supabase.from('contest_state').select('*').eq('is_active', true).single(),
+                supabase.from('quiz_state').select('*').eq('is_active', true).maybeSingle(),
+                supabase.from('contest_state').select('*').eq('is_active', true).maybeSingle(),
             ]);
+
             setQuizState(quiz ?? null);
             setContestState(contest ?? null);
             setLoading(false);
         };
         fetchStates();
 
-        // ✅ listener separato per quiz_state e contest_state
+        // listener realtime quiz_state
         const quizChannel = supabase
             .channel('quiz_state_realtime')
             .on(
@@ -57,7 +63,7 @@ export default function QuizPageContent() {
                         setQuizState(newQuiz);
                         setContestState(null);
                     }
-                }
+                },
             )
             .on(
                 'postgres_changes',
@@ -66,10 +72,11 @@ export default function QuizPageContent() {
                     const newQuiz = payload.new as any;
                     if (newQuiz?.is_active) setQuizState(newQuiz);
                     else setQuizState(null);
-                }
+                },
             )
             .subscribe();
 
+        // listener realtime contest_state
         const contestChannel = supabase
             .channel('contest_state_realtime')
             .on(
@@ -81,7 +88,7 @@ export default function QuizPageContent() {
                         setContestState(newContest);
                         setQuizState(null);
                     }
-                }
+                },
             )
             .on(
                 'postgres_changes',
@@ -90,7 +97,7 @@ export default function QuizPageContent() {
                     const newContest = payload.new as ContestState;
                     if (newContest?.is_active) setContestState(newContest);
                     else setContestState(null);
-                }
+                },
             )
             .subscribe();
 
@@ -99,6 +106,15 @@ export default function QuizPageContent() {
             supabase.removeChannel(contestChannel);
         };
     }, []);
+
+    // 🔹 Quando parte un nuovo quiz, azzera eventuali punti finali vecchi
+    useEffect(() => {
+        if (quizState?.quiz_name) {
+            setFinalPoints(null);
+            setFinalLoading(false);
+            setLastQuizName(quizState.quiz_name);
+        }
+    }, [quizState?.quiz_name]);
 
     // ==============================================================
     // 🔹 Carica quiz JSON
@@ -141,6 +157,85 @@ export default function QuizPageContent() {
         const interval = setInterval(tick, 1000);
         return () => clearInterval(interval);
     }, [quizState?.current_question, quizState?.question_start, quizState?.question_duration, questions]);
+
+    // ==============================================================
+    // 🔹 Quando il quiz è finito → recupera i punti dell’utente
+    //     (anche dopo un refresh)
+    // ==============================================================
+    useEffect(() => {
+        const fetchFinalPoints = async () => {
+            // esci se:
+            // - c'è ancora un quiz attivo
+            // - c'è un contest attivo
+            if (quizState || contestState) return;
+            if (!user) return;
+            if (finalPoints !== null) return; // già calcolati
+
+            setFinalLoading(true);
+
+            // 1) Recupera l'ultimo quiz concluso
+            let quizId = lastQuizName;
+
+            if (!quizId) {
+                const { data: lastSession, error: lastErr } = await supabase
+                    .from('quiz_state')
+                    .select('quiz_name, ended_at')
+                    .not('ended_at', 'is', null)
+                    .order('ended_at', { ascending: false })
+                    .limit(1)
+                    .maybeSingle();
+
+                if (lastErr) {
+                    console.error('Errore fetch last quiz_state:', lastErr);
+                    setFinalLoading(false);
+                    return;
+                }
+
+                if (!lastSession?.quiz_name) {
+                    console.warn('Nessun quiz concluso trovato per calcolare i punti utente.');
+                    setFinalLoading(false);
+                    return;
+                }
+
+                quizId = lastSession.quiz_name;
+                setLastQuizName(quizId);
+            }
+
+            // 2) Calcola i punti dell'utente per quell'ultimo quiz
+            const { data, error } = await supabase.rpc('get_user_total_points', {
+                p_user_id: user.id,
+                p_quiz_id: quizId,
+            });
+
+            console.log('get_user_total_points result', { data, error });
+
+            if (error) {
+                console.error('Errore get_user_total_points:', error);
+                setFinalLoading(false);
+                return;
+            }
+
+            let points: number | null = null;
+
+            if (typeof data === 'number') {
+                points = data;
+            } else if (Array.isArray(data) && data.length > 0) {
+                const first = data[0] as any;
+                const val = Object.values(first)[0];
+                points = typeof val === 'number' ? val : 0;
+            } else if (data && typeof data === 'object') {
+                const val = Object.values(data as any)[0];
+                points = typeof val === 'number' ? val : 0;
+            } else {
+                points = 0;
+            }
+
+            setFinalPoints(points);
+            setFinalLoading(false);
+        };
+
+        fetchFinalPoints();
+    }, [quizState, contestState, user, lastQuizName, finalPoints]);
 
     // ==============================================================
     // 🔹 Gestione risposta utente per quiz
@@ -269,9 +364,39 @@ export default function QuizPageContent() {
     }
 
     // =======================
-    // Nessun quiz attivo
+    // Nessun quiz attivo → mostra risultato se disponibile
     // =======================
     if (!quizState) {
+        // stiamo calcolando il punteggio
+        if (finalLoading && user) {
+            return (
+                <main className="flex flex-col items-center justify-center h-screen text-center">
+                    <h1 className="text-2xl font-semibold text-gray-800 mb-3">Quiz concluso 🎉</h1>
+                    <p className="text-gray-500">Calcolo del tuo punteggio in corso...</p>
+                </main>
+            );
+        }
+
+        // abbiamo i punti → schermata risultato
+        if (finalPoints !== null && lastQuizName) {
+            return (
+                <main className="flex flex-col items-center justify-center h-screen text-center">
+                    <h1 className="text-2xl font-semibold text-gray-800 mb-3">Quiz concluso 🎉</h1>
+                    <p className="text-lg text-gray-700 mb-2">
+                        Hai totalizzato{' '}
+                        <span className="font-bold text-[var(--color-primary)]">{finalPoints}</span> punti
+                    </p>
+                    <p className="text-gray-500">
+                        Quiz: <span className="font-medium">{lastQuizName}</span>
+                    </p>
+                    <p className="text-gray-500 mt-4">
+                        Attendi che l’amministratore avvii una nuova sessione.
+                    </p>
+                </main>
+            );
+        }
+
+        // fallback generico
         return (
             <main className="flex flex-col items-center justify-center h-screen text-center">
                 <h1 className="text-2xl font-semibold text-gray-800 mb-3">Nessun quiz attivo</h1>
@@ -293,12 +418,22 @@ export default function QuizPageContent() {
         );
     }
 
+    // Numero domanda corrente
+    const totalQuestions = questions.length;
+    const currentIndex =
+        quizState.current_question != null && totalQuestions
+            ? quizState.current_question + 1
+            : null;
+
     return (
         <main className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
             <div className="flex justify-between items-center mb-4">
-                <div
-                    className={`font-medium ${timeLeft <= 5 ? 'text-red-600' : 'text-gray-600'}`}
-                >
+                <div className="text-gray-600 font-medium">
+                    {currentIndex !== null && totalQuestions > 0
+                        ? `Domanda ${currentIndex} di ${totalQuestions}`
+                        : ''}
+                </div>
+                <div className={`font-medium ${timeLeft <= 5 ? 'text-red-600' : 'text-gray-600'}`}>
                     ⏱️ {timeLeft}s
                 </div>
             </div>

@@ -53,7 +53,7 @@ export default function MultipleSelectQuestion({ question, onAnswer, disabled }:
                             : 'bg-gray-300 cursor-not-allowed'
                     }`}
                 >
-                    Conferma risposte
+                    Invia risposta
                 </button>
             )}
         </div>

@@ -71,7 +71,7 @@ export default function OrderingQuestion({ question, onAnswer, disabled }: Quest
                 disabled={disabled || submitted}
                 className="mt-3 bg-[var(--color-secondary)] hover:bg-[var(--color-secondary-hover)] text-white px-4 py-2 rounded-md font-medium disabled:opacity-50"
             >
-                Conferma
+                Invia risposta
             </button>
         </div>
     );

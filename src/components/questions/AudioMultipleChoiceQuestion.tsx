@@ -50,7 +50,7 @@ export default function AudioMultipleChoiceQuestion({ question, onAnswer, disabl
                             : 'bg-gray-300 cursor-not-allowed'
                     }`}
                 >
-                    Conferma risposta
+                    Invia risposta
                 </button>
             )}
         </div>
