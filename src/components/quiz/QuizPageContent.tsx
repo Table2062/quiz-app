@@ -49,6 +49,8 @@ export default function QuizPageContent() {
             setContestState(contest ?? null);
             setLoading(false);
         };
+
+        // primo load
         fetchStates();
 
         // listener realtime quiz_state
@@ -58,6 +60,7 @@ export default function QuizPageContent() {
                 'postgres_changes',
                 { event: 'INSERT', schema: 'public', table: 'quiz_state' },
                 (payload) => {
+                    console.log('[quiz_state INSERT]', payload);
                     const newQuiz = payload.new as any;
                     if (newQuiz?.is_active) {
                         setQuizState(newQuiz);
@@ -69,6 +72,7 @@ export default function QuizPageContent() {
                 'postgres_changes',
                 { event: 'UPDATE', schema: 'public', table: 'quiz_state' },
                 (payload) => {
+                    console.log('[quiz_state UPDATE]', payload);
                     const newQuiz = payload.new as any;
                     if (newQuiz?.is_active) setQuizState(newQuiz);
                     else setQuizState(null);
@@ -83,6 +87,7 @@ export default function QuizPageContent() {
                 'postgres_changes',
                 { event: 'INSERT', schema: 'public', table: 'contest_state' },
                 (payload) => {
+                    console.log('[contest_state INSERT]', payload);
                     const newContest = payload.new as ContestState;
                     if (newContest?.is_active) {
                         setContestState(newContest);
@@ -94,6 +99,7 @@ export default function QuizPageContent() {
                 'postgres_changes',
                 { event: 'UPDATE', schema: 'public', table: 'contest_state' },
                 (payload) => {
+                    console.log('[contest_state UPDATE]', payload);
                     const newContest = payload.new as ContestState;
                     if (newContest?.is_active) setContestState(newContest);
                     else setContestState(null);
@@ -101,9 +107,17 @@ export default function QuizPageContent() {
             )
             .subscribe();
 
+        // 🔁 fallback: polling ogni 8s in caso di problemi col realtime
+        const interval = setInterval(() => {
+            fetchStates().catch((err) =>
+                console.warn('Polling contest/quiz_state fallito:', err),
+            );
+        }, 8000);
+
         return () => {
             supabase.removeChannel(quizChannel);
             supabase.removeChannel(contestChannel);
+            clearInterval(interval);
         };
     }, []);
 
