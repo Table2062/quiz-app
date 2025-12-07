@@ -40,8 +40,8 @@ export default function AdminDashboard() {
     const [lastLeaderboard, setLastLeaderboard] = useState<any[]>([]);
     const [loadingLeaderboard, setLoadingLeaderboard] = useState(false);
 
-    const [availableQuizzes] = useState(['quiz1', 'quiz2', 'quiz3']);
-    const [selectedQuiz, setSelectedQuiz] = useState('quiz1');
+    const [availableQuizzes] = useState(['xmas_quiz']);
+    const [selectedQuiz, setSelectedQuiz] = useState(availableQuizzes[0]);
 
     // =======================
     // Ruolo admin
@@ -296,7 +296,7 @@ export default function AdminDashboard() {
                             <select
                                 value={selectedQuiz}
                                 onChange={(e) => setSelectedQuiz(e.target.value)}
-                                className="ml-2 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                                className="m-2 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
                             >
                                 {availableQuizzes.map((quiz) => (
                                     <option key={quiz} value={quiz}>

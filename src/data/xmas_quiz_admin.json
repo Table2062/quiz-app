@@ -1,0 +1,501 @@
+{
+  "name": "Quiz Natale",
+  "title": "Quiz di Natale",
+  "questions": [
+    {
+      "id": "xmas-q1",
+      "type": "MULTIPLE_CHOICE",
+      "question": "In che città vive la famiglia di Kevin in \"Mamma, ho perso l’aereo\"?",
+      "options": ["New York", "Chicago", "Boston", "Los Angeles"],
+      "correctAnswers": ["Chicago"],
+      "timeLimit": 25,
+      "points": 12,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "xmas-q2",
+      "type": "MULTIPLE_SELECT",
+      "question": "Quali di questi film sono ambientati durante il periodo di Natale? (Seleziona tutte le risposte corrette)",
+      "options": [
+        "Love Actually",
+        "Gremlins",
+        "Jurassic Park",
+        "The Holiday"
+      ],
+      "correctAnswers": ["Love Actually", "Gremlins", "The Holiday"],
+      "timeLimit": 30,
+      "points": 15,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "xmas-q3",
+      "type": "ORDERING",
+      "question": "Ordina questi momenti della storia di \"A Christmas Carol\" (Canto di Natale) dalla prima all’ultima.",
+      "options": [
+        "Scrooge vede il proprio futuro con lo Spirito del Natale Futuro",
+        "Scrooge riceve la visita del fantasma di Marley",
+        "Scrooge si sveglia il giorno di Natale deciso a cambiare vita",
+        "Scrooge viene visitato dallo Spirito del Natale Presente"
+      ],
+      "correctAnswers": [
+        "Scrooge riceve la visita del fantasma di Marley",
+        "Scrooge viene visitato dallo Spirito del Natale Presente",
+        "Scrooge vede il proprio futuro con lo Spirito del Natale Futuro",
+        "Scrooge si sveglia il giorno di Natale deciso a cambiare vita"
+      ],
+      "timeLimit": 45,
+      "points": 15,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "xmas-q4",
+      "type": "MATCHING",
+      "question": "Abbina il film natalizio al suo protagonista principale.",
+      "options": [
+        {
+          "left": "Mamma, ho perso l’aereo",
+          "rightOptions": ["Kevin McCallister", "Jack Skeletron", "Iris"]
+        },
+        {
+          "left": "The Holiday",
+          "rightOptions": ["Kevin McCallister", "Jack Skeletron", "Iris"]
+        },
+        {
+          "left": "Nightmare Before Christmas",
+          "rightOptions": ["Kevin McCallister", "Jack Skeletron", "Iris"]
+        }
+      ],
+      "correctAnswers": [
+        { "left": "Mamma, ho perso l’aereo", "right": "Kevin McCallister" },
+        { "left": "The Holiday", "right": "Iris" },
+        { "left": "Nightmare Before Christmas", "right": "Jack Skeletron" }
+      ],
+      "timeLimit": 45,
+      "points": 10,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "xmas-q5",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale di questi colori NON è considerato tradizionale per le decorazioni natalizie classiche?",
+      "options": ["Rosso", "Verde", "Oro", "Viola"],
+      "correctAnswers": ["Viola"],
+      "timeLimit": 25,
+      "points": 10,
+      "speedBonus": { "mode": "linear", "maxBonus": 5 }
+    },
+    {
+      "id": "xmas-q6",
+      "type": "MULTIPLE_SELECT",
+      "question": "Quali di queste storie hanno come elemento centrale la redenzione o il cambiamento di un personaggio durante il periodo di Natale? (Seleziona tutte le risposte corrette)",
+      "options": [
+        "A Christmas Carol (Canto di Natale)",
+        "Il Grinch",
+        "Die Hard - Trappola di cristallo",
+        "Klaus"
+      ],
+      "correctAnswers": ["A Christmas Carol (Canto di Natale)", "Il Grinch", "Klaus"],
+      "timeLimit": 45,
+      "points": 15,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "xmas-q7",
+      "type": "AUDIO_MULTIPLE_CHOICE",
+      "question": "Ascolta e indica il titolo di questa celebre canzone di Natale.",
+      "audioPath": "/audio/xmas-song1.mp3",
+      "options": [
+        "All I Want for Christmas Is You",
+        "Last Christmas",
+        "Jingle Bells",
+        "Happy Xmas (War Is Over)"
+      ],
+      "correctAnswers": ["All I Want for Christmas Is You"],
+      "timeLimit": 30,
+      "points": 12,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "xmas-q8",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Nel film \"Il Grinch\", come si chiama la cittadina che il Grinch vuole rovinare?",
+      "options": ["Whoville", "Hogsmeade", "Smalltown", "Northville"],
+      "correctAnswers": ["Whoville"],
+      "timeLimit": 25,
+      "points": 12,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "xmas-q9",
+      "type": "MATCHING",
+      "question": "Abbina la canzone di Natale al suo artista principale.",
+      "options": [
+        {
+          "left": "All I Want for Christmas Is You",
+          "rightOptions": ["Mariah Carey", "Wham!", "Ariana Grande"]
+        },
+        {
+          "left": "Last Christmas",
+          "rightOptions": ["Mariah Carey", "Wham!", "Ariana Grande"]
+        },
+        {
+          "left": "Santa Tell Me",
+          "rightOptions": ["Mariah Carey", "Wham!", "Ariana Grande"]
+        }
+      ],
+      "correctAnswers": [
+        { "left": "All I Want for Christmas Is You", "right": "Mariah Carey" },
+        { "left": "Last Christmas", "right": "Wham!" },
+        { "left": "Santa Tell Me", "right": "Ariana Grande" }
+      ],
+      "timeLimit": 45,
+      "points": 10,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "xmas-q10",
+      "type": "ORDERING",
+      "question": "Ordina questi eventi principali di \"Mamma, ho perso l’aereo\" (dal primo all’ultimo).",
+      "options": [
+        "La famiglia parte per il viaggio dimenticando Kevin",
+        "Kevin difende la casa dai ladri",
+        "La famiglia si prepara per il viaggio",
+        "Kevin viene mandato a dormire da solo al piano di sopra"
+      ],
+      "correctAnswers": [
+        "La famiglia si prepara per il viaggio",
+        "Kevin viene mandato a dormire da solo al piano di sopra",
+        "La famiglia parte per il viaggio dimenticando Kevin",
+        "Kevin difende la casa dai ladri"
+      ],
+      "timeLimit": 45,
+      "points": 15,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "xmas-q11",
+      "type": "MULTIPLE_SELECT",
+      "question": "Quali di queste canzoni sono tradizionalmente considerate canti di Natale? (Seleziona tutte le risposte corrette)",
+      "options": [
+        "Carol of the Bells",
+        "O Holy Night",
+        "Auld Lang Syne",
+        "Joy to the World"
+      ],
+      "correctAnswers": ["Carol of the Bells", "O Holy Night", "Joy to the World"],
+      "timeLimit": 45,
+      "points": 15,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "xmas-q12",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Secondo la tradizione finlandese, qual è la città considerata “ufficiale” di Babbo Natale?",
+      "options": ["Troms", "Reykjavík", "Rovaniemi", "Tallinn"],
+      "correctAnswers": ["Rovaniemi"],
+      "timeLimit": 25,
+      "points": 10,
+      "speedBonus": { "mode": "linear", "maxBonus": 8 }
+    },
+    {
+      "id": "xmas-q13",
+      "type": "MATCHING",
+      "question": "Abbina il titolo originale del film alla corrispondente versione italiana.",
+      "options": [
+        {
+          "left": "Home Alone",
+          "rightOptions": ["Mamma, ho perso l’aereo", "Una promessa è una promessa", "Fuga dal Natale"]
+        },
+        {
+          "left": "Jingle All the Way",
+          "rightOptions": ["Mamma, ho perso l’aereo", "Una promessa è una promessa", "Fuga dal Natale"]
+        },
+        {
+          "left": "Christmas with the Kranks",
+          "rightOptions": ["Mamma, ho perso l’aereo", "Una promessa è una promessa", "Fuga dal Natale"]
+        }
+      ],
+      "correctAnswers": [
+        { "left": "Home Alone", "right": "Mamma, ho perso l’aereo" },
+        { "left": "Jingle All the Way", "right": "Una promessa è una promessa" },
+        { "left": "Christmas with the Kranks", "right": "Fuga dal Natale" }
+      ],
+      "timeLimit": 45,
+      "points": 15,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "xmas-q14",
+      "type": "MULTIPLE_CHOICE",
+      "question": "In \"Nightmare Before Christmas\", quale festa vuole \"sostituire\" Jack Skeletron?",
+      "options": ["Halloween", "Natale", "Capodanno", "Pasqua"],
+      "correctAnswers": ["Natale"],
+      "timeLimit": 25,
+      "points": 12,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "xmas-q15",
+      "type": "AUDIO_MULTIPLE_CHOICE",
+      "question": "Ascolta il brano e indica quale di queste canzoni natalizie è.",
+      "audioPath": "/audio/xmas-song2.mp3",
+      "options": [
+        "Have Yourself a Merry Little Christmas",
+        "O Holy Night",
+        "Carol of the Bells",
+        "We Wish You a Merry Christmas"
+      ],
+      "correctAnswers": ["Carol of the Bells"],
+      "timeLimit": 30,
+      "points": 12,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "xmas-q16",
+      "type": "AUDIO_MULTIPLE_CHOICE",
+      "question": "Ascolta il brano e indica quale canzone di Natale è.",
+      "audioPath": "/audio/xmas-song3.mp3",
+      "options": [
+        "Jingle Bell Rock",
+        "Let It Snow! Let It Snow! Let It Snow!",
+        "It’s Beginning to Look a Lot Like Christmas",
+        "Rockin’ Around the Christmas Tree"
+      ],
+      "correctAnswers": ["Jingle Bell Rock"],
+      "timeLimit": 25,
+      "points": 12,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "xmas-q17",
+      "type": "ORDERING",
+      "question": "Ordina queste fasi della preparazione di un albero di Natale (dalla prima all’ultima).",
+      "options": [
+        "Mettere le luci sull’albero",
+        "Montare l’albero",
+        "Appendere palline e decorazioni",
+        "Tirare fuori l’albero e gli addobbi dalla scatola"
+      ],
+      "correctAnswers": [
+        "Tirare fuori l’albero e gli addobbi dalla scatola",
+        "Montare l’albero",
+        "Mettere le luci sull’albero",
+        "Appendere palline e decorazioni"
+      ],
+      "timeLimit": 45,
+      "points": 12,
+      "speedBonus": { "mode": "linear", "maxBonus": 5 }
+    },
+    {
+      "id": "xmas-q18",
+      "type": "MATCHING",
+      "question": "Abbina il Paese al dolce natalizio tipico.",
+      "options": [
+        {
+          "left": "Germania",
+          "rightOptions": ["Christstollen", "Christmas pudding", "Bûche de Noël"]
+        },
+        {
+          "left": "Regno Unito",
+          "rightOptions": ["Christstollen", "Christmas pudding", "Bûche de Noël"]
+        },
+        {
+          "left": "Francia",
+          "rightOptions": ["Christstollen", "Christmas pudding", "Bûche de Noël"]
+        }
+      ],
+      "correctAnswers": [
+        { "left": "Germania", "right": "Christstollen" },
+        { "left": "Regno Unito", "right": "Christmas pudding" },
+        { "left": "Francia", "right": "Bûche de Noël" }
+      ],
+      "timeLimit": 45,
+      "points": 12,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "xmas-q19",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale grande marchio ha contribuito a rendere popolare l’immagine moderna di Babbo Natale vestito di rosso?",
+      "options": ["Pepsi", "Coca-Cola", "McDonald’s", "Disney"],
+      "correctAnswers": ["Coca-Cola"],
+      "timeLimit": 25,
+      "points": 12,
+      "speedBonus": { "mode": "linear", "maxBonus": 8 }
+    },
+    {
+      "id": "xmas-q20",
+      "type": "MULTIPLE_SELECT",
+      "question": "Quali di questi si trovano tipicamente in un mercatino di Natale tedesco tradizionale? (Seleziona tutte le risposte corrette)",
+      "options": [
+        "Glühwein (vin brulé)",
+        "Bratwurst",
+        "Sushi alla piastra",
+        "Gazpacho freddo"
+      ],
+      "correctAnswers": ["Glühwein (vin brulé)", "Bratwurst"],
+      "timeLimit": 45,
+      "points": 12,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "xmas-q21",
+      "type": "AUDIO_MULTIPLE_CHOICE",
+      "question": "Ascolta e indica in quale lingua è cantato questo canto natalizio tradizionale.",
+      "audioPath": "/audio/xmas-song4.mp3",
+      "options": ["Francese", "Inglese", "Tedesco", "Spagnolo"],
+      "correctAnswers": ["Francese"],
+      "timeLimit": 25,
+      "points": 12,
+      "speedBonus": { "mode": "linear", "maxBonus": 8 }
+    },
+    {
+      "id": "xmas-q22",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Nel film \"Nightmare Before Christmas\", che ruolo ha Jack a Halloween Town prima di interessarsi al Natale?",
+      "options": [
+        "Re delle zucche",
+        "Sindaco di Halloween Town",
+        "Fantasma del Natale Passato",
+        "Custode del cimitero"
+      ],
+      "correctAnswers": ["Re delle zucche"],
+      "timeLimit": 25,
+      "points": 10,
+      "speedBonus": { "mode": "linear", "maxBonus": 8 }
+    },
+    {
+      "id": "xmas-q23",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Chi è l’autore del racconto \"A Christmas Carol\" (\"Canto di Natale\")?",
+      "options": [
+        "Charles Dickens",
+        "Oscar Wilde",
+        "Arthur Conan Doyle",
+        "Jane Austen"
+      ],
+      "correctAnswers": ["Charles Dickens"],
+      "timeLimit": 25,
+      "points": 12,
+      "speedBonus": { "mode": "linear", "maxBonus": 8 }
+    },
+    {
+      "id": "xmas-q24",
+      "type": "MULTIPLE_SELECT",
+      "question": "Quali di questi nomi appartengono alle renne tradizionalmente associate a Babbo Natale? (Seleziona tutte le risposte corrette)",
+      "options": [
+        "Dasher (Fulmine)",
+        "Comet (Cometa)",
+        "Flash (Lampo)",
+        "Blizzard (Bufera)"
+      ],
+      "correctAnswers": ["Dasher (Fulmine)", "Comet (Cometa)"],
+      "timeLimit": 30,
+      "points": 15,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "xmas-q25",
+      "type": "ORDERING",
+      "question": "Ordina questi eventi della storia de \"Il Grinch\" (versione live action con Jim Carrey) dalla prima all’ultima.",
+      "options": [
+        "Gli abitanti di Chinonsò festeggiano il Natale anche senza regali",
+        "Cindy Lou cerca di capire perché il Grinch odia il Natale",
+        "Il Grinch ruba gli addobbi e i regali di Chinonsò",
+        "Il Grinch viene ferito dai commenti dei compagni e fugge sul Monte Briciolaio"
+      ],
+      "correctAnswers": [
+        "Il Grinch viene ferito dai commenti dei compagni e fugge sul Monte Briciolaio",
+        "Cindy Lou cerca di capire perché il Grinch odia il Natale",
+        "Il Grinch ruba gli addobbi e i regali di Chinonsò",
+        "Gli abitanti di Chinonsò festeggiano il Natale anche senza regali"
+      ],
+      "timeLimit": 45,
+      "points": 15,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "xmas-q26",
+      "type": "MATCHING",
+      "question": "Abbina l’augurio di Natale alla lingua corretta.",
+      "options": [
+        {
+          "left": "Merry Christmas",
+          "rightOptions": ["Inglese", "Tedesco", "Spagnolo"]
+        },
+        {
+          "left": "Frohe Weihnachten",
+          "rightOptions": ["Inglese", "Tedesco", "Spagnolo"]
+        },
+        {
+          "left": "Feliz Navidad",
+          "rightOptions": ["Inglese", "Tedesco", "Spagnolo"]
+        }
+      ],
+      "correctAnswers": [
+        { "left": "Merry Christmas", "right": "Inglese" },
+        { "left": "Frohe Weihnachten", "right": "Tedesco" },
+        { "left": "Feliz Navidad", "right": "Spagnolo" }
+      ],
+      "timeLimit": 40,
+      "points": 10,
+      "speedBonus": { "mode": "linear", "maxBonus": 5 }
+    },
+    {
+      "id": "xmas-q27",
+      "type": "AUDIO_MULTIPLE_CHOICE",
+      "question": "Ascolta e indica da quale film natalizio proviene questa canzone.",
+      "audioPath": "/audio/xmas-song5.mp3",
+      "options": [
+        "The Polar Express",
+        "Love Actually",
+        "Elf - Un elfo di nome Buddy",
+        "Nightmare Before Christmas"
+      ],
+      "correctAnswers": ["Love Actually"],
+      "timeLimit": 45,
+      "points": 15,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "xmas-q28",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Nel film \"Love Actually\", quale attore interpreta il Primo Ministro del Regno Unito?",
+      "options": ["Hugh Grant", "Colin Firth", "Liam Neeson", "Alan Rickman"],
+      "correctAnswers": ["Hugh Grant"],
+      "timeLimit": 30,
+      "points": 12,
+      "speedBonus": { "mode": "linear", "maxBonus": 8 }
+    },
+    {
+      "id": "xmas-q29",
+      "type": "MULTIPLE_SELECT",
+      "question": "Quali di questi elementi sono tipicamente associati all’iconografia moderna di Babbo Natale? (Seleziona tutte le risposte corrette)",
+      "options": [
+        "Cappello rosso con bordo bianco",
+        "Barba bianca lunga",
+        "Cintura nera",
+        "Stivali alti scuri"
+      ],
+      "correctAnswers": [
+        "Cappello rosso con bordo bianco",
+        "Barba bianca lunga",
+        "Cintura nera",
+        "Stivali alti scuri"
+      ],
+      "timeLimit": 35,
+      "points": 12,
+      "speedBonus": { "mode": "linear", "maxBonus": 8 }
+    },
+    {
+      "id": "xmas-q30",
+      "type": "MULTIPLE_CHOICE",
+      "question": "In quale di questi Paesi il Natale viene tradizionalmente festeggiato il 7 gennaio secondo il calendario ortodosso?",
+      "options": ["Russia", "Italia", "Spagna", "Portogallo"],
+      "correctAnswers": ["Russia"],
+      "timeLimit": 25,
+      "points": 15,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    }
+  ]
+}
