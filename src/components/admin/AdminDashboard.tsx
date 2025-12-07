@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
 import { useAuth } from '@/store/useUserStore';
+import contestConfig from '@/data/contest_options.json';
 
 interface ContestState {
     id: string;
@@ -21,6 +22,18 @@ interface QuizState {
     is_active: boolean;
     ended_at?: string;
 }
+
+type ContestConfig = {
+    [key: string]: {
+        title: string;
+        description: string;
+        maxVotes: number;
+        pointsPerVote: number[];
+        options: string[];
+    };
+};
+
+const CONTEST_CATEGORIES = Object.keys(contestConfig as ContestConfig);
 
 export default function AdminDashboard() {
     const { user, loading } = useAuth();
@@ -43,6 +56,18 @@ export default function AdminDashboard() {
     const [availableQuizzes] = useState(['xmas_quiz']);
     const [selectedQuiz, setSelectedQuiz] = useState(availableQuizzes[0]);
 
+    // Contest UI state
+    const [selectedContestToStart, setSelectedContestToStart] = useState<string>(
+        (CONTEST_CATEGORIES[0] as string) ?? 'DESSERT',
+    );
+    const [selectedContestToView, setSelectedContestToView] = useState<string>(
+        (CONTEST_CATEGORIES[0] as string) ?? 'DESSERT',
+    );
+    const [contestLeaderboard, setContestLeaderboard] = useState<any[]>([]);
+    const [loadingContestLeaderboard, setLoadingContestLeaderboard] = useState(false);
+    const [finalContestLeaderboard, setFinalContestLeaderboard] = useState<any[]>([]);
+    const [loadingFinalContest, setLoadingFinalContest] = useState(false);
+
     // =======================
     // Ruolo admin
     // =======================
@@ -64,16 +89,8 @@ export default function AdminDashboard() {
         const loadStates = async () => {
             const [{ data: quiz, error: quizError }, { data: contest, error: contestError }] =
                 await Promise.all([
-                    supabase
-                        .from('quiz_state')
-                        .select('*')
-                        .eq('is_active', true)
-                        .maybeSingle(),
-                    supabase
-                        .from('contest_state')
-                        .select('*')
-                        .eq('is_active', true)
-                        .maybeSingle(),
+                    supabase.from('quiz_state').select('*').eq('is_active', true).maybeSingle(),
+                    supabase.from('contest_state').select('*').eq('is_active', true).maybeSingle(),
                 ]);
 
             if (quizError) console.error('quiz_state error:', quizError);
@@ -163,7 +180,6 @@ export default function AdminDashboard() {
         const el = audioRef.current;
         if (!el) return;
 
-        // piccolo delay così l'elemento <audio> è montato
         const t = setTimeout(() => {
             const playPromise = el.play();
             if (playPromise && typeof playPromise.then === 'function') {
@@ -173,8 +189,6 @@ export default function AdminDashboard() {
             }
         }, 500);
 
-        // 🔹 non fermiamo né nascondiamo più l'audio allo scadere del tempo:
-        // rimane finché cambia la domanda o il quiz viene terminato
         return () => {
             clearTimeout(t);
             if (audioRef.current) {
@@ -208,8 +222,6 @@ export default function AdminDashboard() {
     // =======================
     useEffect(() => {
         const fetchLastLeaderboard = async () => {
-            // vogliamo l'ultima classifica solo quando NON c'è un quiz attivo
-            // e siamo nella tab "Ultima classifica" della schermata senza quiz
             if (quizState || inactiveTab !== 'leaderboard') return;
 
             setLoadingLeaderboard(true);
@@ -230,7 +242,60 @@ export default function AdminDashboard() {
     }, [quizState, inactiveTab]);
 
     // =======================
-    // Avvio / prossima domanda
+    // Classifica contest attivo
+    // =======================
+    useEffect(() => {
+        const fetchContestLeaderboard = async () => {
+            if (!contestState?.category) return;
+
+            setLoadingContestLeaderboard(true);
+            const { data, error } = await supabase.rpc('get_contest_leaderboard', {
+                p_category: contestState.category,
+            });
+
+            if (error) {
+                console.error('Errore get_contest_leaderboard:', error);
+                setContestLeaderboard([]);
+                setLoadingContestLeaderboard(false);
+                return;
+            }
+
+            setContestLeaderboard(data ?? []);
+            setLoadingContestLeaderboard(false);
+        };
+
+        fetchContestLeaderboard();
+    }, [contestState?.category]);
+
+    // =======================
+    // Classifica finale contest (quando non c'è nulla attivo)
+    // =======================
+    useEffect(() => {
+        const fetchFinalContestLeaderboard = async () => {
+            if (quizState || contestState) return;
+            if (inactiveTab !== 'contest') return;
+
+            setLoadingFinalContest(true);
+            const { data, error } = await supabase.rpc('get_contest_leaderboard', {
+                p_category: selectedContestToView,
+            });
+
+            if (error) {
+                console.error('Errore get_contest_leaderboard (final):', error);
+                setFinalContestLeaderboard([]);
+                setLoadingFinalContest(false);
+                return;
+            }
+
+            setFinalContestLeaderboard(data ?? []);
+            setLoadingFinalContest(false);
+        };
+
+        fetchFinalContestLeaderboard();
+    }, [quizState, contestState, inactiveTab, selectedContestToView]);
+
+    // =======================
+    // Avvio quiz / prossima domanda
     // =======================
     const startQuiz = async () => {
         if (contestState) {
@@ -267,6 +332,7 @@ export default function AdminDashboard() {
                 .single();
 
             setQuizState(data);
+            setTimeLeft(mod.default.questions[0].timeLimit ?? 30);
             setActiveTab('question');
         } catch (err) {
             console.error('Errore avvio quiz:', err);
@@ -275,6 +341,8 @@ export default function AdminDashboard() {
 
     const nextQuestion = async () => {
         if (!quizState || !questions.length) return;
+        if (timeLeft > 0) return;
+
         const next = quizState.current_question + 1;
 
         if (next >= questions.length) {
@@ -288,17 +356,69 @@ export default function AdminDashboard() {
             return;
         }
 
+        const nextDuration = questions[next].timeLimit ?? 30;
+        setTimeLeft(nextDuration);
+
         const { data } = await supabase
             .from('quiz_state')
             .update({
                 current_question: next,
                 question_start: new Date().toISOString(),
-                question_duration: questions[next].timeLimit ?? 30,
+                question_duration: nextDuration,
             })
             .eq('id', quizState.id)
             .select()
             .single();
+
         setQuizState(data);
+    };
+
+    // =======================
+    // Avvio / chiusura contest
+    // =======================
+    const startContest = async () => {
+        if (quizState) {
+            alert('❌ Non puoi avviare una votazione mentre un quiz è attivo.');
+            return;
+        }
+
+        try {
+            await supabase.from('contest_state').update({ is_active: false }).eq('is_active', true);
+
+            const { data, error } = await supabase
+                .from('contest_state')
+                .insert({
+                    category: selectedContestToStart,
+                    is_active: true,
+                })
+                .select()
+                .single();
+
+            if (error) throw error;
+
+            setContestState(data);
+            setContestLeaderboard([]);
+        } catch (err) {
+            console.error('Errore avvio contest:', err);
+        }
+    };
+
+    const closeContest = async () => {
+        if (!contestState) return;
+
+        try {
+            const { error } = await supabase
+                .from('contest_state')
+                .update({ is_active: false, ended_at: new Date().toISOString() })
+                .eq('id', contestState.id);
+
+            if (error) throw error;
+
+            setContestState(null);
+            setInactiveTab('contest');
+        } catch (err) {
+            console.error('Errore chiusura contest:', err);
+        }
     };
 
     // =======================
@@ -318,7 +438,9 @@ export default function AdminDashboard() {
         );
     }
 
+    // =======================
     // Nessun quiz o contest attivo
+    // =======================
     if (!quizState && !contestState) {
         return (
             <main className="max-w-4xl mx-auto p-6">
@@ -408,114 +530,265 @@ export default function AdminDashboard() {
                 )}
 
                 {inactiveTab === 'contest' && (
-                    <div className="bg-white shadow-lg rounded-lg p-8 border border-gray-200 text-center">
-                        <h2 className="text-lg font-semibold text-gray-700 mb-4">Votazioni</h2>
-                        <p className="text-gray-500">
-                            Qui potrai gestire le votazioni del contest quando le implementerai.
-                        </p>
+                    <div className="bg-white shadow-lg rounded-lg p-8 border border-gray-200">
+                        <h2 className="text-lg font-semibold text-gray-700 mb-6 text-center">Votazioni</h2>
+
+                        {/* Avvia nuova votazione */}
+                        <div className="mb-10">
+                            <h3 className="text-md font-semibold text-gray-700 mb-2">Avvia nuova votazione</h3>
+                            <p className="text-gray-500 mb-3">
+                                Seleziona una categoria di contest da avviare. I partecipanti vedranno solo la
+                                votazione attiva.
+                            </p>
+                            <div className="flex flex-wrap items-center gap-3">
+                                <label className="text-gray-700 font-medium">
+                                    Categoria:
+                                    <select
+                                        value={selectedContestToStart}
+                                        onChange={(e) => setSelectedContestToStart(e.target.value)}
+                                        className="ml-2 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                                    >
+                                        {CONTEST_CATEGORIES.map((key) => {
+                                            const cfg = (contestConfig as ContestConfig)[key];
+                                            return (
+                                                <option key={key} value={key}>
+                                                    {cfg?.title ?? key}
+                                                </option>
+                                            );
+                                        })}
+                                    </select>
+                                </label>
+                                <button
+                                    onClick={startContest}
+                                    className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-6 py-2 rounded-md font-semibold transition-all"
+                                >
+                                    Avvia votazione
+                                </button>
+                            </div>
+                            <p className="text-sm text-gray-500 mt-2">
+                                {(contestConfig as ContestConfig)[selectedContestToStart]?.description}
+                            </p>
+                        </div>
+
+                        {/* Classifica finale contest */}
+                        <div>
+                            <h3 className="text-md font-semibold text-gray-700 mb-2">Classifica finale contest</h3>
+                            <div className="flex flex-wrap items-center gap-3 mb-4">
+                                <label className="text-gray-700 font-medium">
+                                    Categoria:
+                                    <select
+                                        value={selectedContestToView}
+                                        onChange={(e) => setSelectedContestToView(e.target.value)}
+                                        className="ml-2 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+                                    >
+                                        {CONTEST_CATEGORIES.map((key) => {
+                                            const cfg = (contestConfig as ContestConfig)[key];
+                                            return (
+                                                <option key={key} value={key}>
+                                                    {cfg?.title ?? key}
+                                                </option>
+                                            );
+                                        })}
+                                    </select>
+                                </label>
+                            </div>
+
+                            {loadingFinalContest ? (
+                                <p className="text-gray-500 text-center">Caricamento classifica...</p>
+                            ) : finalContestLeaderboard.length === 0 ? (
+                                <p className="text-gray-500 text-center">
+                                    Nessuna votazione registrata per questa categoria.
+                                </p>
+                            ) : (
+                                <table className="min-w-full border border-gray-200 text-sm mt-2">
+                                    <thead className="bg-gray-50 border-b">
+                                    <tr>
+                                        <th className="px-4 py-2 text-left font-semibold text-gray-600">#</th>
+                                        <th className="px-4 py-2 text-left font-semibold text-gray-600">Candidato</th>
+                                        <th className="px-4 py-2 text-left font-semibold text-gray-600">Punti</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {finalContestLeaderboard.map((row: any, idx: number) => (
+                                        <tr
+                                            key={`${row.candidate}-${idx}`}
+                                            className={`${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'} border-b`}
+                                        >
+                                            <td className="px-4 py-2">{idx + 1}</td>
+                                            <td className="px-4 py-2">{row.candidate}</td>
+                                            <td className="px-4 py-2 font-medium">{row.total_points}</td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </table>
+                            )}
+                        </div>
                     </div>
                 )}
             </main>
         );
     }
 
+    // =======================
     // Quiz attivo
-    const currentIndex = (quizState?.current_question ?? 0) + 1;
+    // =======================
+    if (quizState) {
+        const currentIndex = (quizState.current_question ?? 0) + 1;
 
-    return (
-        <main className="max-w-4xl mx-auto p-6">
-            <h1 className="text-2xl font-bold text-gray-800 mb-6">Dashboard Admin</h1>
+        return (
+            <main className="max-w-4xl mx-auto p-6">
+                <h1 className="text-2xl font-bold text-gray-800 mb-6">Dashboard Admin</h1>
 
-            <div className="flex mb-6 border-b border-gray-300">
-                {['question', 'leaderboard'].map((tab) => (
-                    <button
-                        key={tab}
-                        className={`px-4 py-2 font-medium ${
-                            activeTab === tab
-                                ? 'border-b-2 border-[var(--color-primary)] text-[var(--color-primary)]'
-                                : 'text-gray-600 hover:text-gray-800'
-                        }`}
-                        onClick={() => setActiveTab(tab as any)}
-                    >
-                        {tab === 'question' ? 'Domanda corrente' : 'Classifica'}
-                    </button>
-                ))}
-            </div>
+                <div className="flex mb-6 border-b border-gray-300">
+                    {['question', 'leaderboard'].map((tab) => (
+                        <button
+                            key={tab}
+                            className={`px-4 py-2 font-medium ${
+                                activeTab === tab
+                                    ? 'border-b-2 border-[var(--color-primary)] text-[var(--color-primary)]'
+                                    : 'text-gray-600 hover:text-gray-800'
+                            }`}
+                            onClick={() => setActiveTab(tab as any)}
+                        >
+                            {tab === 'question' ? 'Domanda corrente' : 'Classifica'}
+                        </button>
+                    ))}
+                </div>
 
-            {activeTab === 'question' && (
+                {activeTab === 'question' && (
+                    <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
+                        <p className="text-sm text-green-600 mb-2">
+                            🟢 Domanda {currentIndex} di {questions.length}
+                        </p>
+                        <h2 className="text-lg font-semibold text-gray-700 mb-2">
+                            {currentQuestion?.question || 'Nessuna domanda disponibile'}
+                        </h2>
+
+                        {showAudio && currentQuestion?.audioPath && (
+                            <div className="mt-4 flex items-center gap-2">
+                                <audio ref={audioRef} src={currentQuestion.audioPath} controls />
+                            </div>
+                        )}
+
+                        <ul className="list-disc list-inside text-gray-600 mb-4">
+                            {currentQuestion?.options?.map((opt: any, idx: number) => (
+                                <li key={idx}>{typeof opt === 'string' ? opt : opt.left ?? JSON.stringify(opt)}</li>
+                            ))}
+                        </ul>
+
+                        <div className="flex items-center gap-3 mt-3 mb-6">
+                            <span className="text-gray-600">Tempo rimanente:</span>
+                            <span
+                                className={`font-semibold ${
+                                    timeLeft <= 5 ? 'text-red-500' : 'text-[var(--color-secondary)]'
+                                }`}
+                            >
+                {timeLeft}s
+              </span>
+                        </div>
+
+                        <button
+                            onClick={nextQuestion}
+                            disabled={timeLeft > 0}
+                            className="bg-[var(--color-secondary)] text-white px-4 py-2 rounded-md font-medium hover:bg-[var(--color-secondary-hover)] disabled:bg-gray-300 disabled:cursor-not-allowed transition-all"
+                        >
+                            {currentIndex === questions.length ? 'Termina quiz' : 'Prossima domanda'}
+                        </button>
+                    </div>
+                )}
+
+                {activeTab === 'leaderboard' && (
+                    <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
+                        <h2 className="text-lg font-semibold text-gray-700 mb-4">Classifica parziale</h2>
+                        {leaderboard.length === 0 ? (
+                            <p className="text-gray-500 text-center">Nessun dato disponibile.</p>
+                        ) : (
+                            <table className="min-w-full border border-gray-200 text-sm">
+                                <thead className="bg-gray-50 border-b">
+                                <tr>
+                                    <th className="px-4 py-2 text-left font-semibold text-gray-600">#</th>
+                                    <th className="px-4 py-2 text-left font-semibold text-gray-600">Utente</th>
+                                    <th className="px-4 py-2 text-left font-semibold text-gray-600">Punti</th>
+                                    <th className="px-4 py-2 text-left font-semibold text-gray-600">Corrette</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {leaderboard.map((row: any, idx: number) => (
+                                    <tr
+                                        key={`${row.user_name}-${idx}`}
+                                        className={`${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'} border-b`}
+                                    >
+                                        <td className="px-4 py-2">{idx + 1}</td>
+                                        <td className="px-4 py-2">{row.user_name}</td>
+                                        <td className="px-4 py-2 font-medium">{row.total_points}</td>
+                                        <td className="px-4 py-2">{row.correct_answers}</td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </table>
+                        )}
+                    </div>
+                )}
+            </main>
+        );
+    }
+
+    // =======================
+    // Contest attivo
+    // =======================
+    if (contestState && !quizState) {
+        const cfg = (contestConfig as ContestConfig)[contestState.category];
+
+        return (
+            <main className="max-w-4xl mx-auto p-6">
+                <h1 className="text-2xl font-bold text-gray-800 mb-6">Dashboard Admin</h1>
+
                 <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
                     <p className="text-sm text-green-600 mb-2">
-                        🟢 Domanda {currentIndex} di {questions.length}
+                        🟢 Votazione attiva: {cfg?.title ?? contestState.category}
                     </p>
-                    <h2 className="text-lg font-semibold text-gray-700 mb-2">
-                        {currentQuestion?.question || 'Nessuna domanda disponibile'}
-                    </h2>
+                    <p className="text-gray-600 mb-4">{cfg?.description}</p>
 
-                    {showAudio && currentQuestion?.audioPath && (
-                        <div className="mt-4 flex items-center gap-2">
-                            <audio ref={audioRef} src={currentQuestion.audioPath} controls />
-                        </div>
-                    )}
-
-                    <ul className="list-disc list-inside text-gray-600 mb-4">
-                        {currentQuestion?.options?.map((opt: any, idx: number) => (
-                            <li key={idx}>{typeof opt === 'string' ? opt : opt.left ?? JSON.stringify(opt)}</li>
-                        ))}
-                    </ul>
-
-                    <div className="flex items-center gap-3 mt-3 mb-6">
-                        <span className="text-gray-600">Tempo rimanente:</span>
-                        <span
-                            className={`font-semibold ${
-                                timeLeft <= 5 ? 'text-red-500' : 'text-[var(--color-secondary)]'
-                            }`}
-                        >
-              {timeLeft}s
-            </span>
-                    </div>
-
-                    <button
-                        onClick={nextQuestion}
-                        disabled={timeLeft > 0}
-                        className="bg-[var(--color-secondary)] text-white px-4 py-2 rounded-md font-medium hover:bg-[var(--color-secondary-hover)] disabled:bg-gray-300 disabled:cursor-not-allowed transition-all"
-                    >
-                        {currentIndex === questions.length ? 'Termina quiz' : 'Prossima domanda'}
-                    </button>
-                </div>
-            )}
-
-            {activeTab === 'leaderboard' && (
-                <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-                    <h2 className="text-lg font-semibold text-gray-700 mb-4">Classifica parziale</h2>
-                    {leaderboard.length === 0 ? (
-                        <p className="text-gray-500 text-center">Nessun dato disponibile.</p>
+                    <h2 className="text-lg font-semibold text-gray-700 mb-3">Classifica provvisoria</h2>
+                    {loadingContestLeaderboard ? (
+                        <p className="text-gray-500 text-center">Caricamento classifica...</p>
+                    ) : contestLeaderboard.length === 0 ? (
+                        <p className="text-gray-500 text-center">Nessun voto ricevuto finora.</p>
                     ) : (
-                        <table className="min-w-full border border-gray-200 text-sm">
+                        <table className="min-w-full border border-gray-200 text-sm mb-4">
                             <thead className="bg-gray-50 border-b">
                             <tr>
                                 <th className="px-4 py-2 text-left font-semibold text-gray-600">#</th>
-                                <th className="px-4 py-2 text-left font-semibold text-gray-600">Utente</th>
+                                <th className="px-4 py-2 text-left font-semibold text-gray-600">Candidato</th>
                                 <th className="px-4 py-2 text-left font-semibold text-gray-600">Punti</th>
-                                <th className="px-4 py-2 text-left font-semibold text-gray-600">Corrette</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {leaderboard.map((row: any, idx: number) => (
+                            {contestLeaderboard.map((row: any, idx: number) => (
                                 <tr
-                                    key={`${row.user_name}-${idx}`}
+                                    key={`${row.candidate}-${idx}`}
                                     className={`${idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'} border-b`}
                                 >
                                     <td className="px-4 py-2">{idx + 1}</td>
-                                    <td className="px-4 py-2">{row.user_name}</td>
+                                    <td className="px-4 py-2">{row.candidate}</td>
                                     <td className="px-4 py-2 font-medium">{row.total_points}</td>
-                                    <td className="px-4 py-2">{row.correct_answers}</td>
                                 </tr>
                             ))}
                             </tbody>
                         </table>
                     )}
+
+                    <button
+                        onClick={closeContest}
+                        className="bg-[var(--color-secondary)] text-white px-4 py-2 rounded-md font-medium hover:bg-[var(--color-secondary-hover)] transition-all"
+                    >
+                        Termina votazione
+                    </button>
                 </div>
-            )}
-        </main>
-    );
+            </main>
+        );
+    }
+
+    // Fallback (non dovrebbe mai arrivarci)
+    return null;
 }

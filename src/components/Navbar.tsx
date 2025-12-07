@@ -33,11 +33,17 @@ export default function Navbar() {
         <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
             <nav className="max-w-7xl mx-auto flex justify-between items-center px-6 py-3">
                 {/* Logo */}
+                {/* Logo con cappellino di Natale */}
                 <Link
                     href="/"
-                    className="text-xl font-semibold text-gray-900 tracking-tight hover:text-[var(--color-primary)] transition-colors"
+                    className="flex items-center gap-2 text-xl font-semibold text-gray-900 tracking-tight hover:text-[var(--color-primary)] transition-colors"
                 >
-                    Quiz<span className="text-[var(--color-primary)]">App</span>
+                    <span>
+                        Quiz<span className="text-[var(--color-primary)]">App</span>
+                    </span>
+
+                    {/* Emoji cappellino Babbo Natale */}
+                    <span className="text-2xl leading-none -mt-1">🎅</span>
                 </Link>
 
                 {/* Navigation Links */}

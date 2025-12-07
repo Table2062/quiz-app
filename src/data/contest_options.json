@@ -5,30 +5,18 @@
     "maxVotes": 1,
     "pointsPerVote": [12],
     "options": [
-      "Pepah e Ignazio",
-      "Luca",
-      "Eugenia e Maurizio"
+      "Chiara",
+      "Salvo"
     ]
   },
 
   "COSPLAY": {
-    "title": "Cosplay Contest 🎭",
-    "description": "Vota i tre migliori cosplay della serata! Ogni utente può scegliere 3 partecipanti (12, 10, 8 punti).",
+    "title": "Christmas Cosplay Contest 🎭\uD83C\uDF85",
+    "description": "Vota i tre migliori cosplay natalizi della serata! Ogni utente può scegliere 3 partecipanti (12, 10, 8 punti).",
     "maxVotes": 3,
     "pointsPerVote": [12, 10, 8],
     "options": [
-      "Pepah",
-      "Davide",
-      "Chiara",
-      "Ignazio",
-      "Luca",
-      "Alessio",
-      "Marianna",
-      "Eugenia",
-      "Maurizio",
-      "Flavio",
-      "Mate",
-      "Ginger"
+      "Pepa", "Ignazio", "Davide", "Chiara", "Alessio", "Marianna", "Mate", "Flavio", "Ginger", "Salvo", "Luigi", "Lauro"
     ]
   }
 }

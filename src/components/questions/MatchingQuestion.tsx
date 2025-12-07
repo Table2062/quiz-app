@@ -345,7 +345,7 @@ const DroppableBox = React.forwardRef<HTMLDivElement, DroppableBoxProps>(
                             backgroundColor: '#fff',
                         }}
                     >
-                        <option value="">— Seleziona —</option>
+                        <option value="">——</option>
                         {allRightOptions.map(opt => (
                             <option key={opt} value={opt}>
                                 {opt}

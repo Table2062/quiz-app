@@ -116,6 +116,13 @@ export default function QuizPageContent() {
         }
     }, [quizState?.quiz_name]);
 
+    // 🔹 Reset stati contest quando parte/finisce una votazione
+    useEffect(() => {
+        setSelectedVotes([]);
+        setSubmitted(false);
+        setContestCandidates([]);
+    }, [contestState?.id, contestState?.category, contestState?.is_active]);
+
     // ==============================================================
     // 🔹 Carica quiz JSON
     // ==============================================================
@@ -160,20 +167,15 @@ export default function QuizPageContent() {
 
     // ==============================================================
     // 🔹 Quando il quiz è finito → recupera i punti dell’utente
-    //     (anche dopo un refresh)
     // ==============================================================
     useEffect(() => {
         const fetchFinalPoints = async () => {
-            // esci se:
-            // - c'è ancora un quiz attivo
-            // - c'è un contest attivo
             if (quizState || contestState) return;
             if (!user) return;
-            if (finalPoints !== null) return; // già calcolati
+            if (finalPoints !== null) return;
 
             setFinalLoading(true);
 
-            // 1) Recupera l'ultimo quiz concluso
             let quizId = lastQuizName;
 
             if (!quizId) {
@@ -201,7 +203,6 @@ export default function QuizPageContent() {
                 setLastQuizName(quizId);
             }
 
-            // 2) Calcola i punti dell'utente per quell'ultimo quiz
             const { data, error } = await supabase.rpc('get_user_total_points', {
                 p_user_id: user.id,
                 p_quiz_id: quizId,
@@ -267,7 +268,20 @@ export default function QuizPageContent() {
             try {
                 const res = await fetch(`/data/contest_options.json`);
                 const json = await res.json();
-                const options = json[contestState.category] ?? [];
+
+                let options: string[] = [];
+
+                const raw = json[contestState.category];
+
+                if (Array.isArray(raw)) {
+                    // formato attuale: "COSPLAY": ["Pepa", "Ignazio", ...]
+                    options = raw;
+                } else if (raw && Array.isArray(raw.options)) {
+                    // compatibilità se in futuro torni al formato a oggetto:
+                    // "COSPLAY": { ..., "options": ["Pepa", ...] }
+                    options = raw.options;
+                }
+
                 setContestCandidates(options);
             } catch (err) {
                 console.error('Errore caricamento opzioni contest:', err);
@@ -278,6 +292,10 @@ export default function QuizPageContent() {
 
     const handleContestVote = async () => {
         if (!contestState || !user || submitted || selectedVotes.length === 0) return;
+        const isCosplay = contestState.category === 'COSPLAY';
+        const maxVotes = isCosplay ? 3 : 1;
+        if (selectedVotes.length < maxVotes) return;
+
         setSubmitted(true);
 
         const category = contestState.category;
@@ -292,6 +310,15 @@ export default function QuizPageContent() {
 
         const { error } = await supabase.from('contest_votes').insert(insertRows);
         if (error) console.error('Errore invio voto:', error);
+    };
+
+    // helper: etichetta posizione per candidato COSPLAY
+    const getCosplayPositionLabel = (candidate: string) => {
+        const idx = selectedVotes.indexOf(candidate);
+        if (idx === -1) return null;
+        const pos = idx + 1;
+        const points = idx === 0 ? 12 : idx === 1 ? 10 : 8;
+        return `${pos}º (${points} pt)`;
     };
 
     // ==============================================================
@@ -326,28 +353,43 @@ export default function QuizPageContent() {
                 <h1 className="text-2xl font-bold text-center mb-4">
                     {isCosplay ? '🎭 COSPLAY CONTEST' : '🍰 DESSERT CONTEST'}
                 </h1>
-                <p className="text-center text-gray-600 mb-6">
+                <p className="text-center text-gray-600 mb-2">
                     {isCosplay
-                        ? 'Scegli i tuoi 3 preferiti (in ordine di preferenza)'
-                        : 'Scegli il tuo dessert preferito'}
+                        ? 'Scegli i tuoi 3 preferiti: il primo selezionato sarà 1º (12 pt), il secondo 2º (10 pt), il terzo 3º (8 pt).'
+                        : 'Scegli il tuo dessert preferito (12 pt).'}
                 </p>
+                {isCosplay && (
+                    <p className="text-center text-gray-500 mb-4 text-sm">
+                        Puoi cambiare idea deselezionando e riselezionando i candidati.
+                    </p>
+                )}
 
                 <ul className="space-y-3">
-                    {contestCandidates.map((candidate) => (
-                        <li key={candidate}>
-                            <button
-                                onClick={() => toggleSelect(candidate)}
-                                disabled={submitted}
-                                className={`w-full px-4 py-3 rounded-lg border text-left transition-all ${
-                                    selectedVotes.includes(candidate)
-                                        ? 'bg-green-500 text-white border-green-500'
-                                        : 'bg-gray-50 hover:bg-gray-100 border-gray-300'
-                                }`}
-                            >
-                                {candidate}
-                            </button>
-                        </li>
-                    ))}
+                    {contestCandidates.map((candidate) => {
+                        const isSelected = selectedVotes.includes(candidate);
+                        const posLabel = isCosplay ? getCosplayPositionLabel(candidate) : null;
+
+                        return (
+                            <li key={candidate}>
+                                <button
+                                    onClick={() => toggleSelect(candidate)}
+                                    disabled={submitted}
+                                    className={`w-full px-4 py-3 rounded-lg border text-left transition-all flex items-center justify-between ${
+                                        isSelected
+                                            ? 'bg-green-500 text-white border-green-500'
+                                            : 'bg-gray-50 hover:bg-gray-100 border-gray-300'
+                                    }`}
+                                >
+                                    <span>{candidate}</span>
+                                    {posLabel && (
+                                        <span className="text-xs font-semibold bg-white/20 px-2 py-1 rounded-md">
+                      {posLabel}
+                    </span>
+                                    )}
+                                </button>
+                            </li>
+                        );
+                    })}
                 </ul>
 
                 <div className="text-center mt-6">
@@ -367,7 +409,6 @@ export default function QuizPageContent() {
     // Nessun quiz attivo → mostra risultato se disponibile
     // =======================
     if (!quizState) {
-        // stiamo calcolando il punteggio
         if (finalLoading && user) {
             return (
                 <main className="flex flex-col items-center justify-center h-screen text-center">
@@ -377,7 +418,6 @@ export default function QuizPageContent() {
             );
         }
 
-        // abbiamo i punti → schermata risultato
         if (finalPoints !== null && lastQuizName) {
             return (
                 <main className="flex flex-col items-center justify-center h-screen text-center">
@@ -396,7 +436,6 @@ export default function QuizPageContent() {
             );
         }
 
-        // fallback generico
         return (
             <main className="flex flex-col items-center justify-center h-screen text-center">
                 <h1 className="text-2xl font-semibold text-gray-800 mb-3">Nessun quiz attivo</h1>
@@ -418,7 +457,6 @@ export default function QuizPageContent() {
         );
     }
 
-    // Numero domanda corrente
     const totalQuestions = questions.length;
     const currentIndex =
         quizState.current_question != null && totalQuestions
