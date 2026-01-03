@@ -259,7 +259,7 @@
       ],
       "correctAnswers": [
         "TikTok ha introdotto video fino a 60 minuti",
-        "Instagram ha spinto sempre più i Reels rispetto ai post tradizionali"
+        "Instagram ha spinto sempre più i Reels rispetto ai post"
       ],
       "answerDescription": "Nel 2025 TikTok ha esteso ulteriormente la durata dei video, mentre Instagram ha continuato a favorire i Reels rispetto ai post tradizionali.",
       "timeLimit": 35,
@@ -293,18 +293,6 @@
 
     {
       "id": "funeral-q23",
-      "type": "MULTIPLE_CHOICE",
-      "question": "Quale piattaforma social ha superato il miliardo di utenti attivi nel 2025?",
-      "options": ["TikTok", "X", "Snapchat", "Pinterest"],
-      "correctAnswers": ["TikTok"],
-      "answerDescription": "Nel 2025 TikTok ha superato il miliardo di utenti attivi mensili a livello globale.",
-      "timeLimit": 20,
-      "points": 10,
-      "speedBonus": { "mode": "linear", "maxBonus": 5 }
-    },
-
-    {
-      "id": "funeral-q24",
       "type": "ORDERING",
       "question": "Ordina questi scandali e polemiche mediatiche italiane del 2025 dal primo all’ultimo nell’arco dell’anno.",
       "options": [
