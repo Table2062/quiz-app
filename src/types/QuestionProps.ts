@@ -6,6 +6,7 @@ export interface Question {
     correctAnswers?: number[]; // solo lato admin
     timeLimit: number;
     audioPath?: string;
+    answerDescription?: string;
 }
 
 export interface QuestionProps {

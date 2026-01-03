@@ -676,6 +676,12 @@ export default function AdminDashboard() {
                             ))}
                         </ul>
 
+                        {timeLeft === 0 && currentQuestion?.answerDescription && (
+                            <div className="mt-4 text-sm text-gray-600">
+                                <strong>💡 Spiegazione:</strong> {currentQuestion.answerDescription}
+                            </div>
+                        )}
+
                         <div className="flex items-center gap-3 mt-3 mb-6">
                             <span className="text-gray-600">Tempo rimanente:</span>
                             <span
