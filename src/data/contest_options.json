@@ -1,22 +1,17 @@
 {
-  "DESSERT": {
-    "title": "Dessert Contest 🍰",
-    "description": "Scegli il miglior dolce della serata! Ogni utente può dare UN solo voto (12 punti).",
-    "maxVotes": 1,
-    "pointsPerVote": [12],
-    "options": [
-      "Chiara",
-      "Salvo"
-    ]
+  "EULOGY": {
+    "title": "Funeral Eulogy Contest ⚰\uFE0F",
+    "description": "Scegli il miglior elogio funebre della serata! Ogni utente può dare UN solo voto (12 punti).",
+    "maxVotes": 3,
+    "pointsPerVote": [12, 10, 8],
+    "options": ["Chiara", "Davide", "Emilia", "Flavio", "Ginger", "Luca M.", "Pepah"]
   },
 
   "COSPLAY": {
-    "title": "Christmas Cosplay Contest 🎭\uD83C\uDF85",
-    "description": "Vota i tre migliori cosplay natalizi della serata! Ogni utente può scegliere 3 partecipanti (12, 10, 8 punti).",
+    "title": "Funeral Cosplay Contest ⚰\uFE0F",
+    "description": "Vota i tre migliori cosplay funebri della serata! Ogni utente può scegliere 3 partecipanti (12, 10, 8 punti).",
     "maxVotes": 3,
     "pointsPerVote": [12, 10, 8],
-    "options": [
-      "Pepa", "Ignazio", "Davide", "Chiara", "Alessio", "Marianna", "Mate", "Flavio", "Ginger", "Salvo", "Luigi", "Lauro"
-    ]
+    "options": ["Chiara", "Davide", "Emilia", "Flavio", "Ginger", "Luca M.", "Pepah"]
   }
 }

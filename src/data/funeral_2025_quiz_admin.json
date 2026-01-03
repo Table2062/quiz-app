@@ -1,0 +1,176 @@
+{
+  "name": "Addio al 2025",
+  "title": "Addio al 2025 – Funeral Party Quiz",
+  "questions": [
+    {
+      "id": "funeral-q1",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale attrice simbolo del cinema italiano è morta nel 2025?",
+      "options": ["Claudia Cardinale", "Sophia Loren", "Monica Vitti", "Isabella Rossellini"],
+      "correctAnswers": ["Claudia Cardinale"],
+      "answer_description": "Claudia Cardinale, icona del cinema italiano e internazionale, è morta nel settembre 2025, come riportato da fonti biografiche ufficiali.",
+      "timeLimit": 25,
+      "points": 10,
+      "speedBonus": { "mode": "linear", "maxBonus": 5 }
+    },
+    {
+      "id": "funeral-q2",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale celebre stilista italiano è morto nel 2025?",
+      "options": ["Giorgio Armani", "Valentino Garavani", "Gianni Versace", "Miuccia Prada"],
+      "correctAnswers": ["Giorgio Armani"],
+      "answer_description": "Giorgio Armani, fondatore dell'omonima casa di moda e figura centrale del fashion mondiale, è morto nel settembre 2025.",
+      "timeLimit": 25,
+      "points": 10,
+      "speedBonus": { "mode": "linear", "maxBonus": 5 }
+    },
+    {
+      "id": "funeral-q3",
+      "type": "MULTIPLE_SELECT",
+      "question": "Quali di queste personalità del mondo dello spettacolo sono morte nel 2025?",
+      "options": ["Pippo Baudo", "Renzo Arbore", "Michael Madsen", "Al Pacino"],
+      "correctAnswers": ["Pippo Baudo", "Michael Madsen"],
+      "answer_description": "Pippo Baudo e Michael Madsen sono entrambi deceduti nel 2025; Renzo Arbore e Al Pacino risultano invece in vita.",
+      "timeLimit": 45,
+      "points": 15,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "funeral-q4",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale leggendaria attrice francese è morta nel 2025?",
+      "options": ["Brigitte Bardot", "Catherine Deneuve", "Juliette Binoche", "Marion Cotillard"],
+      "correctAnswers": ["Brigitte Bardot"],
+      "answer_description": "Brigitte Bardot, simbolo del cinema francese e icona culturale del Novecento, è morta nel dicembre 2025.",
+      "timeLimit": 25,
+      "points": 10,
+      "speedBonus": { "mode": "linear", "maxBonus": 5 }
+    },
+    {
+      "id": "funeral-q5",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale musicista britannico noto per la sua carriera rock è morto nel 2025?",
+      "options": ["Ozzy Osbourne", "Mick Jagger", "David Gilmour", "Paul McCartney"],
+      "correctAnswers": ["Ozzy Osbourne"],
+      "answer_description": "Ozzy Osbourne, frontman dei Black Sabbath e figura chiave dell'heavy metal, è morto nel luglio 2025.",
+      "timeLimit": 25,
+      "points": 10,
+      "speedBonus": { "mode": "linear", "maxBonus": 5 }
+    },
+    {
+      "id": "funeral-q6",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale scrittore italiano è morto nel 2025?",
+      "options": ["Stefano Benni", "Umberto Eco", "Alessandro Baricco", "Erri De Luca"],
+      "correctAnswers": ["Stefano Benni"],
+      "answer_description": "Stefano Benni, autore satirico e narratore molto amato, è morto nel settembre 2025.",
+      "timeLimit": 25,
+      "points": 10,
+      "speedBonus": { "mode": "linear", "maxBonus": 5 }
+    },
+    {
+      "id": "funeral-q7",
+      "type": "ORDERING",
+      "question": "Ordina cronologicamente queste morti illustri del 2025 (dalla più precoce alla più recente).",
+      "options": ["Arnaldo Pomodoro", "Michael Madsen", "Ozzy Osbourne", "Brigitte Bardot"],
+      "correctAnswers": ["Arnaldo Pomodoro", "Michael Madsen", "Ozzy Osbourne", "Brigitte Bardot"],
+      "answer_description": "Pomodoro è morto a giugno, Madsen a inizio luglio, Osbourne a fine luglio e Bardot a dicembre 2025.",
+      "timeLimit": 60,
+      "points": 15,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "funeral-q8",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale attore hollywoodiano noto per ruoli in film di Tarantino è morto nel 2025?",
+      "options": ["Michael Madsen", "John Travolta", "Harvey Keitel", "Tim Roth"],
+      "correctAnswers": ["Michael Madsen"],
+      "answer_description": "Michael Madsen ha recitato in numerosi film di Quentin Tarantino ed è morto nel luglio 2025.",
+      "timeLimit": 25,
+      "points": 10,
+      "speedBonus": { "mode": "linear", "maxBonus": 5 }
+    },
+    {
+      "id": "funeral-q9",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale tecnologia di intelligenza artificiale ha visto un'adozione di massa nel 2025?",
+      "options": ["Assistenti AI generativi", "Realtà virtuale domestica", "Auto completamente autonome", "Social network decentralizzati"],
+      "correctAnswers": ["Assistenti AI generativi"],
+      "answer_description": "Nel 2025 l'uso di assistenti AI generativi è diventato mainstream in ambito lavorativo e personale.",
+      "timeLimit": 25,
+      "points": 10,
+      "speedBonus": { "mode": "linear", "maxBonus": 5 }
+    },
+    {
+      "id": "funeral-q10",
+      "type": "MULTIPLE_SELECT",
+      "question": "Quali di questi eventi tecnologici sono avvenuti nel 2025?",
+      "options": ["Diffusione massiva AI generativa", "Fine definitiva delle password tradizionali", "Aumento regolamentazioni AI", "Scomparsa degli smartphone"],
+      "correctAnswers": ["Diffusione massiva AI generativa", "Aumento regolamentazioni AI"],
+      "answer_description": "Nel 2025 si è assistito a una diffusione dell'AI generativa e a un rafforzamento delle regolamentazioni, mentre password e smartphone non sono scomparsi.",
+      "timeLimit": 45,
+      "points": 15,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+    {
+      "id": "funeral-q11",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale abitudine digitale è stata ufficialmente sconsigliata da numerose aziende nel 2025?",
+      "options": ["Uso di password deboli", "Backup automatici", "Autenticazione a due fattori", "Aggiornamenti di sistema"],
+      "correctAnswers": ["Uso di password deboli"],
+      "answer_description": "Nel 2025 molte aziende hanno rafforzato le policy contro l'uso di password deboli.",
+      "timeLimit": 20,
+      "points": 10,
+      "speedBonus": { "mode": "linear", "maxBonus": 5 }
+    },
+
+    {
+      "id": "funeral-q12",
+      "type": "ORDERING",
+      "question": "Ordina queste fasi dell'evoluzione dell'AI dal passato al 2025.",
+      "options": ["Chatbot semplici", "Assistenti vocali", "AI generativa", "AI multimodale"],
+      "correctAnswers": ["Chatbot semplici", "Assistenti vocali", "AI generativa", "AI multimodale"],
+      "answer_description": "L'evoluzione segue un percorso storico ben documentato culminato nel 2025 con modelli multimodali.",
+      "timeLimit": 60,
+      "points": 15,
+      "speedBonus": { "mode": "linear", "maxBonus": 10 }
+    },
+
+    {
+      "id": "funeral-q13",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale pratica lavorativa è diminuita nel 2025 rispetto agli anni precedenti?",
+      "options": ["Smart working totale", "Lavoro ibrido", "Meeting online", "Uso di chat aziendali"],
+      "correctAnswers": ["Smart working totale"],
+      "answer_description": "Nel 2025 molte aziende hanno ridotto lo smart working totalmente remoto a favore di modelli ibridi.",
+      "timeLimit": 20,
+      "points": 10,
+      "speedBonus": { "mode": "linear", "maxBonus": 5 }
+    },
+
+    {
+      "id": "funeral-q14",
+      "type": "AUDIO_MULTIPLE_CHOICE",
+      "question": "Ascolta l'audio e indica quale tipo di contenuto digitale rappresenta.",
+      "audioPath": "/audio/funeral-ai-voice.mp3",
+      "options": ["Voce sintetica AI", "Podcast radiofonico", "Audiolibro narrato", "Messaggio vocale"],
+      "correctAnswers": ["Voce sintetica AI"],
+      "answer_description": "L'audio presenta caratteristiche tipiche delle voci AI diffuse nel 2025.",
+      "timeLimit": 30,
+      "points": 12,
+      "speedBonus": { "mode": "linear", "maxBonus": 8 }
+    },
+
+    {
+      "id": "funeral-q15",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale settore ha subito maggiori regolamentazioni globali nel 2025?",
+      "options": ["Intelligenza artificiale", "Streaming musicale", "E-commerce", "Gaming"],
+      "correctAnswers": ["Intelligenza artificiale"],
+      "answer_description": "Nel 2025 governi e istituzioni hanno introdotto numerose normative sull'uso dell'AI.",
+      "timeLimit": 25,
+      "points": 10,
+      "speedBonus": { "mode": "linear", "maxBonus": 5 }
+    }
+  ]
+}

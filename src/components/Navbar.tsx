@@ -43,7 +43,7 @@ export default function Navbar() {
                     </span>
 
                     {/* Emoji cappellino Babbo Natale */}
-                    <span className="text-2xl leading-none -mt-1">🎅</span>
+                    <span className="text-2xl leading-none -mt-1">⚰️</span>
                 </Link>
 
                 {/* Navigation Links */}
