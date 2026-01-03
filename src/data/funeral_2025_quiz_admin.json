@@ -190,7 +190,7 @@
       "id": "funeral-q16",
       "type": "MULTIPLE_CHOICE",
       "question": "Nel 2025 quale tipo di contenuto è cresciuto maggiormente online?",
-      "options": ["Contenuti generati da AI", "Blog personali", "Forum tradizionali", "Newsletter cartacee"],
+      "options": ["Contenuti generati da AI", "Blog personali", "Forum tradizionali", "Video su YouTube"],
       "correctAnswers": ["Contenuti generati da AI"],
       "answerDescription": "Nel 2025 i contenuti generati da AI hanno avuto una crescita significativa.",
       "timeLimit": 20,
@@ -201,7 +201,7 @@
     {
       "id": "funeral-q17",
       "type": "MULTIPLE_CHOICE",
-      "question": "Quale celebre frase è attribuita a Pippo Baudo, scomparso nel 2025?",
+      "question": "Quale celebre frase è attribuita a Pippo Baudo (scomparso nel 2025)?",
       "options": [
         "La televisione entra nelle case, ma deve uscire dalle persone",
         "Il pubblico ha sempre ragione",
