@@ -10,7 +10,7 @@
         "Monica Vitti",
         "Isabella Rossellini"
       ],
-      "answer_description": "Claudia Cardinale, icona del cinema italiano e internazionale, è morta nel settembre 2025, come riportato da fonti biografiche ufficiali.",
+      "answerDescription": "Claudia Cardinale, icona del cinema italiano e internazionale, è morta nel settembre 2025.",
       "timeLimit": 25
     },
     {
@@ -20,180 +20,312 @@
       "options": [
         "Giorgio Armani",
         "Valentino Garavani",
-        "Gianni Versace",
-        "Miuccia Prada"
+        "Miuccia Prada",
+        "Donatella Versace"
       ],
-      "answer_description": "Giorgio Armani, fondatore dell'omonima casa di moda e figura centrale del fashion mondiale, è morto nel settembre 2025.",
+      "answerDescription": "Giorgio Armani, fondatore della maison omonima, è morto nel settembre 2025.",
       "timeLimit": 25
     },
     {
       "id": "funeral-q3",
-      "type": "MULTIPLE_SELECT",
-      "question": "Quali di queste personalità del mondo dello spettacolo sono morte nel 2025?",
-      "options": [
-        "Pippo Baudo",
-        "Renzo Arbore",
-        "Michael Madsen",
-        "Al Pacino"
-      ],
-      "answer_description": "Pippo Baudo e Michael Madsen sono entrambi deceduti nel 2025; Renzo Arbore e Al Pacino risultano invece in vita.",
-      "timeLimit": 45
-    },
-    {
-      "id": "funeral-q4",
       "type": "MULTIPLE_CHOICE",
-      "question": "Quale leggendaria attrice francese è morta nel 2025?",
+      "question": "Quale attrice francese simbolo degli anni ’60 è morta nel 2025?",
       "options": [
         "Brigitte Bardot",
         "Catherine Deneuve",
         "Juliette Binoche",
         "Marion Cotillard"
       ],
-      "answer_description": "Brigitte Bardot, simbolo del cinema francese e icona culturale del Novecento, è morta nel dicembre 2025.",
+      "answerDescription": "Brigitte Bardot, icona culturale e cinematografica francese, è morta nel dicembre 2025.",
+      "timeLimit": 25
+    },
+    {
+      "id": "funeral-q4",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale musicista britannico, figura chiave dell’heavy metal, è morto nel 2025?",
+      "options": [
+        "Ozzy Osbourne",
+        "Mick Jagger",
+        "David Gilmour",
+        "Robert Plant"
+      ],
+      "answerDescription": "Ozzy Osbourne, storico frontman dei Black Sabbath, è morto nel luglio 2025.",
       "timeLimit": 25
     },
     {
       "id": "funeral-q5",
       "type": "MULTIPLE_CHOICE",
-      "question": "Quale musicista britannico noto per la sua carriera rock è morto nel 2025?",
+      "question": "Nel 2025 è morto Papa Francesco. In quale data è avvenuto il decesso?",
       "options": [
-        "Ozzy Osbourne",
-        "Mick Jagger",
-        "David Gilmour",
-        "Paul McCartney"
+        "21 aprile 2025",
+        "15 marzo 2025",
+        "1 giugno 2025",
+        "25 dicembre 2025"
       ],
-      "answer_description": "Ozzy Osbourne, frontman dei Black Sabbath e figura chiave dell'heavy metal, è morto nel luglio 2025.",
-      "timeLimit": 25
+      "answerDescription": "Papa Francesco è morto il 21 aprile 2025 nella residenza di Casa Santa Marta in Vaticano.",
+      "timeLimit": 30
     },
     {
       "id": "funeral-q6",
       "type": "MULTIPLE_CHOICE",
-      "question": "Quale scrittore italiano è morto nel 2025?",
+      "question": "Quale celebre frase è attribuita a Pippo Baudo, scomparso nel 2025?",
       "options": [
-        "Stefano Benni",
-        "Umberto Eco",
-        "Alessandro Baricco",
-        "Erri De Luca"
+        "La televisione entra nelle case, ma deve uscire dalle persone",
+        "Il pubblico ha sempre ragione",
+        "La musica non si giudica",
+        "La TV è solo intrattenimento"
       ],
-      "answer_description": "Stefano Benni, autore satirico e narratore molto amato, è morto nel settembre 2025.",
-      "timeLimit": 25
+      "answerDescription": "Citazione famosa di Pippo Baudo sul ruolo culturale della televisione.",
+      "timeLimit": 30
     },
     {
       "id": "funeral-q7",
-      "type": "ORDERING",
-      "question": "Ordina cronologicamente queste morti illustri del 2025 (dalla più precoce alla più recente).",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Dopo la scomparsa di Claudia Cardinale nel settembre 2025, quale film è stato ricordato come uno dei più iconici della sua carriera?",
       "options": [
-        "Arnaldo Pomodoro",
-        "Michael Madsen",
-        "Ozzy Osbourne",
-        "Brigitte Bardot"
+        "Il Gattopardo",
+        "La dolce vita",
+        "Divorzio all’italiana",
+        "Nuovo Cinema Paradiso"
       ],
-      "answer_description": "Pomodoro è morto a giugno, Madsen a inizio luglio, Osbourne a fine luglio e Bardot a dicembre 2025.",
-      "timeLimit": 60
+      "answerDescription": "Claudia Cardinale interpretò Angelica ne \"Il Gattopardo\" di Luchino Visconti.",
+      "timeLimit": 30
     },
     {
       "id": "funeral-q8",
       "type": "MULTIPLE_CHOICE",
-      "question": "Quale attore hollywoodiano noto per ruoli in film di Tarantino è morto nel 2025?",
-      "options": [
-        "Michael Madsen",
-        "John Travolta",
-        "Harvey Keitel",
-        "Tim Roth"
-      ],
-      "answer_description": "Michael Madsen ha recitato in numerosi film di Quentin Tarantino ed è morto nel luglio 2025.",
-      "timeLimit": 25
-    },
-    {
-      "id": "funeral-q9",
-      "type": "MULTIPLE_CHOICE",
-      "question": "Quale tecnologia di intelligenza artificiale ha visto un'adozione di massa nel 2025?",
+      "question": "Quale tecnologia ha conosciuto una diffusione di massa nel 2025?",
       "options": [
         "Assistenti AI generativi",
         "Realtà virtuale domestica",
         "Auto completamente autonome",
-        "Social network decentralizzati"
+        "Social decentralizzati"
       ],
-      "answer_description": "Nel 2025 l'uso di assistenti AI generativi è diventato mainstream in ambito lavorativo e personale.",
+      "answerDescription": "Nel 2025 gli assistenti AI generativi sono entrati nell’uso quotidiano di milioni di persone.",
       "timeLimit": 25
     },
     {
-      "id": "funeral-q10",
+      "id": "funeral-q9",
       "type": "MULTIPLE_SELECT",
-      "question": "Quali di questi eventi tecnologici sono avvenuti nel 2025?",
+      "question": "Quali di questi temi sono stati tra i più cercati su Google nel 2025?",
       "options": [
-        "Diffusione massiva AI generativa",
-        "Fine definitiva delle password tradizionali",
-        "Aumento regolamentazioni AI",
-        "Scomparsa degli smartphone"
+        "Intelligenza artificiale",
+        "Cambiamento climatico",
+        "NFT",
+        "Metaverso"
       ],
-      "answer_description": "Nel 2025 si è assistito a una diffusione dell'AI generativa e a un rafforzamento delle regolamentazioni, mentre password e smartphone non sono scomparsi.",
-      "timeLimit": 45
+      "answerDescription": "Nel 2025 AI e cambiamento climatico sono stati temi centrali nelle ricerche online.",
+      "timeLimit": 40
+    },
+    {
+      "id": "funeral-q10",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale pratica lavorativa è diminuita nel 2025 rispetto agli anni precedenti?",
+      "options": [
+        "Smart working totale",
+        "Lavoro ibrido",
+        "Call online",
+        "Chat aziendali"
+      ],
+      "answerDescription": "Nel 2025 molte aziende hanno ridotto il lavoro completamente da remoto.",
+      "timeLimit": 20
     },
     {
       "id": "funeral-q11",
       "type": "MULTIPLE_CHOICE",
-      "question": "Quale abitudine digitale è stata ufficialmente sconsigliata da numerose aziende nel 2025?",
+      "question": "Nel 2025, quale sport è stato spesso citato dai media italiani come simbolo di un periodo positivo?",
       "options": [
-        "Uso di password deboli",
-        "Backup automatici",
-        "Autenticazione a due fattori",
-        "Aggiornamenti di sistema"
+        "Tennis",
+        "Basket",
+        "Rugby",
+        "Pallavolo"
       ],
-      "answer_description": "Nel 2025 molte aziende hanno rafforzato le policy contro l'uso di password deboli.",
+      "answerDescription": "Nel 2025 il tennis è stato spesso citato dai media italiani per la sua crescente popolarità.",
       "timeLimit": 20
     },
     {
       "id": "funeral-q12",
       "type": "ORDERING",
-      "question": "Ordina queste fasi dell'evoluzione dell'AI dal passato al 2025.",
+      "question": "Ordina queste fasi dell’evoluzione dell’intelligenza artificiale fino al 2025.",
       "options": [
         "Chatbot semplici",
         "Assistenti vocali",
         "AI generativa",
         "AI multimodale"
       ],
-      "answer_description": "L'evoluzione segue un percorso storico ben documentato culminato nel 2025 con modelli multimodali.",
-      "timeLimit": 60
+      "answerDescription": "L’evoluzione dell’AI ha seguito questo percorso storico.",
+      "timeLimit": 50
     },
     {
       "id": "funeral-q13",
-      "type": "MULTIPLE_CHOICE",
-      "question": "Quale pratica lavorativa è diminuita nel 2025 rispetto agli anni precedenti?",
+      "type": "AUDIO_MULTIPLE_CHOICE",
+      "question": "Ascolta l’audio e indica il titolo di questa hit italiana del 2025, ispirata a una celebre melodia di Manu Chao.",
+      "audioPath": "/audio/2025-a-me-mi-piace.mp3",
       "options": [
-        "Smart working totale",
-        "Lavoro ibrido",
-        "Meeting online",
-        "Uso di chat aziendali"
+        "A me mi piace",
+        "Il filo rosso",
+        "Questa domenica",
+        "Balorda nostalgia"
       ],
-      "answer_description": "Nel 2025 molte aziende hanno ridotto lo smart working totalmente remoto a favore di modelli ibridi.",
-      "timeLimit": 20
+      "answerDescription": "“A me mi piace” di Alfa & Manu Chao riprende la melodia di “Me Gustas Tú” ed è stata una delle hit italiane del 2025.",
+      "timeLimit": 30
     },
     {
       "id": "funeral-q14",
       "type": "AUDIO_MULTIPLE_CHOICE",
-      "question": "Ascolta l'audio e indica quale tipo di contenuto digitale rappresenta.",
-      "audioPath": "/audio/funeral-ai-voice.mp3",
+      "question": "Ascolta l’audio e indica il titolo di questo singolo dance-pop pubblicato da Annalisa nel 2025.",
+      "audioPath": "/audio/2025-esibizionista.mp3",
       "options": [
-        "Voce sintetica AI",
-        "Podcast radiofonico",
-        "Audiolibro narrato",
-        "Messaggio vocale"
+        "Esibizionista",
+        "Ragazza sola",
+        "Bellissima",
+        "Mon amour"
       ],
-      "answer_description": "L'audio presenta caratteristiche tipiche delle voci AI diffuse nel 2025.",
+      "answerDescription": "“Esibizionista” è un singolo di Annalisa del 2025 con sonorità dance-pop ed elettroniche.",
       "timeLimit": 30
     },
     {
       "id": "funeral-q15",
+      "type": "AUDIO_MULTIPLE_CHOICE",
+      "question": "Ascolta l’audio e indica il titolo di questa collaborazione internazionale del 2025 tra Lady Gaga e Bruno Mars.",
+      "audioPath": "/audio/2025-die-with-a-smile.mp3",
+      "options": [
+        "Die With A Smile",
+        "Shallow",
+        "Leave The Door Open",
+        "Always Remember Us This Way"
+      ],
+      "answerDescription": "“Die With A Smile” è una collaborazione del 2025 tra Lady Gaga e Bruno Mars che ha dominato le classifiche globali.",
+      "timeLimit": 30
+    },
+    {
+      "id": "funeral-q16",
       "type": "MULTIPLE_CHOICE",
-      "question": "Quale settore ha subito maggiori regolamentazioni globali nel 2025?",
+      "question": "Quale piattaforma social ha superato il miliardo di utenti attivi nel 2025?",
+      "options": [
+        "TikTok",
+        "X",
+        "Snapchat",
+        "Pinterest"
+      ],
+      "answerDescription": "Nel 2025 TikTok ha superato il miliardo di utenti attivi mensili a livello globale.",
+      "timeLimit": 20
+    },
+    {
+      "id": "funeral-q17",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale parola è entrata stabilmente nel linguaggio comune nel 2025 grazie ai social?",
+      "options": [
+        "POV",
+        "YOLO",
+        "Swag",
+        "Selfie"
+      ],
+      "answerDescription": "POV è diventato un termine di uso comune nel linguaggio digitale nel 2025.",
+      "timeLimit": 20
+    },
+    {
+      "id": "funeral-q18",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Nel 2025 quale evento tecnologico ha fatto discutere maggiormente?",
+      "options": [
+        "Regolamentazione dell’AI",
+        "Chiusura dei social",
+        "Scomparsa degli smartphone",
+        "Ritorno dei telefoni a tastiera"
+      ],
+      "answerDescription": "Nel 2025 la regolamentazione dell’intelligenza artificiale è stata uno dei temi più dibattuti.",
+      "timeLimit": 25
+    },
+    {
+      "id": "funeral-q19",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale abitudine digitale è stata maggiormente scoraggiata nel 2025?",
+      "options": [
+        "Uso di password deboli",
+        "Backup automatici",
+        "Autenticazione a due fattori",
+        "Aggiornamenti di sistema"
+      ],
+      "answerDescription": "Nel 2025 molte aziende hanno rafforzato le policy contro l’uso di password deboli.",
+      "timeLimit": 20
+    },
+    {
+      "id": "funeral-q20",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale settore ha ricevuto più attenzione normativa nel 2025?",
       "options": [
         "Intelligenza artificiale",
+        "Gaming",
         "Streaming musicale",
-        "E-commerce",
-        "Gaming"
+        "E-commerce"
       ],
-      "answer_description": "Nel 2025 governi e istituzioni hanno introdotto numerose normative sull'uso dell'AI.",
+      "answerDescription": "Nel 2025 governi e istituzioni hanno introdotto nuove normative sull’AI.",
+      "timeLimit": 20
+    },
+    {
+      "id": "funeral-q21",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale modalità di lavoro è diventata la più diffusa nel 2025?",
+      "options": [
+        "Ibrida",
+        "Completamente remota",
+        "Solo in presenza",
+        "A progetto"
+      ],
+      "answerDescription": "Nel 2025 il modello di lavoro ibrido è diventato il più adottato.",
+      "timeLimit": 20
+    },
+    {
+      "id": "funeral-q22",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale tema ambientale è stato più discusso nel 2025?",
+      "options": [
+        "Cambiamento climatico",
+        "Inquinamento luminoso",
+        "Acidificazione degli oceani",
+        "Deforestazione urbana"
+      ],
+      "answerDescription": "Nel 2025 il cambiamento climatico è rimasto al centro del dibattito globale.",
+      "timeLimit": 20
+    },
+    {
+      "id": "funeral-q23",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale piattaforma è stata più usata per i video brevi nel 2025?",
+      "options": [
+        "TikTok",
+        "YouTube",
+        "Instagram",
+        "Facebook"
+      ],
+      "answerDescription": "TikTok ha continuato a dominare il formato video breve nel 2025.",
+      "timeLimit": 20
+    },
+    {
+      "id": "funeral-q24",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Nel 2025 quale tipo di contenuto è cresciuto maggiormente online?",
+      "options": [
+        "Contenuti generati da AI",
+        "Blog personali",
+        "Forum tradizionali",
+        "Newsletter cartacee"
+      ],
+      "answerDescription": "Nel 2025 i contenuti generati da AI hanno avuto una crescita significativa.",
+      "timeLimit": 20
+    },
+    {
+      "id": "funeral-q25",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale sensazione ha meglio rappresentato il clima generale del 2025 secondo molti commentatori?",
+      "options": [
+        "Transizione",
+        "Euforia",
+        "Indifferenza",
+        "Stabilità"
+      ],
+      "answerDescription": "Il 2025 è stato spesso descritto come un anno di transizione in ambito tecnologico, sociale e culturale.",
       "timeLimit": 25
     }
   ]
