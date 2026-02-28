@@ -285,8 +285,8 @@ export default function QuizPageContent() {
             { user_id: user.id, category: contestState.category, candidate: selectedVotes[0], points: 12 },
             { user_id: user.id, category: contestState.category, candidate: selectedVotes[1], points: 10 },
             { user_id: user.id, category: contestState.category, candidate: selectedVotes[2], points: 8 },
-            { user_id: user.id, category: contestState.category, candidate: selectedVotes[2], points: 7 },
-            { user_id: user.id, category: contestState.category, candidate: selectedVotes[2], points: 6 },
+            { user_id: user.id, category: contestState.category, candidate: selectedVotes[3], points: 7 },
+            { user_id: user.id, category: contestState.category, candidate: selectedVotes[4], points: 6 },
         ];
 
         const { error } = await supabase.from('contest_votes').insert(rows);
