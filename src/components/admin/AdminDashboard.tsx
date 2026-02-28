@@ -58,10 +58,10 @@ export default function AdminDashboard() {
 
     // Contest UI state
     const [selectedContestToStart, setSelectedContestToStart] = useState<string>(
-        (CONTEST_CATEGORIES[0] as string) ?? 'EULOGY',
+        (CONTEST_CATEGORIES[0] as string) ?? 'PERFORMANCE',
     );
     const [selectedContestToView, setSelectedContestToView] = useState<string>(
-        (CONTEST_CATEGORIES[0] as string) ?? 'EULOGY',
+        (CONTEST_CATEGORIES[0] as string) ?? 'PERFORMANCE',
     );
     const [contestLeaderboard, setContestLeaderboard] = useState<any[]>([]);
     const [loadingContestLeaderboard, setLoadingContestLeaderboard] = useState(false);

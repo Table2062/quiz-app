@@ -31,10 +31,25 @@ export default function QuizPageContent() {
     const [finalLoading, setFinalLoading] = useState(false);
 
     // Contest
+    const [userContestName, setUserContestName] = useState<string>('');
     const [contestCandidates, setContestCandidates] = useState<string[]>([]);
     const [selectedVotes, setSelectedVotes] = useState<string[]>([]);
     const [submitted, setSubmitted] = useState<boolean>(false);
     const [alreadyVoted, setAlreadyVoted] = useState<boolean>(false);
+
+    useEffect(() => {
+        const fetchName = async () => {
+            if (user) {
+                const { data } = await supabase
+                    .from('users')
+                    .select('name')
+                    .eq('id', user.id)
+                    .single();
+                setUserContestName(data?.name ?? null);
+            }
+        };
+        fetchName();
+    }, [user]);
 
     // ==============================================================
     // 🔹 Load quiz + contest state (realtime + polling)
@@ -264,12 +279,14 @@ export default function QuizPageContent() {
     // 🔹 Submit voto contest
     // ==============================================================
     const handleContestVote = async () => {
-        if (!contestState || !user || submitted || selectedVotes.length < 3) return;
+        if (!contestState || !user || submitted || selectedVotes.length < 5) return;
 
         const rows = [
             { user_id: user.id, category: contestState.category, candidate: selectedVotes[0], points: 12 },
             { user_id: user.id, category: contestState.category, candidate: selectedVotes[1], points: 10 },
             { user_id: user.id, category: contestState.category, candidate: selectedVotes[2], points: 8 },
+            { user_id: user.id, category: contestState.category, candidate: selectedVotes[2], points: 7 },
+            { user_id: user.id, category: contestState.category, candidate: selectedVotes[2], points: 6 },
         ];
 
         const { error } = await supabase.from('contest_votes').insert(rows);
@@ -283,8 +300,8 @@ export default function QuizPageContent() {
         const idx = selectedVotes.indexOf(candidate);
         if (idx === -1) return null;
 
-        const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : '🥉';
-        const points = idx === 0 ? 12 : idx === 1 ? 10 : 8;
+        const medal = idx === 0 ? '🥇' : (idx === 1 ? '🥈' : (idx === 2 ? '🥉' : ''));
+        const points = idx === 0 ? 12 : (idx === 1 ? 10 : (idx === 2 ? 8 : (idx === 3 ? 7 : 6)));
 
         return `${medal} ${idx + 1}º (${points} pt)`;
     };
@@ -305,7 +322,7 @@ export default function QuizPageContent() {
             setSelectedVotes((prev) =>
                 prev.includes(candidate)
                     ? prev.filter((c) => c !== candidate)
-                    : prev.length < 3
+                    : prev.length < 5
                         ? [...prev, candidate]
                         : prev,
             );
@@ -314,7 +331,7 @@ export default function QuizPageContent() {
         return (
             <main className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
                 <h1 className="text-2xl font-bold text-center mb-4">
-                    ⚰️ {contestState.category} CONTEST
+                    🎤️ {contestState.category} CONTEST
                 </h1>
 
                 {alreadyVoted && (
@@ -324,37 +341,39 @@ export default function QuizPageContent() {
                 )}
 
                 <ul className="space-y-3">
-                    {contestCandidates.map((candidate) => {
-                        const isSelected = selectedVotes.includes(candidate);
-                        const posLabel = getPositionLabel(candidate);
+                    {contestCandidates
+                        .filter((candidate) => candidate.toLowerCase() != userContestName.toLowerCase())
+                        .map((candidate) => {
+                            const isSelected = selectedVotes.includes(candidate);
+                            const posLabel = getPositionLabel(candidate);
 
-                        return (
-                            <li key={candidate}>
-                                <button
-                                    onClick={() => toggleSelect(candidate)}
-                                    disabled={submitted}
-                                    className={`w-full px-4 py-3 rounded-lg border flex justify-between items-center ${
-                                        isSelected
-                                            ? 'bg-green-500 text-white border-green-500'
-                                            : 'bg-gray-50 hover:bg-gray-100 border-gray-300'
-                                    }`}
-                                >
-                                    <span>{candidate}</span>
-                                    {posLabel && (
-                                        <span className="text-xs font-semibold bg-white/20 px-2 py-1 rounded-md">
-                                            {posLabel}
-                                        </span>
-                                    )}
-                                </button>
-                            </li>
-                        );
-                    })}
+                            return (
+                                <li key={candidate}>
+                                    <button
+                                        onClick={() => toggleSelect(candidate)}
+                                        disabled={submitted}
+                                        className={`w-full px-4 py-3 rounded-lg border flex justify-between items-center ${
+                                            isSelected
+                                                ? 'bg-green-500 text-white border-green-500'
+                                                : 'bg-gray-50 hover:bg-gray-100 border-gray-300'
+                                        }`}
+                                    >
+                                        <span>{candidate}</span>
+                                        {posLabel && (
+                                            <span className="text-xs font-semibold bg-white/20 px-2 py-1 rounded-md">
+                                                {posLabel}
+                                            </span>
+                                        )}
+                                    </button>
+                                </li>
+                            );
+                        })}
                 </ul>
 
                 <div className="text-center mt-6">
                     <button
                         onClick={handleContestVote}
-                        disabled={submitted || selectedVotes.length < 3}
+                        disabled={submitted || selectedVotes.length < 5}
                         className="bg-[var(--color-primary)] text-white px-6 py-3 rounded-md font-semibold disabled:bg-gray-400"
                     >
                         {submitted ? 'Voto registrato' : 'Invia voto'}

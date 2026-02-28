@@ -1,17 +1,17 @@
 {
-  "EULOGY": {
-    "title": "Funeral Eulogy Contest ⚰\uFE0F",
-    "description": "Scegli il miglior elogio funebre della serata! Ogni utente può dare UN solo voto (12 punti).",
-    "maxVotes": 3,
-    "pointsPerVote": [12, 10, 8],
-    "options": ["Chiara", "Davide", "Emilia", "Flavio", "Ginger", "Luca M.", "Pepah"]
+  "PERFORMANCE": {
+    "title": "Sanremo Performance Contest \uD83C\uDFA4",
+    "description": "Scegli la miglior performance della serata! Ogni utente può scegliere 5 partecipanti (12, 10, 8, 7, 6 punti).",
+    "maxVotes": 5,
+    "pointsPerVote": [12, 10, 8, 7, 6],
+    "options": ["Giuseppe", "Chiara", "Davide", "Cristian", "Marco", "Eugenia", "Maurizio", "Simone", "Luigi", "Salvo", "Flavio", "Riccardo", "Hector"]
   },
 
   "COSPLAY": {
-    "title": "Funeral Cosplay Contest ⚰\uFE0F",
-    "description": "Vota i tre migliori cosplay funebri della serata! Ogni utente può scegliere 3 partecipanti (12, 10, 8 punti).",
-    "maxVotes": 3,
-    "pointsPerVote": [12, 10, 8],
-    "options": ["Chiara", "Davide", "Emilia", "Flavio", "Ginger", "Luca M.", "Pepah"]
+    "title": "Sanremo Cosplay Contest \uD83C\uDFA4",
+    "description": "Vota i tre migliori cosplay della serata! Ogni utente può scegliere 5 partecipanti (12, 10, 8, 7, 6 punti).",
+    "maxVotes": 5,
+    "pointsPerVote": [12, 10, 8, 7, 6],
+    "options": ["Giuseppe", "Chiara", "Davide", "Cristian", "Marco", "Eugenia", "Maurizio", "Simone", "Luigi", "Salvo", "Flavio", "Riccardo", "Hector"]
   }
 }
