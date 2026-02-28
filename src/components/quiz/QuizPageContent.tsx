@@ -405,11 +405,24 @@ export default function QuizPageContent() {
     }
 
     // =======================
-    // Nessun quiz / contest
+    // Benvenuto Sanremo
     // =======================
     return (
-        <main className="flex items-center justify-center h-screen text-gray-500">
-            Nessun quiz o contest attivo
+        <main className="flex flex-col items-center justify-center h-screen text-center px-6">
+            <div className="max-w-md">
+                <h1 className="text-4xl font-bold mb-4">
+                    🥳 Benvenuti al Pisacane Party 7.0! 🥳
+                </h1>
+                <p className="text-xl text-gray-700 mb-6">
+                    🤩 First time outdoor 🤩
+                </p>
+                <p className="text-2xl font-semibold text-amber-600 mb-2">
+                    🍕 Buona pizza a tutti! 🍕
+                </p>
+                <p className="text-lg text-gray-600">
+                    Nessun quiz o contest attivo al momento.
+                </p>
+            </div>
         </main>
     );
 }
