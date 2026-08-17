@@ -37,9 +37,8 @@ type ContestConfig = {
 const CONTEST_CATEGORIES = Object.keys(contestConfig as ContestConfig);
 
 export default function AdminDashboard() {
-    const { user, loading } = useAuth();
+    const { user, loading, role } = useAuth();
 
-    const [role, setRole] = useState<string | null>(null);
     const [quizState, setQuizState] = useState<QuizState | null>(null);
     const [contestState, setContestState] = useState<ContestState | null>(null);
     const [questions, setQuestions] = useState<any[]>([]);
@@ -73,18 +72,6 @@ export default function AdminDashboard() {
     const [loadingContestLeaderboard, setLoadingContestLeaderboard] = useState(false);
     const [finalContestLeaderboard, setFinalContestLeaderboard] = useState<any[]>([]);
     const [loadingFinalContest, setLoadingFinalContest] = useState(false);
-
-    // =======================
-    // Ruolo admin
-    // =======================
-    useEffect(() => {
-        const fetchRole = async () => {
-            if (!user) return;
-            const { data } = await supabase.from('users').select('role').eq('id', user.id).single();
-            setRole(data?.role ?? null);
-        };
-        fetchRole();
-    }, [user]);
 
     // =======================
     // Stato quiz + contest + realtime

@@ -74,8 +74,8 @@ export default function QuizPageContent() {
 
         fetchStates();
 
-        const quizChannel = supabase
-            .channel('quiz_state_realtime')
+        const channel = supabase
+            .channel('quiz_and_contest_updates')
             .on(
                 'postgres_changes',
                 { event: '*', schema: 'public', table: 'quiz_state' },
@@ -84,10 +84,6 @@ export default function QuizPageContent() {
                     setQuizState(q?.is_active ? q : null);
                 },
             )
-            .subscribe();
-
-        const contestChannel = supabase
-            .channel('contest_state_realtime')
             .on(
                 'postgres_changes',
                 { event: '*', schema: 'public', table: 'contest_state' },
@@ -98,11 +94,10 @@ export default function QuizPageContent() {
             )
             .subscribe();
 
-        const interval = setInterval(fetchStates, 8000);
+        const interval = setInterval(fetchStates, 15000);
 
         return () => {
-            supabase.removeChannel(quizChannel);
-            supabase.removeChannel(contestChannel);
+            supabase.removeChannel(channel);
             clearInterval(interval);
         };
     }, []);

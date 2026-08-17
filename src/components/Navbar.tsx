@@ -2,30 +2,14 @@
 import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
 import { useAuth } from '@/store/useUserStore';
-import { useEffect, useState } from 'react';
 
 export default function Navbar() {
-    const { user, session, loading } = useAuth();
-    const [role, setRole] = useState<string | null>(null);
+    const { user, session, loading, role } = useAuth();
 
     const handleLogout = async () => {
         await supabase.auth.signOut();
         window.location.replace('/login');
     };
-
-    useEffect(() => {
-        const fetchRole = async () => {
-            if (user) {
-                const { data } = await supabase
-                    .from('users')
-                    .select('role')
-                    .eq('id', user.id)
-                    .single();
-                setRole(data?.role ?? null);
-            }
-        };
-        fetchRole();
-    }, [user]);
 
     if (loading) return null;
 
