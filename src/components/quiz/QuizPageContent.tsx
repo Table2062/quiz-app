@@ -45,7 +45,7 @@ export default function QuizPageContent() {
                     .select('name')
                     .eq('id', user.id)
                     .single();
-                setUserContestName(data?.name ?? null);
+                setUserContestName(data?.name ?? '');
             }
         };
         fetchName();
@@ -342,7 +342,7 @@ export default function QuizPageContent() {
 
                 <ul className="space-y-3">
                     {contestCandidates
-                        .filter((candidate) => candidate.toLowerCase() != userContestName.toLowerCase())
+                        .filter((candidate) => (candidate ?? '').toLowerCase() !== (userContestName ?? '').toLowerCase())
                         .map((candidate) => {
                             const isSelected = selectedVotes.includes(candidate);
                             const posLabel = getPositionLabel(candidate);

@@ -20,7 +20,7 @@
       "type": "MULTIPLE_CHOICE",
       "question": "??? (sono una risposta è corretta)",
       "options": ["opzione1", "opzione2", "opzione3", "opzione4"],
-      "correctAnswers": ["Roma"],
+      "correctAnswers": ["opzione3"],
       "timeLimit": 20,
       "points": 10,
       "speedBonus": {
