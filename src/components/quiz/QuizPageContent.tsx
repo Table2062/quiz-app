@@ -342,7 +342,7 @@ export default function QuizPageContent() {
         };
 
         return (
-            <main className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+            <main className="max-w-xl mx-auto mt-10 p-6 pb-28 bg-white shadow-md rounded-lg">
                 <h1 className="text-2xl font-bold text-center mb-4">
                     🧞 {contestState.category} CONTEST
                 </h1>
@@ -351,6 +351,12 @@ export default function QuizPageContent() {
                     <div className="mb-4 p-3 rounded-md bg-green-100 text-green-800 text-center font-semibold">
                         ✅ Hai già votato
                     </div>
+                )}
+
+                {!submitted && !alreadyVoted && (
+                    <p className="text-center text-sm text-gray-600 mb-3">
+                        Selezionati: {selectedVotes.length}/5
+                    </p>
                 )}
 
                 <ul className="space-y-3">
@@ -383,14 +389,23 @@ export default function QuizPageContent() {
                         })}
                 </ul>
 
-                <div className="text-center mt-6">
-                    <button
-                        onClick={handleContestVote}
-                        disabled={submitted || selectedVotes.length < 5}
-                        className="bg-[var(--color-primary)] text-white px-6 py-3 rounded-md font-semibold disabled:bg-gray-400"
-                    >
-                        {submitted ? 'Voto registrato' : 'Invia voto'}
-                    </button>
+                {/* Barra fissa in fondo allo schermo: il pulsante "Invia voto" resta sempre
+                    visibile su mobile, anche con molte opzioni e la tastiera/scroll lunghi. */}
+                <div
+                    className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 shadow-[0_-2px_10px_rgba(0,0,0,0.08)]"
+                    style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+                >
+                    <div className="max-w-xl mx-auto px-6 py-3 text-center">
+                        <button
+                            onClick={handleContestVote}
+                            disabled={submitted || selectedVotes.length < 5}
+                            className="w-full sm:w-auto bg-[var(--color-primary)] text-white px-6 py-3 rounded-md font-semibold disabled:bg-gray-400"
+                        >
+                            {submitted
+                                ? 'Voto registrato'
+                                : `Invia voto (${selectedVotes.length}/5)`}
+                        </button>
+                    </div>
                 </div>
             </main>
         );
