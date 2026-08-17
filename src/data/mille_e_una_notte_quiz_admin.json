@@ -8,7 +8,7 @@
       "question": "Qual è la capitale dell’Italia?",
       "options": ["Roma", "Milano", "Napoli", "Torino"],
       "correctAnswers": ["Roma"],
-      "timeLimit": 5,
+      "timeLimit": 20,
       "points": 10,
       "speedBonus": {
         "mode": "linear",
@@ -21,7 +21,7 @@
       "question": "??? (sono una risposta è corretta)",
       "options": ["opzione1", "opzione2", "opzione3", "opzione4"],
       "correctAnswers": ["Roma"],
-      "timeLimit": 5,
+      "timeLimit": 20,
       "points": 10,
       "speedBonus": {
         "mode": "linear",
@@ -34,7 +34,7 @@
       "question": "Quali di questi sono linguaggi di programmazione?",
       "options": ["HTML", "Python", "CSS", "Java"],
       "correctAnswers": ["Python", "Java"],
-      "timeLimit": 5,
+      "timeLimit": 20,
       "points": 12,
       "speedBonus": {
         "mode": "linear",
@@ -47,7 +47,7 @@
       "question": "??? (ci sono più risposte corrette)",
       "options": ["Aaa", "Bbbb", "Cc", "D"],
       "correctAnswers": ["Bbbb", "D"],
-      "timeLimit": 5,
+      "timeLimit": 20,
       "points": 12,
       "speedBonus": {
         "mode": "linear",

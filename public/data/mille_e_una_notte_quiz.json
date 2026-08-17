@@ -10,7 +10,7 @@
         "Napoli",
         "Torino"
       ],
-      "timeLimit": 5
+      "timeLimit": 20
     },
     {
       "id": "q2",
@@ -22,7 +22,7 @@
         "opzione3",
         "opzione4"
       ],
-      "timeLimit": 5
+      "timeLimit": 20
     },
     {
       "id": "q3",
@@ -34,7 +34,7 @@
         "CSS",
         "Java"
       ],
-      "timeLimit": 5
+      "timeLimit": 20
     },
     {
       "id": "q4",
@@ -46,7 +46,7 @@
         "Cc",
         "D"
       ],
-      "timeLimit": 5
+      "timeLimit": 20
     }
   ]
 }
