@@ -72,6 +72,7 @@ export default function AdminDashboard() {
     const [loadingContestLeaderboard, setLoadingContestLeaderboard] = useState(false);
     const [finalContestLeaderboard, setFinalContestLeaderboard] = useState<any[]>([]);
     const [loadingFinalContest, setLoadingFinalContest] = useState(false);
+    const channelRef = useRef<any>(null);
 
     // =======================
     // Stato quiz + contest + realtime
@@ -111,7 +112,20 @@ export default function AdminDashboard() {
                         (payload.new as ContestState)?.is_active ? (payload.new as ContestState) : null,
                     ),
             )
+            // Canale "broadcast" a bassissima latenza (in aggiunta a postgres_changes, che rimane
+            // come fallback affidabile basato su DB): evita il ritardo dovuto alla replica WAL di
+            // Postgres quando si avvia/avanza un quiz o un contest con molti dispositivi collegati.
+            .on('broadcast', { event: 'quiz_state' }, (payload) =>
+                setQuizState((payload.payload as QuizState)?.is_active ? (payload.payload as QuizState) : null),
+            )
+            .on('broadcast', { event: 'contest_state' }, (payload) =>
+                setContestState(
+                    (payload.payload as ContestState)?.is_active ? (payload.payload as ContestState) : null,
+                ),
+            )
             .subscribe();
+
+        channelRef.current = channel;
 
         return () => {
             mounted = false;
@@ -325,6 +339,7 @@ export default function AdminDashboard() {
                 .single();
 
             setQuizState(data);
+            channelRef.current?.send({ type: 'broadcast', event: 'quiz_state', payload: data });
             setTimeLeft(mod.default.questions[0].timeLimit ?? 30);
             setActiveTab('question');
         } catch (err) {
@@ -344,6 +359,7 @@ export default function AdminDashboard() {
                 .update({ is_active: false, ended_at: new Date().toISOString() })
                 .eq('id', quizState.id);
             setQuizState(null);
+            channelRef.current?.send({ type: 'broadcast', event: 'quiz_state', payload: null });
             setInactiveTab('leaderboard');
             setActiveTab('leaderboard');
             return;
@@ -364,6 +380,7 @@ export default function AdminDashboard() {
             .single();
 
         setQuizState(data);
+        channelRef.current?.send({ type: 'broadcast', event: 'quiz_state', payload: data });
     };
 
     // =======================
@@ -390,6 +407,7 @@ export default function AdminDashboard() {
             if (error) throw error;
 
             setContestState(data);
+            channelRef.current?.send({ type: 'broadcast', event: 'contest_state', payload: data });
             setContestLeaderboard([]);
         } catch (err) {
             console.error('Errore avvio contest:', err);
@@ -408,6 +426,7 @@ export default function AdminDashboard() {
             if (error) throw error;
 
             setContestState(null);
+            channelRef.current?.send({ type: 'broadcast', event: 'contest_state', payload: null });
             setInactiveTab('contest');
         } catch (err) {
             console.error('Errore chiusura contest:', err);

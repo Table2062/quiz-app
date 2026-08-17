@@ -92,6 +92,17 @@ export default function QuizPageContent() {
                     setContestState(c?.is_active ? c : null);
                 },
             )
+            // Canale "broadcast" a bassissima latenza (in aggiunta a postgres_changes, che rimane
+            // come fallback affidabile basato su DB): evita il ritardo dovuto alla replica WAL di
+            // Postgres quando l'admin avvia/avanza un quiz o un contest con molti dispositivi collegati.
+            .on('broadcast', { event: 'quiz_state' }, (payload) => {
+                const q = payload.payload as any;
+                setQuizState(q?.is_active ? q : null);
+            })
+            .on('broadcast', { event: 'contest_state' }, (payload) => {
+                const c = payload.payload as ContestState;
+                setContestState(c?.is_active ? c : null);
+            })
             .subscribe();
 
         const interval = setInterval(fetchStates, 15000);
