@@ -26,6 +26,7 @@ export default function QuizPageContent() {
     const [timeLeft, setTimeLeft] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
     const [clockOffsetMs, setClockOffsetMs] = useState<number>(0);
+    const [showScrollHint, setShowScrollHint] = useState<boolean>(false);
 
     useEffect(() => {
         getServerClockOffsetMs().then(setClockOffsetMs);
@@ -289,6 +290,32 @@ export default function QuizPageContent() {
     }, [contestState?.category, user?.id]);
 
     // ==============================================================
+    // 🔹 Indicatore "scorri per altre opzioni" nel contest
+    // ==============================================================
+    useEffect(() => {
+        if (!contestState) {
+            setShowScrollHint(false);
+            return;
+        }
+
+        const checkScroll = () => {
+            const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const distanceFromBottom = scrollableHeight - window.scrollY;
+            // Nasconde il suggerimento quando l'utente è arrivato (quasi) in fondo alla lista
+            setShowScrollHint(distanceFromBottom > 40);
+        };
+
+        checkScroll();
+        window.addEventListener('scroll', checkScroll, { passive: true });
+        window.addEventListener('resize', checkScroll);
+
+        return () => {
+            window.removeEventListener('scroll', checkScroll);
+            window.removeEventListener('resize', checkScroll);
+        };
+    }, [contestState, contestCandidates.length]);
+
+    // ==============================================================
     // 🔹 Submit voto contest
     // ==============================================================
     const handleContestVote = async () => {
@@ -388,6 +415,16 @@ export default function QuizPageContent() {
                             );
                         })}
                 </ul>
+
+                {/* Suggerimento "scorri per altre opzioni": visibile finché l'utente non
+                    raggiunge il fondo della lista, per far capire che ci sono altri candidati. */}
+                {showScrollHint && !submitted && (
+                    <div className="fixed bottom-20 left-0 right-0 z-30 flex justify-center pointer-events-none">
+                        <span className="bg-black/70 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-md animate-bounce">
+                            ▼ Scorri per altre opzioni
+                        </span>
+                    </div>
+                )}
 
                 {/* Barra fissa in fondo allo schermo: il pulsante "Invia voto" resta sempre
                     visibile su mobile, anche con molte opzioni e la tastiera/scroll lunghi. */}
