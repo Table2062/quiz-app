@@ -7,10 +7,12 @@ interface UserState {
     session: any;
     loading: boolean;
     role: string | null;
+    roleLoaded: boolean;
     setUser: (user: any) => void;
     setSession: (session: any) => void;
     setLoading: (loading: boolean) => void;
     setRole: (role: string | null) => void;
+    setRoleLoaded: (roleLoaded: boolean) => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -18,10 +20,12 @@ export const useUserStore = create<UserState>((set) => ({
     session: null,
     loading: true,
     role: null,
+    roleLoaded: false,
     setUser: (user: any) => set({ user }),
     setSession: (session) => set({ session }),
     setLoading: (loading) => set({ loading }),
     setRole: (role) => set({ role }),
+    setRoleLoaded: (roleLoaded) => set({ roleLoaded }),
 }));
 
 // Evita di rifare la stessa query "role" per ogni componente che monta useAuth()
@@ -31,7 +35,8 @@ export const useUserStore = create<UserState>((set) => ({
 let roleFetchUserId: string | null = null;
 
 export function useAuth() {
-    const { user, session, loading, role, setUser, setSession, setLoading, setRole } = useUserStore();
+    const { user, session, loading, role, roleLoaded, setUser, setSession, setLoading, setRole, setRoleLoaded } =
+        useUserStore();
 
     useEffect(() => {
         const init = async () => {
@@ -59,6 +64,7 @@ export function useAuth() {
         if (!user) {
             roleFetchUserId = null;
             setRole(null);
+            setRoleLoaded(false);
             return;
         }
 
@@ -72,8 +78,9 @@ export function useAuth() {
             .single()
             .then(({ data }) => {
                 setRole(data?.role ?? null);
+                setRoleLoaded(true);
             });
-    }, [user, setRole]);
+    }, [user, setRole, setRoleLoaded]);
 
-    return { user, session, loading, role };
+    return { user, session, loading, role, roleLoaded };
 }

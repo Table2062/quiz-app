@@ -2,7 +2,6 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/store/useUserStore';
-import { supabase } from '@/lib/supabaseClient';
 
 interface ProtectedRouteProps {
     children: React.ReactNode;
@@ -11,49 +10,37 @@ interface ProtectedRouteProps {
 
 export default function ProtectedRoute({ children, requiredRole }: ProtectedRouteProps) {
     const router = useRouter();
-    const { user, loading } = useAuth();
-    const [role, setRole] = useState<string | null>(null);
+    const { user, loading, role, roleLoaded } = useAuth();
     const [checking, setChecking] = useState(true);
 
     useEffect(() => {
-        const verifyAccess = async () => {
-            if (loading) return;
+        if (loading) return;
 
-            // 🔹 1. Non loggato → redirect a /login
-            if (!user) {
-                router.replace('/login');
-                return;
-            }
+        // 🔹 1. Non loggato → redirect a /login
+        if (!user) {
+            router.replace('/login');
+            return;
+        }
 
-            // 🔹 2. Recupera ruolo solo se necessario
-            const { data, error } = await supabase
-                .from('users')
-                .select('role')
-                .eq('id', user.id)
-                .single();
+        // 🔹 2. Aspetta che il ruolo (già recuperato/condiviso da useAuth) sia disponibile
+        if (!roleLoaded) return;
 
-            if (error) {
-                console.error('Errore recupero ruolo:', error.message);
-                router.replace('/login');
-                return;
-            }
+        // 🔹 Ruolo non trovato → stesso comportamento di errore di prima (redirect a /login)
+        if (!role) {
+            router.replace('/login');
+            return;
+        }
 
-            const userRole = data?.role;
-            setRole(userRole);
+        // 🔹 3. Ruolo non valido per la pagina
+        if (requiredRole && role !== requiredRole) {
+            if (role === 'admin') router.replace('/admin');
+            else if (role === 'user') router.replace('/quiz');
+            else router.replace('/');
+            return;
+        }
 
-            // 🔹 3. Ruolo non valido per la pagina
-            if (requiredRole && userRole !== requiredRole) {
-                if (userRole === 'admin') router.replace('/admin');
-                else if (userRole === 'user') router.replace('/quiz');
-                else router.replace('/');
-                return;
-            }
-
-            setChecking(false);
-        };
-
-        verifyAccess();
-    }, [user, loading, requiredRole, router]);
+        setChecking(false);
+    }, [user, loading, role, roleLoaded, requiredRole, router]);
 
     if (loading || checking) {
         return (
