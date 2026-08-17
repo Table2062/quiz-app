@@ -425,13 +425,13 @@ export default function AdminDashboard() {
     // Render
     // =======================
     if (loading || isLoading)
-        return <div className="p-6 text-center text-gray-500">Caricamento...</div>;
+        return <div className="p-6 text-center text-gray-300">Caricamento...</div>;
 
     if (role !== 'admin') {
         return (
-            <div className="p-6 text-center">
+            <div className="p-6 text-center text-white">
                 <p className="text-lg">Accesso negato 🚫</p>
-                <Link href="/login" className="text-[var(--color-primary)] hover:underline">
+                <Link href="/login" className="text-[var(--color-secondary)] hover:underline">
                     Torna al login
                 </Link>
             </div>
@@ -444,16 +444,16 @@ export default function AdminDashboard() {
     if (!quizState && !contestState) {
         return (
             <main className="max-w-4xl mx-auto p-6">
-                <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">Dashboard Admin</h1>
+                <h1 className="text-2xl font-bold text-white mb-6 text-center">Dashboard Admin</h1>
 
-                <div className="flex justify-center mb-6 border-b border-gray-300">
+                <div className="flex justify-center mb-6 border-b border-white/20">
                     {['start', 'leaderboard', 'contest'].map((tab) => (
                         <button
                             key={tab}
                             className={`px-4 py-2 font-medium ${
                                 inactiveTab === tab
-                                    ? 'border-b-2 border-[var(--color-primary)] text-[var(--color-primary)]'
-                                    : 'text-gray-600 hover:text-gray-800'
+                                    ? 'border-b-2 border-[var(--color-secondary)] text-[var(--color-secondary)]'
+                                    : 'text-gray-300 hover:text-white'
                             }`}
                             onClick={() => setInactiveTab(tab as any)}
                         >
@@ -637,16 +637,16 @@ export default function AdminDashboard() {
 
         return (
             <main className="max-w-4xl mx-auto p-6">
-                <h1 className="text-2xl font-bold text-gray-800 mb-6">Dashboard Admin</h1>
+                <h1 className="text-2xl font-bold text-white mb-6">Dashboard Admin</h1>
 
-                <div className="flex mb-6 border-b border-gray-300">
+                <div className="flex mb-6 border-b border-white/20">
                     {['question', 'leaderboard'].map((tab) => (
                         <button
                             key={tab}
                             className={`px-4 py-2 font-medium ${
                                 activeTab === tab
-                                    ? 'border-b-2 border-[var(--color-primary)] text-[var(--color-primary)]'
-                                    : 'text-gray-600 hover:text-gray-800'
+                                    ? 'border-b-2 border-[var(--color-secondary)] text-[var(--color-secondary)]'
+                                    : 'text-gray-300 hover:text-white'
                             }`}
                             onClick={() => setActiveTab(tab as any)}
                         >
@@ -747,7 +747,7 @@ export default function AdminDashboard() {
 
         return (
             <main className="max-w-4xl mx-auto p-6">
-                <h1 className="text-2xl font-bold text-gray-800 mb-6">Dashboard Admin</h1>
+                <h1 className="text-2xl font-bold text-white mb-6">Dashboard Admin</h1>
 
                 <div className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
                     <p className="text-sm text-green-600 mb-2">

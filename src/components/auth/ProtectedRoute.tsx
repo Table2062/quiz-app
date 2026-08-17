@@ -57,7 +57,7 @@ export default function ProtectedRoute({ children, requiredRole }: ProtectedRout
 
     if (loading || checking) {
         return (
-            <div className="flex items-center justify-center h-screen text-gray-600">
+            <div className="flex items-center justify-center h-screen text-gray-300">
                 Verifica accesso...
             </div>
         );

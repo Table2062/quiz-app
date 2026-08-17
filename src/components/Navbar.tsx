@@ -41,8 +41,8 @@ export default function Navbar() {
                         Quiz<span className="text-[var(--color-primary)]">App</span>
                     </span>
 
-                    {/* Emoji lampada magica delle Mille e una Notte */}
-                    <span className="text-2xl leading-none -mt-1">🪔</span>
+                    {/* Emoji genio delle Mille e una Notte */}
+                    <span className="text-2xl leading-none -mt-1">🧞</span>
                 </Link>
 
                 {/* Navigation Links */}

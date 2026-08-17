@@ -310,7 +310,7 @@ export default function QuizPageContent() {
     // 🔹 UI STATES
     // ==============================================================
     if (loading) {
-        return <main className="flex items-center justify-center h-screen">Caricamento…</main>;
+        return <main className="flex items-center justify-center h-screen text-white">Caricamento…</main>;
     }
 
     // =======================
@@ -408,18 +408,18 @@ export default function QuizPageContent() {
     // Benvenuto Le Mille e una Notte
     // =======================
     return (
-        <main className="flex flex-col items-center justify-center h-screen text-center px-6">
-            <div className="max-w-md">
-                <h1 className="text-4xl font-bold mb-4">
+        <main className="flex flex-col items-center justify-center min-h-screen text-center px-4 sm:px-6">
+            <div className="max-w-md w-full">
+                <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-white break-words">
                     🎉 Buon Compleanno Peppe! 🎉
                 </h1>
-                <p className="text-xl text-gray-700 mb-6">
+                <p className="text-lg sm:text-xl text-gray-200 mb-6">
                     ✨ Le Mille e una Notte ✨
                 </p>
-                <p className="text-2xl font-semibold text-amber-600 mb-2">
+                <p className="text-xl sm:text-2xl font-semibold text-[var(--color-secondary)] mb-2">
                     🧞 Che la magia della notte abbia inizio! 🧞
                 </p>
-                <p className="text-lg text-gray-600">
+                <p className="text-base sm:text-lg text-gray-300">
                     Nessun quiz o contest attivo al momento.
                 </p>
             </div>
