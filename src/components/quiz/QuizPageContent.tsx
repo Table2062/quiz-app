@@ -475,13 +475,13 @@ export default function QuizPageContent() {
     return (
         <main className="flex flex-col items-center justify-center min-h-screen text-center px-4 sm:px-6">
             <div className="max-w-md w-full">
-                <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-white break-words">
+                <h1 className="text-2xl sm:text-4xl font-bold mb-4 text-white break-words">
                     🎉 Buon Compleanno Pepah! 🎉
                 </h1>
-                <p className="text-2xl sm:text-3xl font-semibold text-gray-100 mb-6">
+                <p className="text-xl sm:text-3xl font-semibold text-gray-100 mb-6">
                     ✨ Le Mille e una Notte ✨
                 </p>
-                <p className="text-xl sm:text-2xl font-semibold text-[var(--color-secondary)] mb-2">
+                <p className="text-lg sm:text-2xl font-semibold text-[var(--color-secondary)] mb-2">
                     🧞 Che la magia della notte abbia inizio! 🧞
                 </p>
                 <p className="text-base sm:text-lg text-gray-300">
