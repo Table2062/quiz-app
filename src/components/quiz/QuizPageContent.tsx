@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabaseClient';
 import { Question } from '@/types/QuestionProps';
 import { renderQuestion } from '@/utils/renderQuestion';
 import { useAuth } from '@/store/useUserStore';
+import { getServerClockOffsetMs, nowSynced } from '@/utils/serverClock';
 
 interface ContestState {
     id: string;
@@ -24,6 +25,11 @@ export default function QuizPageContent() {
 
     const [timeLeft, setTimeLeft] = useState<number>(0);
     const [loading, setLoading] = useState<boolean>(true);
+    const [clockOffsetMs, setClockOffsetMs] = useState<number>(0);
+
+    useEffect(() => {
+        getServerClockOffsetMs().then(setClockOffsetMs);
+    }, []);
 
     // Punteggio finale quiz
     const [finalPoints, setFinalPoints] = useState<number | null>(null);
@@ -154,7 +160,7 @@ export default function QuizPageContent() {
         const duration = quizState.question_duration * 1000;
 
         const tick = () => {
-            const now = Date.now();
+            const now = nowSynced(clockOffsetMs);
             const diff = Math.max(0, Math.floor((start + duration - now) / 1000));
             setTimeLeft(diff);
         };
@@ -167,6 +173,7 @@ export default function QuizPageContent() {
         quizState?.question_start,
         quizState?.question_duration,
         questions,
+        clockOffsetMs,
     ]);
 
     // ==============================================================

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { supabase } from '@/lib/supabaseClient';
 import { useAuth } from '@/store/useUserStore';
 import contestConfig from '@/data/contest_options.json';
+import { getServerClockOffsetMs, nowSynced } from '@/utils/serverClock';
 
 interface ContestState {
     id: string;
@@ -45,6 +46,11 @@ export default function AdminDashboard() {
     const [timeLeft, setTimeLeft] = useState<number>(0);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [showAudio, setShowAudio] = useState(false);
+    const [clockOffsetMs, setClockOffsetMs] = useState<number>(0);
+
+    useEffect(() => {
+        getServerClockOffsetMs().then(setClockOffsetMs);
+    }, []);
 
     const [activeTab, setActiveTab] = useState<'question' | 'leaderboard'>('question');
     const [inactiveTab, setInactiveTab] = useState<'start' | 'leaderboard' | 'contest'>('start');
@@ -152,13 +158,13 @@ export default function AdminDashboard() {
 
         const interval = setInterval(() => {
             const start = new Date(quizState.question_start).getTime();
-            const elapsed = Math.floor((Date.now() - start) / 1000);
+            const elapsed = Math.floor((nowSynced(clockOffsetMs) - start) / 1000);
             const remaining = Math.max(quizState.question_duration - elapsed, 0);
             setTimeLeft(remaining);
         }, 1000);
 
         return () => clearInterval(interval);
-    }, [quizState]);
+    }, [quizState, clockOffsetMs]);
 
     // =======================
     // Audio
@@ -324,7 +330,7 @@ export default function AdminDashboard() {
                 .insert({
                     quiz_name: selectedQuiz,
                     current_question: 0,
-                    question_start: new Date().toISOString(),
+                    question_start: new Date(nowSynced(clockOffsetMs)).toISOString(),
                     question_duration: mod.default.questions[0].timeLimit ?? 30,
                     is_active: true,
                 })
@@ -363,7 +369,7 @@ export default function AdminDashboard() {
             .from('quiz_state')
             .update({
                 current_question: next,
-                question_start: new Date().toISOString(),
+                question_start: new Date(nowSynced(clockOffsetMs)).toISOString(),
                 question_duration: nextDuration,
             })
             .eq('id', quizState.id)
