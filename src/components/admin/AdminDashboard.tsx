@@ -53,15 +53,15 @@ export default function AdminDashboard() {
     const [lastLeaderboard, setLastLeaderboard] = useState<any[]>([]);
     const [loadingLeaderboard, setLoadingLeaderboard] = useState(false);
 
-    const [availableQuizzes] = useState(['sanremo_2026_quiz']);
+    const [availableQuizzes] = useState(['mille_e_una_notte_quiz']);
     const [selectedQuiz, setSelectedQuiz] = useState(availableQuizzes[0]);
 
     // Contest UI state
     const [selectedContestToStart, setSelectedContestToStart] = useState<string>(
-        (CONTEST_CATEGORIES[0] as string) ?? 'PERFORMANCE',
+        (CONTEST_CATEGORIES[0] as string) ?? 'COSPLAY',
     );
     const [selectedContestToView, setSelectedContestToView] = useState<string>(
-        (CONTEST_CATEGORIES[0] as string) ?? 'PERFORMANCE',
+        (CONTEST_CATEGORIES[0] as string) ?? 'COSPLAY',
     );
     const [contestLeaderboard, setContestLeaderboard] = useState<any[]>([]);
     const [loadingContestLeaderboard, setLoadingContestLeaderboard] = useState(false);

@@ -1,17 +1,9 @@
 {
-  "PERFORMANCE": {
-    "title": "Sanremo Performance Contest \uD83C\uDFA4",
-    "description": "Scegli la miglior performance della serata! Ogni utente può scegliere 5 partecipanti (12, 10, 8, 7, 6 punti).",
-    "maxVotes": 5,
-    "pointsPerVote": [12, 10, 8, 7, 6],
-    "options": ["Giuseppe", "Chiara", "Davide", "Cristian", "Marco", "Eugenia", "Maurizio", "Simone", "Luigi", "Salvo", "Flavio", "Riccardo", "Hector"]
-  },
-
   "COSPLAY": {
-    "title": "Sanremo Cosplay Contest \uD83C\uDFA4",
-    "description": "Vota i tre migliori cosplay della serata! Ogni utente può scegliere 5 partecipanti (12, 10, 8, 7, 6 punti).",
+    "title": "Le Mille e una Notte - Cosplay Contest \uD83E\uDDDE",
+    "description": "Vota i migliori cosplay della serata! Ogni utente può scegliere 5 partecipanti (12, 10, 8, 7, 6 punti).",
     "maxVotes": 5,
     "pointsPerVote": [12, 10, 8, 7, 6],
-    "options": ["Giuseppe", "Chiara", "Davide", "Cristian", "Marco", "Eugenia", "Maurizio", "Simone", "Luigi", "Salvo", "Flavio", "Riccardo", "Hector"]
+    "options": ["Alessio", "Andrea", "Chiara", "Claudio", "Davide D.E.", "Davide F.", "Elena", "Eugenia", "Federico", "Flavio", "Francesco", "Giuseppe", "Ignazio", "Irene", "Josy", "Luigi", "Marianna", "Martina", "Maurizio", "Noemi", "Serena", "Sonia"]
   }
 }

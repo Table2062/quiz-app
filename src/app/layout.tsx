@@ -14,14 +14,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: 'Quiz App',
-    description: 'Web app quiz interattiva con Supabase e Next.js',
+    title: 'Le Mille e una Notte - Quiz Party',
+    description: 'Web app quiz interattiva a tema "Le Mille e una Notte" con Supabase e Next.js',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="it">
-            <body className="bg-gray-50">
+            <body>
                 <Navbar />
                 {children}
             </body>

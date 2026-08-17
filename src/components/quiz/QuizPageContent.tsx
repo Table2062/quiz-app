@@ -331,7 +331,7 @@ export default function QuizPageContent() {
         return (
             <main className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
                 <h1 className="text-2xl font-bold text-center mb-4">
-                    🎤️ {contestState.category} CONTEST
+                    🧞 {contestState.category} CONTEST
                 </h1>
 
                 {alreadyVoted && (
@@ -405,19 +405,19 @@ export default function QuizPageContent() {
     }
 
     // =======================
-    // Benvenuto Sanremo
+    // Benvenuto Le Mille e una Notte
     // =======================
     return (
         <main className="flex flex-col items-center justify-center h-screen text-center px-6">
             <div className="max-w-md">
                 <h1 className="text-4xl font-bold mb-4">
-                    🥳 Benvenuti al Pisacane Party 7.0! 🥳
+                    🎉 Buon Compleanno Peppe! 🎉
                 </h1>
                 <p className="text-xl text-gray-700 mb-6">
-                    🤩 First time outdoor 🤩
+                    ✨ Le Mille e una Notte ✨
                 </p>
                 <p className="text-2xl font-semibold text-amber-600 mb-2">
-                    🍕 Buona pizza a tutti! 🍕
+                    🧞 Che la magia della notte abbia inizio! 🧞
                 </p>
                 <p className="text-lg text-gray-600">
                     Nessun quiz o contest attivo al momento.

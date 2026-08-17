@@ -30,10 +30,9 @@ export default function Navbar() {
     if (loading) return null;
 
     return (
-        <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+        <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-[var(--color-secondary)] shadow-sm">
             <nav className="max-w-7xl mx-auto flex justify-between items-center px-6 py-3">
-                {/* Logo */}
-                {/* Logo con cappellino di Natale */}
+                {/* Logo a tema "Le Mille e una Notte" */}
                 <Link
                     href="/"
                     className="flex items-center gap-2 text-xl font-semibold text-gray-900 tracking-tight hover:text-[var(--color-primary)] transition-colors"
@@ -42,8 +41,8 @@ export default function Navbar() {
                         Quiz<span className="text-[var(--color-primary)]">App</span>
                     </span>
 
-                    {/* Emoji cappellino Babbo Natale */}
-                    <span className="text-2xl leading-none -mt-1">🎤️</span>
+                    {/* Emoji lampada magica delle Mille e una Notte */}
+                    <span className="text-2xl leading-none -mt-1">🪔</span>
                 </Link>
 
                 {/* Navigation Links */}

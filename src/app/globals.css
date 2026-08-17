@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
 :root {
-    --color-primary: #2563eb;
-    --color-primary-hover: #1e40af;
-    --color-secondary: #16a34a;
-    --color-secondary-hover: #15803d;
-    --color-bg: #f9fafb;
+    /* Tema "Le Mille e una Notte": notte stellata, velluto viola e oro */
+    --color-primary: #7c3aed;
+    --color-primary-hover: #5b21b6;
+    --color-secondary: #d4af37;
+    --color-secondary-hover: #b8860b;
+    --color-bg: #14102b;
     --color-text: #1f2937;
     --color-border: #e5e7eb;
     --color-placeholder: #6b7280;
@@ -15,10 +16,17 @@
 
 body {
     background-color: var(--color-bg);
+    background-image:
+        radial-gradient(circle at 15% 20%, rgba(212, 175, 55, 0.18) 0%, transparent 35%),
+        radial-gradient(circle at 85% 10%, rgba(124, 58, 237, 0.35) 0%, transparent 45%),
+        radial-gradient(circle at 50% 90%, rgba(124, 58, 237, 0.25) 0%, transparent 50%),
+        linear-gradient(160deg, #1e1541 0%, #14102b 55%, #2b1b4a 100%);
+    background-attachment: fixed;
     color: var(--color-text);
     font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
 }
 
 input, button {

@@ -1,0 +1,58 @@
+{
+  "name": "Mille e una notte - Pepa's birthday",
+  "title": "Mille e una notte - Pepa's birthday",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Qual è la capitale dell’Italia?",
+      "options": ["Roma", "Milano", "Napoli", "Torino"],
+      "correctAnswers": ["Roma"],
+      "timeLimit": 5,
+      "points": 10,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 5
+      }
+    },
+    {
+      "id": "q2",
+      "type": "MULTIPLE_CHOICE",
+      "question": "??? (sono una risposta è corretta)",
+      "options": ["opzione1", "opzione2", "opzione3", "opzione4"],
+      "correctAnswers": ["Roma"],
+      "timeLimit": 5,
+      "points": 10,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 5
+      }
+    },
+    {
+      "id": "q3",
+      "type": "MULTIPLE_SELECT",
+      "question": "Quali di questi sono linguaggi di programmazione?",
+      "options": ["HTML", "Python", "CSS", "Java"],
+      "correctAnswers": ["Python", "Java"],
+      "timeLimit": 5,
+      "points": 12,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 6
+      }
+    },
+    {
+      "id": "q4",
+      "type": "MULTIPLE_SELECT",
+      "question": "??? (ci sono più risposte corrette)",
+      "options": ["Aaa", "Bbbb", "Cc", "D"],
+      "correctAnswers": ["Bbbb", "D"],
+      "timeLimit": 5,
+      "points": 12,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 6
+      }
+    }
+  ]
+}
