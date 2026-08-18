@@ -1,0 +1,706 @@
+{
+  "name": "L'Enigma del Sultano",
+  "title": "L'Enigma del Sultano – Quiz Personale",
+  "questions": [
+    {
+      "id": "sultano-q1",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Sono nato alle 12:55. Qual è il mio ascendente?",
+      "options": [
+        "Leone",
+        "Scorpione",
+        "Bilancia",
+        "Sagittario"
+      ],
+      "correctAnswers": [
+        "Bilancia"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q2",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Qual era il mio cartone animato preferito?",
+      "options": [
+        "Pokémon",
+        "Sailor Moon",
+        "Detective Conan",
+        "Dragon Ball"
+      ],
+      "correctAnswers": [
+        "Sailor Moon"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q3",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Qual era il mio lavoro dei sogni da bambino?",
+      "options": [
+        "Astronauta",
+        "Medico",
+        "Vigile del fuoco",
+        "Insegnante"
+      ],
+      "correctAnswers": [
+        "Vigile del fuoco"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q4",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Qual era l'unico sport a cui volevo giocare?",
+      "options": [
+        "Basket",
+        "Tennis",
+        "Pallavolo",
+        "Calcio"
+      ],
+      "correctAnswers": [
+        "Pallavolo"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q5",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Da bambino odiavo...",
+      "options": [
+        "La montagna",
+        "La moto",
+        "Il mare",
+        "La bici"
+      ],
+      "correctAnswers": [
+        "Il mare"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q6",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale ruolo politico ricoprii in terza media dopo essere stato eletto rappresentante d'istituto?",
+      "options": [
+        "Assessore junior",
+        "Presidente del Consiglio d'Istituto",
+        "Sindaco dei ragazzi",
+        "Baby consigliere comunale"
+      ],
+      "correctAnswers": [
+        "Baby consigliere comunale"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q7",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Qual era il mio soprannome durante l'adolescenza?",
+      "options": [
+        "Il Filosofo",
+        "L'Avvocato",
+        "Il Sindaco",
+        "Il Professore"
+      ],
+      "correctAnswers": [
+        "L'Avvocato"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q8",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Qual era la mia materia preferita al liceo?",
+      "options": [
+        "Latino",
+        "Storia",
+        "Filosofia",
+        "Chimica"
+      ],
+      "correctAnswers": [
+        "Chimica"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q9",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Qual è stata la mia prima cotta?",
+      "options": [
+        "Marco",
+        "Mirko",
+        "Paolo",
+        "Luca"
+      ],
+      "correctAnswers": [
+        "Paolo"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q10",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Qual è stata la mia prima esperienza lavorativa?",
+      "options": [
+        "Lidl",
+        "McDonald's",
+        "Amazon",
+        "Poste Italiane"
+      ],
+      "correctAnswers": [
+        "Amazon"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q11",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Dopo la Juventus, cronologicamente, per quale squadra simpatizzo?",
+      "options": [
+        "Napoli",
+        "Milan",
+        "Inter",
+        "Roma"
+      ],
+      "correctAnswers": [
+        "Roma"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q12",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Qual è stato il mio primo viaggio all'estero dopo la maturità?",
+      "options": [
+        "Amsterdam",
+        "Berlino",
+        "Praga",
+        "Düsseldorf"
+      ],
+      "correctAnswers": [
+        "Düsseldorf"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q13",
+      "type": "MULTIPLE_CHOICE",
+      "question": "La prima persona con cui feci coming out fu...",
+      "options": [
+        "Enrico",
+        "Luisa",
+        "Flavio",
+        "Alessio"
+      ],
+      "correctAnswers": [
+        "Flavio"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q14",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Dove nacque Sailor Mars?",
+      "options": [
+        "Malta",
+        "Torino",
+        "Barcellona",
+        "Marsala"
+      ],
+      "correctAnswers": [
+        "Malta"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q15",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Chi mi diede il nome 'Sailor Mars_ala'?",
+      "options": [
+        "Serena",
+        "Josephine",
+        "Flavio",
+        "La Diamond"
+      ],
+      "correctAnswers": [
+        "La Diamond"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q16",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Oltre a Sailor Mars, qual è il personaggio di Sailor Moon in cui mi sono identificato di più?",
+      "options": [
+        "Sailor Venus",
+        "Sailor Mercury",
+        "Sailor Jupiter",
+        "Sailor Uranus"
+      ],
+      "correctAnswers": [
+        "Sailor Mercury"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q17",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Dopo Sailor Moon, qual era il mio anime preferito da bambino?",
+      "options": [
+        "Pokémon",
+        "Beyblade",
+        "Digimon",
+        "Yu-Gi-Oh!"
+      ],
+      "correctAnswers": [
+        "Digimon"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q18",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Qual è il mio anime preferito da adulto?",
+      "options": [
+        "Naruto",
+        "Death Note",
+        "Attack on Titan",
+        "One Piece"
+      ],
+      "correctAnswers": [
+        "Naruto"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q19",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Dopo Il Trono di Spade, qual è la mia serie TV preferita?",
+      "options": [
+        "La casa di carta",
+        "Lost",
+        "Grey's Anatomy",
+        "Breaking Bad"
+      ],
+      "correctAnswers": [
+        "Grey's Anatomy"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q20",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale cantante ascolto più spesso dopo Annalisa?",
+      "options": [
+        "Emma",
+        "Mahmood",
+        "Marco Mengoni",
+        "Madame"
+      ],
+      "correctAnswers": [
+        "Mahmood"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q21",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Chi è la mia Principessa Disney preferita?",
+      "options": [
+        "Belle",
+        "Mulan",
+        "Ariel",
+        "Pocahontas"
+      ],
+      "correctAnswers": [
+        "Pocahontas"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q22",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale serie TV ho rivisto più volte?",
+      "options": [
+        "Modern Family",
+        "Grey's Anatomy",
+        "Friends",
+        "Il Trono di Spade"
+      ],
+      "correctAnswers": [
+        "Il Trono di Spade"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q23",
+      "type": "MULTIPLE_CHOICE",
+      "question": "In Harry Potter, a quale Casa apparterrei?",
+      "options": [
+        "Tassorosso",
+        "Corvonero",
+        "Grifondoro",
+        "Serpeverde"
+      ],
+      "correctAnswers": [
+        "Corvonero"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q24",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale animale sceglierei come Patronus?",
+      "options": [
+        "Aquila",
+        "Lupo",
+        "Corvo",
+        "Volpe"
+      ],
+      "correctAnswers": [
+        "Aquila"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q25",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Non amo i tatuaggi ma, se dovessi farne uno, sarebbe: 'Zaldrīzes buzdari iksos daor.' Cosa significa?",
+      "options": [
+        "Il fuoco purifica ogni cosa",
+        "Il sangue del drago è eterno",
+        "Un drago non è uno schiavo",
+        "Il drago domina il cielo"
+      ],
+      "correctAnswers": [
+        "Un drago non è uno schiavo"
+      ],
+      "timeLimit": 20,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q26",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Ho Marte, Mercurio e Venere in quale segno zodiacale?",
+      "options": [
+        "Vergine",
+        "Scorpione",
+        "Bilancia",
+        "Leone"
+      ],
+      "correctAnswers": [
+        "Vergine"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q27",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Chi è la mia mentore politica e culturale?",
+      "options": [
+        "Laura Boldrini",
+        "Elly Schlein",
+        "Emma Bonino",
+        "Michela Murgia"
+      ],
+      "correctAnswers": [
+        "Michela Murgia"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q28",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Che ruolo ricopro in Arcigay Trapani?",
+      "options": [
+        "Consigliere e delegato nazionale",
+        "Tesoriere",
+        "Segretario e addetto stampa",
+        "Presidente"
+      ],
+      "correctAnswers": [
+        "Consigliere e delegato nazionale"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q29",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Se pensi a me, quale città e squadra di calcio ti viene in mente?",
+      "options": [
+        "Palermo",
+        "Torino",
+        "Cagliari",
+        "Bologna"
+      ],
+      "correctAnswers": [
+        "Cagliari"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q30",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Qual è il piatto che preparo meglio?",
+      "options": [
+        "Carbonara",
+        "Lasagne",
+        "Cous cous",
+        "Dahl di lenticchie"
+      ],
+      "correctAnswers": [
+        "Dahl di lenticchie"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q31",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Qual è il mio dolce preferito?",
+      "options": [
+        "Millefoglie",
+        "Tiramisù",
+        "Cannolo siciliano",
+        "Cheesecake"
+      ],
+      "correctAnswers": [
+        "Tiramisù"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q32",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Dopo la relazione con Enrico, per chi ho provato qualcosa?",
+      "options": [
+        "Ivan",
+        "Luca",
+        "Vittorio",
+        "Raffaele"
+      ],
+      "correctAnswers": [
+        "Ivan"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q33",
+      "type": "MULTIPLE_CHOICE",
+      "question": "L'ultima persona non italiana con cui ho avuto un rapporto era di quale nazione?",
+      "options": [
+        "Mozambico",
+        "Brasile",
+        "Portogallo",
+        "Spagna"
+      ],
+      "correctAnswers": [
+        "Mozambico"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q34",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale viaggio ricordo con più affetto?",
+      "options": [
+        "Copenaghen",
+        "Madrid",
+        "Manchester",
+        "Malta"
+      ],
+      "correctAnswers": [
+        "Copenaghen"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    },
+    {
+      "id": "sultano-q35",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Qual è il mio motto?",
+      "options": [
+        "La felicità è una scelta.",
+        "Rutto libero e potere alle lesbiche",
+        "Chi non risica non rosica.",
+        "Vivi e lascia vivere."
+      ],
+      "correctAnswers": [
+        "Rutto libero e potere alle lesbiche"
+      ],
+      "timeLimit": 15,
+      "points": 5,
+      "speedBonus": {
+        "mode": "linear",
+        "maxBonus": 3
+      }
+    }
+  ]
+}
