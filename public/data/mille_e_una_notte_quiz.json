@@ -1,52 +1,266 @@
 {
+  "name": "La Prova del Gran Visir",
+  "title": "La Prova del Gran Visir – Mille e una Notte Quiz",
   "questions": [
     {
-      "id": "q1",
+      "id": "granvisir-q1",
       "type": "MULTIPLE_CHOICE",
-      "question": "Qual è la capitale dell’Italia?",
+      "question": "Chi racconta le storie delle Mille e una Notte?",
       "options": [
-        "Roma",
-        "Milano",
-        "Napoli",
-        "Torino"
+        "Fatima",
+        "Morgiana",
+        "Yasmin",
+        "Sherazade"
       ],
-      "timeLimit": 20
+      "answerDescription": "Questa domanda riguarda la cornice narrativa delle Mille e una Notte.",
+      "timeLimit": 15
     },
     {
-      "id": "q2",
+      "id": "granvisir-q2",
       "type": "MULTIPLE_CHOICE",
-      "question": "??? (sono una risposta è corretta)",
+      "question": "Perché Sherazade racconta una storia ogni notte?",
       "options": [
-        "opzione1",
-        "opzione2",
-        "opzione3",
-        "opzione4"
+        "Per evitare di essere uccisa dal re",
+        "Per diventare regina",
+        "Per divertire il popolo",
+        "Per insegnare ai bambini"
       ],
+      "answerDescription": "Questa domanda riguarda la cornice narrativa delle Mille e una Notte.",
+      "timeLimit": 15
+    },
+    {
+      "id": "granvisir-q3",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Come si chiama il re della cornice narrativa delle Mille e una Notte?",
+      "options": [
+        "Harun al-Rashid",
+        "Shahriyār",
+        "Saladino",
+        "Solimano"
+      ],
+      "answerDescription": "Questa domanda riguarda la cornice narrativa delle Mille e una Notte.",
+      "timeLimit": 15
+    },
+    {
+      "id": "granvisir-q4",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale tecnica usa Sherazade per salvarsi notte dopo notte?",
+      "options": [
+        "Canta al re delle poesie",
+        "Gli propone enigmi",
+        "Interrompe ogni racconto nel momento più avvincente",
+        "Gli offre doni preziosi"
+      ],
+      "answerDescription": "Questa domanda riguarda la cornice narrativa delle Mille e una Notte.",
+      "timeLimit": 15
+    },
+    {
+      "id": "granvisir-q5",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale formula apre la caverna dei quaranta ladroni?",
+      "options": [
+        "Porta d'Oriente",
+        "Abracadabra",
+        "Apriti Sesamo",
+        "Sim Sala Bim"
+      ],
+      "answerDescription": "La formula è 'Apriti Sesamo'. La storia di Alì Babà e dei quaranta ladroni è una delle più celebri associate alle Mille e una Notte, anche se la sua presenza nelle prime traduzioni europee ha una storia editoriale complessa.",
+      "timeLimit": 15
+    },
+    {
+      "id": "granvisir-q6",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Perché il Ramadan cambia data ogni anno rispetto al calendario solare?",
+      "options": [
+        "Perché viene deciso dal sultano di ogni Paese",
+        "Perché dipende dall'equinozio di primavera",
+        "Perché il calendario islamico è basato sui cicli lunari",
+        "Perché segue il ciclo delle stagioni nel deserto"
+      ],
+      "answerDescription": "Il calendario islamico è lunare: i suoi mesi seguono i cicli della Luna e l'anno è più corto di quello solare. Per questo il Ramadan arretra ogni anno di circa dieci o undici giorni nel calendario gregoriano.",
       "timeLimit": 20
     },
     {
-      "id": "q3",
-      "type": "MULTIPLE_SELECT",
-      "question": "Quali di questi sono linguaggi di programmazione?",
+      "id": "granvisir-q7",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Nell'Impero Ottomano, quale figura religiosa rappresentava la massima autorità spirituale dell'Islam?",
       "options": [
-        "HTML",
-        "Python",
-        "CSS",
-        "Java"
+        "Qadi",
+        "Califfo",
+        "Imam",
+        "Derviscio"
       ],
+      "answerDescription": "La risposta è Califfo. Il titolo indicava il capo della comunità islamica e, in determinati periodi storici, fu associato anche alla figura del sultano ottomano.",
+      "timeLimit": 15
+    },
+    {
+      "id": "granvisir-q8",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale città è spesso descritta come il cuore dei racconti delle Mille e una Notte?",
+      "options": [
+        "Baghdad",
+        "Damasco",
+        "Gerusalemme",
+        "Il Cairo"
+      ],
+      "answerDescription": "La città è Baghdad. Nella cornice delle Mille e una Notte è il centro del regno di Shahriyār, mentre molte storie sono ambientate in un mondo molto più ampio, dal Medio Oriente all'Asia meridionale.",
+      "timeLimit": 15
+    },
+    {
+      "id": "granvisir-q9",
+      "type": "MULTIPLE_CHOICE",
+      "question": "La città di Baghdad oggi è la capitale di...",
+      "options": [
+        "Siria",
+        "Iran",
+        "Iraq",
+        "Giordania"
+      ],
+      "answerDescription": "Baghdad è la capitale dell'Iraq. La città sorge sul fiume Tigri ed è stata per secoli uno dei grandi centri culturali e intellettuali del mondo islamico.",
+      "timeLimit": 15
+    },
+    {
+      "id": "granvisir-q10",
+      "type": "MULTIPLE_CHOICE",
+      "question": "L'antica Persia corrisponde principalmente all'attuale...",
+      "options": [
+        "Iran",
+        "Turchia",
+        "Arabia Saudita",
+        "Libano"
+      ],
+      "answerDescription": "La Persia corrisponde principalmente all'attuale Iran. Il nome Iran deriva dal persiano e divenne ufficiale nelle relazioni internazionali nel XX secolo.",
+      "timeLimit": 15
+    },
+    {
+      "id": "granvisir-q11",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale mare bagna la costa orientale della Penisola Arabica?",
+      "options": [
+        "Mar Caspio",
+        "Mar Nero",
+        "Golfo Persico",
+        "Mar Rosso"
+      ],
+      "answerDescription": "La risposta è Golfo Persico. È uno specchio d'acqua strategico che separa la Penisola Arabica dall'Iran e comunica con il Golfo di Oman attraverso lo stretto di Hormuz.",
+      "timeLimit": 15
+    },
+    {
+      "id": "granvisir-q12",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Qual è il deserto più grande della Penisola Arabica?",
+      "options": [
+        "Gobi",
+        "Rub' al-Khali",
+        "Karakum",
+        "Sahara"
+      ],
+      "answerDescription": "Il Rub' al-Khali, cioè il 'Quarto Vuoto', è il deserto più grande della Penisola Arabica e uno dei più vasti deserti sabbiosi del pianeta. Si estende soprattutto in Arabia Saudita, ma tocca anche Oman, Emirati Arabi Uniti e Yemen.",
       "timeLimit": 20
     },
     {
-      "id": "q4",
-      "type": "MULTIPLE_SELECT",
-      "question": "??? (ci sono più risposte corrette)",
+      "id": "granvisir-q13",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale fiume attraversa Baghdad?",
       "options": [
-        "Aaa",
-        "Bbbb",
-        "Cc",
-        "D"
+        "Giordano",
+        "Nilo",
+        "Eufrate",
+        "Tigri"
       ],
-      "timeLimit": 20
+      "answerDescription": "Baghdad è attraversata dal Tigri. Il fiume è uno dei due grandi corsi d'acqua della Mesopotamia insieme all'Eufrate, una regione il cui nome significa proprio 'terra tra i fiumi'.",
+      "timeLimit": 15
+    },
+    {
+      "id": "granvisir-q14",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Come si chiama il mercato tradizionale delle città arabe?",
+      "options": [
+        "Bazaar",
+        "Medina",
+        "Caravanserraglio",
+        "Suq (Souk)"
+      ],
+      "answerDescription": "Il termine è suq, o souk. Indica un mercato tradizionale caratterizzato da botteghe e commerci, spesso organizzati per categorie di prodotti.",
+      "timeLimit": 15
+    },
+    {
+      "id": "granvisir-q15",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale animale è chiamato 'la nave del deserto'?",
+      "options": [
+        "Dromedario",
+        "Lama",
+        "Cavallo arabo",
+        "Cammello"
+      ],
+      "answerDescription": "La risposta è dromedario, il camelide con una sola gobba. Il soprannome 'nave del deserto' richiama la sua capacità di trasportare persone e merci affrontando lunghi percorsi in ambienti aridi.",
+      "timeLimit": 15
+    },
+    {
+      "id": "granvisir-q16",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale attrice interpreta Jasmine nel film live action Aladdin del 2019?",
+      "options": [
+        "Zendaya",
+        "Lily Collins",
+        "Naomi Scott",
+        "Emma Watson"
+      ],
+      "answerDescription": "Jasmine è interpretata da Naomi Scott. Per il film Disney del 2019 il personaggio ricevette anche una canzone originale, 'Speechless', pensata per darle un ruolo più autonomo rispetto al film animato.",
+      "timeLimit": 15
+    },
+    {
+      "id": "granvisir-q17",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale ingrediente è alla base della tahina?",
+      "options": [
+        "Mandorle",
+        "Semi di sesamo",
+        "Ceci",
+        "Pistacchi"
+      ],
+      "answerDescription": "La tahina è una crema ottenuta dai semi di sesamo, tostati e macinati. È un ingrediente fondamentale in numerose preparazioni mediorientali, tra cui l'hummus.",
+      "timeLimit": 15
+    },
+    {
+      "id": "granvisir-q18",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Nel film Disney Aladdin, qual è il nome del pappagallo di Jafar?",
+      "options": [
+        "Rajah",
+        "Abu",
+        "Iago",
+        "Zazu"
+      ],
+      "answerDescription": "Il pappagallo di Jafar è Iago. Il nome è un omaggio al personaggio Iago dell'Otello di Shakespeare, anche se nel film Disney il pappagallo ha una personalità decisamente più comica.",
+      "timeLimit": 15
+    },
+    {
+      "id": "granvisir-q19",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale di questi Paesi NON fa parte della Penisola Arabica?",
+      "options": [
+        "Arabia Saudita",
+        "Libano",
+        "Yemen",
+        "Oman"
+      ],
+      "answerDescription": "Il Libano non fa parte della Penisola Arabica: si trova sulla costa orientale del Mediterraneo, nel Levante. Oman, Yemen e Arabia Saudita occupano invece territori della penisola.",
+      "timeLimit": 15
+    },
+    {
+      "id": "granvisir-q20",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Quale di queste città è attraversata dal Bosforo, lo stretto che divide Europa e Asia?",
+      "options": [
+        "Beirut",
+        "Istanbul",
+        "Atene",
+        "Il Cairo"
+      ],
+      "answerDescription": "È Istanbul. La città è costruita su due continenti e il Bosforo attraversa proprio il suo territorio, rendendola una delle grandi città transcontinentali del mondo.",
+      "timeLimit": 15
     }
   ]
 }
