@@ -15,11 +15,11 @@
       "correctAnswers": [
         "Bilancia"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -35,11 +35,11 @@
       "correctAnswers": [
         "Sailor Moon"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -55,11 +55,11 @@
       "correctAnswers": [
         "Vigile del fuoco"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -75,11 +75,11 @@
       "correctAnswers": [
         "Pallavolo"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -95,11 +95,11 @@
       "correctAnswers": [
         "Il mare"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -115,11 +115,11 @@
       "correctAnswers": [
         "Baby consigliere comunale"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -135,11 +135,11 @@
       "correctAnswers": [
         "L'Avvocato"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -155,11 +155,11 @@
       "correctAnswers": [
         "Chimica"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -175,11 +175,11 @@
       "correctAnswers": [
         "Paolo"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -195,11 +195,11 @@
       "correctAnswers": [
         "Amazon"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -215,11 +215,11 @@
       "correctAnswers": [
         "Roma"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -235,11 +235,11 @@
       "correctAnswers": [
         "Düsseldorf"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -255,11 +255,11 @@
       "correctAnswers": [
         "Flavio"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -275,11 +275,11 @@
       "correctAnswers": [
         "Malta"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -295,11 +295,11 @@
       "correctAnswers": [
         "La Diamond"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -315,11 +315,11 @@
       "correctAnswers": [
         "Sailor Mercury"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -335,11 +335,11 @@
       "correctAnswers": [
         "Digimon"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -355,11 +355,11 @@
       "correctAnswers": [
         "Naruto"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -375,11 +375,11 @@
       "correctAnswers": [
         "Grey's Anatomy"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -395,11 +395,11 @@
       "correctAnswers": [
         "Mahmood"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -415,11 +415,11 @@
       "correctAnswers": [
         "Pocahontas"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -435,11 +435,11 @@
       "correctAnswers": [
         "Il Trono di Spade"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -455,11 +455,11 @@
       "correctAnswers": [
         "Corvonero"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -475,11 +475,11 @@
       "correctAnswers": [
         "Aquila"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -499,7 +499,7 @@
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -515,11 +515,11 @@
       "correctAnswers": [
         "Vergine"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -535,11 +535,11 @@
       "correctAnswers": [
         "Michela Murgia"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -555,11 +555,11 @@
       "correctAnswers": [
         "Consigliere e delegato nazionale"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -575,11 +575,11 @@
       "correctAnswers": [
         "Cagliari"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -595,11 +595,11 @@
       "correctAnswers": [
         "Dahl di lenticchie"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -615,11 +615,11 @@
       "correctAnswers": [
         "Tiramisù"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -635,11 +635,11 @@
       "correctAnswers": [
         "Ivan"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -655,11 +655,11 @@
       "correctAnswers": [
         "Mozambico"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -675,11 +675,11 @@
       "correctAnswers": [
         "Copenaghen"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     },
     {
@@ -695,11 +695,11 @@
       "correctAnswers": [
         "Rutto libero e potere alle lesbiche"
       ],
-      "timeLimit": 15,
+      "timeLimit": 20,
       "points": 5,
       "speedBonus": {
         "mode": "linear",
-        "maxBonus": 3
+        "maxBonus": 6
       }
     }
   ]
