@@ -12,7 +12,7 @@
         "Bilancia",
         "Sagittario"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q2",
@@ -24,7 +24,7 @@
         "Detective Conan",
         "Dragon Ball"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q3",
@@ -36,7 +36,7 @@
         "Vigile del fuoco",
         "Insegnante"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q4",
@@ -48,7 +48,7 @@
         "Pallavolo",
         "Calcio"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q5",
@@ -60,7 +60,7 @@
         "Il mare",
         "La bici"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q6",
@@ -72,7 +72,7 @@
         "Sindaco dei ragazzi",
         "Baby consigliere comunale"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q7",
@@ -84,7 +84,7 @@
         "Il Sindaco",
         "Il Professore"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q8",
@@ -96,7 +96,7 @@
         "Filosofia",
         "Chimica"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q9",
@@ -108,7 +108,7 @@
         "Paolo",
         "Luca"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q10",
@@ -120,7 +120,7 @@
         "Amazon",
         "Poste Italiane"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q11",
@@ -132,7 +132,7 @@
         "Inter",
         "Roma"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q12",
@@ -144,7 +144,7 @@
         "Praga",
         "Düsseldorf"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q13",
@@ -156,7 +156,7 @@
         "Flavio",
         "Alessio"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q14",
@@ -168,7 +168,7 @@
         "Barcellona",
         "Marsala"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q15",
@@ -180,7 +180,7 @@
         "Flavio",
         "La Diamond"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q16",
@@ -192,7 +192,7 @@
         "Sailor Jupiter",
         "Sailor Uranus"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q17",
@@ -204,7 +204,7 @@
         "Digimon",
         "Yu-Gi-Oh!"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q18",
@@ -216,7 +216,7 @@
         "Attack on Titan",
         "One Piece"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q19",
@@ -228,7 +228,7 @@
         "Grey's Anatomy",
         "Breaking Bad"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q20",
@@ -240,7 +240,7 @@
         "Marco Mengoni",
         "Madame"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q21",
@@ -252,7 +252,7 @@
         "Ariel",
         "Pocahontas"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q22",
@@ -264,7 +264,7 @@
         "Friends",
         "Il Trono di Spade"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q23",
@@ -276,7 +276,7 @@
         "Grifondoro",
         "Serpeverde"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q24",
@@ -288,7 +288,7 @@
         "Corvo",
         "Volpe"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q25",
@@ -312,7 +312,7 @@
         "Bilancia",
         "Leone"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q27",
@@ -324,7 +324,7 @@
         "Emma Bonino",
         "Michela Murgia"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q28",
@@ -336,7 +336,7 @@
         "Segretario e addetto stampa",
         "Presidente"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q29",
@@ -348,7 +348,7 @@
         "Cagliari",
         "Bologna"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q30",
@@ -360,7 +360,7 @@
         "Cous cous",
         "Dahl di lenticchie"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q31",
@@ -372,7 +372,7 @@
         "Cannolo siciliano",
         "Cheesecake"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q32",
@@ -384,7 +384,7 @@
         "Vittorio",
         "Raffaele"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q33",
@@ -396,7 +396,7 @@
         "Portogallo",
         "Spagna"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q34",
@@ -408,7 +408,7 @@
         "Manchester",
         "Malta"
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "sultano-q35",
@@ -420,7 +420,7 @@
         "Chi non risica non rosica.",
         "Vivi e lascia vivere."
       ],
-      "timeLimit": 15
+      "timeLimit": 20
     }
   ]
 }

@@ -13,7 +13,7 @@
         "Sherazade"
       ],
       "answerDescription": "Questa domanda riguarda la cornice narrativa delle Mille e una Notte.",
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "granvisir-q2",
@@ -26,7 +26,7 @@
         "Per insegnare ai bambini"
       ],
       "answerDescription": "Questa domanda riguarda la cornice narrativa delle Mille e una Notte.",
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "granvisir-q3",
@@ -39,7 +39,7 @@
         "Solimano"
       ],
       "answerDescription": "Questa domanda riguarda la cornice narrativa delle Mille e una Notte.",
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "granvisir-q4",
@@ -52,7 +52,7 @@
         "Gli offre doni preziosi"
       ],
       "answerDescription": "Questa domanda riguarda la cornice narrativa delle Mille e una Notte.",
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "granvisir-q5",
@@ -65,7 +65,7 @@
         "Sim Sala Bim"
       ],
       "answerDescription": "La formula è 'Apriti Sesamo'. La storia di Alì Babà e dei quaranta ladroni è una delle più celebri associate alle Mille e una Notte, anche se la sua presenza nelle prime traduzioni europee ha una storia editoriale complessa.",
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "granvisir-q6",
@@ -91,7 +91,7 @@
         "Derviscio"
       ],
       "answerDescription": "La risposta è Califfo. Il titolo indicava il capo della comunità islamica e, in determinati periodi storici, fu associato anche alla figura del sultano ottomano.",
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "granvisir-q8",
@@ -104,7 +104,7 @@
         "Il Cairo"
       ],
       "answerDescription": "La città è Baghdad. Nella cornice delle Mille e una Notte è il centro del regno di Shahriyār, mentre molte storie sono ambientate in un mondo molto più ampio, dal Medio Oriente all'Asia meridionale.",
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "granvisir-q9",
@@ -117,7 +117,7 @@
         "Giordania"
       ],
       "answerDescription": "Baghdad è la capitale dell'Iraq. La città sorge sul fiume Tigri ed è stata per secoli uno dei grandi centri culturali e intellettuali del mondo islamico.",
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "granvisir-q10",
@@ -130,7 +130,7 @@
         "Libano"
       ],
       "answerDescription": "La Persia corrisponde principalmente all'attuale Iran. Il nome Iran deriva dal persiano e divenne ufficiale nelle relazioni internazionali nel XX secolo.",
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "granvisir-q11",
@@ -143,7 +143,7 @@
         "Mar Rosso"
       ],
       "answerDescription": "La risposta è Golfo Persico. È uno specchio d'acqua strategico che separa la Penisola Arabica dall'Iran e comunica con il Golfo di Oman attraverso lo stretto di Hormuz.",
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "granvisir-q12",
@@ -169,7 +169,7 @@
         "Tigri"
       ],
       "answerDescription": "Baghdad è attraversata dal Tigri. Il fiume è uno dei due grandi corsi d'acqua della Mesopotamia insieme all'Eufrate, una regione il cui nome significa proprio 'terra tra i fiumi'.",
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "granvisir-q14",
@@ -182,7 +182,7 @@
         "Suq (Souk)"
       ],
       "answerDescription": "Il termine è suq, o souk. Indica un mercato tradizionale caratterizzato da botteghe e commerci, spesso organizzati per categorie di prodotti.",
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "granvisir-q15",
@@ -195,7 +195,7 @@
         "Cammello"
       ],
       "answerDescription": "La risposta è dromedario, il camelide con una sola gobba. Il soprannome 'nave del deserto' richiama la sua capacità di trasportare persone e merci affrontando lunghi percorsi in ambienti aridi.",
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "granvisir-q16",
@@ -208,7 +208,7 @@
         "Emma Watson"
       ],
       "answerDescription": "Jasmine è interpretata da Naomi Scott. Per il film Disney del 2019 il personaggio ricevette anche una canzone originale, 'Speechless', pensata per darle un ruolo più autonomo rispetto al film animato.",
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "granvisir-q17",
@@ -221,7 +221,7 @@
         "Pistacchi"
       ],
       "answerDescription": "La tahina è una crema ottenuta dai semi di sesamo, tostati e macinati. È un ingrediente fondamentale in numerose preparazioni mediorientali, tra cui l'hummus.",
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "granvisir-q18",
@@ -234,7 +234,7 @@
         "Zazu"
       ],
       "answerDescription": "Il pappagallo di Jafar è Iago. Il nome è un omaggio al personaggio Iago dell'Otello di Shakespeare, anche se nel film Disney il pappagallo ha una personalità decisamente più comica.",
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "granvisir-q19",
@@ -247,7 +247,7 @@
         "Oman"
       ],
       "answerDescription": "Il Libano non fa parte della Penisola Arabica: si trova sulla costa orientale del Mediterraneo, nel Levante. Oman, Yemen e Arabia Saudita occupano invece territori della penisola.",
-      "timeLimit": 15
+      "timeLimit": 20
     },
     {
       "id": "granvisir-q20",
@@ -260,7 +260,7 @@
         "Il Cairo"
       ],
       "answerDescription": "È Istanbul. La città è costruita su due continenti e il Bosforo attraversa proprio il suo territorio, rendendola una delle grandi città transcontinentali del mondo.",
-      "timeLimit": 15
+      "timeLimit": 20
     }
   ]
 }
