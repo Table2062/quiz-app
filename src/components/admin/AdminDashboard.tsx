@@ -58,7 +58,7 @@ export default function AdminDashboard() {
     const [lastLeaderboard, setLastLeaderboard] = useState<any[]>([]);
     const [loadingLeaderboard, setLoadingLeaderboard] = useState(false);
 
-    const [availableQuizzes] = useState(['mille_e_una_notte_quiz']);
+    const [availableQuizzes] = useState(['mille_e_una_notte_quiz', 'sultano_quiz']);
     const [selectedQuiz, setSelectedQuiz] = useState(availableQuizzes[0]);
 
     // Contest UI state
