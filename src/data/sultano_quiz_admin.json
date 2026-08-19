@@ -5,7 +5,7 @@
     {
       "id": "sultano-q1",
       "type": "MULTIPLE_CHOICE",
-      "question": "👶 Ⅰ. Le Origini\n\nSono nato alle 12:55. Qual è il mio ascendente?",
+      "question": "👶 Ⅰ. Le Origini: Sono nato alle 12:55. Qual è il mio ascendente?",
       "options": [
         "Leone",
         "Scorpione",
@@ -26,7 +26,7 @@
     {
       "id": "sultano-q2",
       "type": "MULTIPLE_CHOICE",
-      "question": "👶 Ⅰ. Le Origini\n\nQual era il mio cartone animato preferito?",
+      "question": "👶 Ⅰ. Le Origini: Qual era il mio cartone animato preferito?",
       "options": [
         "Pokémon",
         "Sailor Moon",
@@ -47,7 +47,7 @@
     {
       "id": "sultano-q3",
       "type": "MULTIPLE_CHOICE",
-      "question": "👶 Ⅰ. Le Origini\n\nQual era il mio lavoro dei sogni da bambino?",
+      "question": "👶 Ⅰ. Le Origini: Qual era il mio lavoro dei sogni da bambino?",
       "options": [
         "Astronauta",
         "Medico",
@@ -68,7 +68,7 @@
     {
       "id": "sultano-q4",
       "type": "MULTIPLE_CHOICE",
-      "question": "👶 Ⅰ. Le Origini\n\nQual era l'unico sport a cui volevo giocare?",
+      "question": "👶 Ⅰ. Le Origini: Qual era l'unico sport a cui volevo giocare?",
       "options": [
         "Basket",
         "Tennis",
@@ -89,7 +89,7 @@
     {
       "id": "sultano-q5",
       "type": "MULTIPLE_CHOICE",
-      "question": "👶 Ⅰ. Le Origini\n\nDa bambino odiavo...",
+      "question": "👶 Ⅰ. Le Origini: Da bambino odiavo...",
       "options": [
         "La montagna",
         "La moto",
@@ -110,7 +110,7 @@
     {
       "id": "sultano-q6",
       "type": "MULTIPLE_CHOICE",
-      "question": "📚 II. Gli anni della scuola\n\nQuale ruolo politico ricoprii in terza media dopo essere stato eletto rappresentante d'istituto?",
+      "question": "📚 II. Gli anni della scuola: Quale ruolo politico ricoprii in terza media dopo essere stato eletto rappresentante d'istituto?",
       "options": [
         "Assessore junior",
         "Presidente del Consiglio d'Istituto",
@@ -131,7 +131,7 @@
     {
       "id": "sultano-q7",
       "type": "MULTIPLE_CHOICE",
-      "question": "📚 II. Gli anni della scuola\n\nQual era il mio soprannome durante l'adolescenza?",
+      "question": "📚 II. Gli anni della scuola: Qual era il mio soprannome durante l'adolescenza?",
       "options": [
         "Il Filosofo",
         "L'Avvocato",
@@ -152,7 +152,7 @@
     {
       "id": "sultano-q8",
       "type": "MULTIPLE_CHOICE",
-      "question": "📚 II. Gli anni della scuola\n\nQual era la mia materia preferita al liceo?",
+      "question": "📚 II. Gli anni della scuola: Qual era la mia materia preferita al liceo?",
       "options": [
         "Latino",
         "Storia",
@@ -173,7 +173,7 @@
     {
       "id": "sultano-q9",
       "type": "MULTIPLE_CHOICE",
-      "question": "📚 II. Gli anni della scuola\n\nQual è stata la mia prima cotta?",
+      "question": "📚 II. Gli anni della scuola: Qual è stata la mia prima cotta?",
       "options": [
         "Marco",
         "Mirko",
@@ -194,7 +194,7 @@
     {
       "id": "sultano-q10",
       "type": "MULTIPLE_CHOICE",
-      "question": "🌱 III. I primi passi verso l'età adulta\n\nQual è stata la mia prima esperienza lavorativa?",
+      "question": "🌱 III. I primi passi verso l'età adulta: Qual è stata la mia prima esperienza lavorativa?",
       "options": [
         "Lidl",
         "McDonald's",
@@ -215,7 +215,7 @@
     {
       "id": "sultano-q11",
       "type": "MULTIPLE_CHOICE",
-      "question": "🌱 III. I primi passi verso l'età adulta\n\nDopo la Juventus, cronologicamente, per quale squadra simpatizzo?",
+      "question": "🌱 III. I primi passi verso l'età adulta: Dopo la Juventus, cronologicamente, per quale squadra simpatizzo?",
       "options": [
         "Napoli",
         "Milan",
@@ -236,7 +236,7 @@
     {
       "id": "sultano-q12",
       "type": "MULTIPLE_CHOICE",
-      "question": "🌱 III. I primi passi verso l'età adulta\n\nQual è stato il mio primo viaggio all'estero dopo la maturità?",
+      "question": "🌱 III. I primi passi verso l'età adulta: Qual è stato il mio primo viaggio all'estero dopo la maturità?",
       "options": [
         "Amsterdam",
         "Berlino",
@@ -257,7 +257,7 @@
     {
       "id": "sultano-q13",
       "type": "MULTIPLE_CHOICE",
-      "question": "🌱 III. I primi passi verso l'età adulta\n\nLa prima persona con cui feci coming out fu...",
+      "question": "🌱 III. I primi passi verso l'età adulta: La prima persona con cui feci coming out fu...",
       "options": [
         "Enrico",
         "Luisa",
@@ -278,7 +278,7 @@
     {
       "id": "sultano-q14",
       "type": "MULTIPLE_CHOICE",
-      "question": "🌙 IV. Le passioni che mi hanno accompagnato\n\nDove nacque Sailor Mars?",
+      "question": "🌙 IV. Le passioni che mi hanno accompagnato: Dove nacque Sailor Mars?",
       "options": [
         "Malta",
         "Torino",
@@ -299,7 +299,7 @@
     {
       "id": "sultano-q15",
       "type": "MULTIPLE_CHOICE",
-      "question": "🌙 IV. Le passioni che mi hanno accompagnato\n\nChi mi diede il nome 'Sailor Mars_ala'?",
+      "question": "🌙 IV. Le passioni che mi hanno accompagnato: Chi mi diede il nome 'Sailor Mars_ala'?",
       "options": [
         "Serena",
         "Josephine",
@@ -320,7 +320,7 @@
     {
       "id": "sultano-q16",
       "type": "MULTIPLE_CHOICE",
-      "question": "🌙 IV. Le passioni che mi hanno accompagnato\n\nOltre a Sailor Mars, qual è il personaggio di Sailor Moon in cui mi sono identificato di più?",
+      "question": "🌙 IV. Le passioni che mi hanno accompagnato: Oltre a Sailor Mars, qual è il personaggio di Sailor Moon in cui mi sono identificato di più?",
       "options": [
         "Sailor Venus",
         "Sailor Mercury",
@@ -341,7 +341,7 @@
     {
       "id": "sultano-q17",
       "type": "MULTIPLE_CHOICE",
-      "question": "🌙 IV. Le passioni che mi hanno accompagnato\n\nDopo Sailor Moon, qual era il mio anime preferito da bambino?",
+      "question": "🌙 IV. Le passioni che mi hanno accompagnato: Dopo Sailor Moon, qual era il mio anime preferito da bambino?",
       "options": [
         "Pokémon",
         "Beyblade",
@@ -362,7 +362,7 @@
     {
       "id": "sultano-q18",
       "type": "MULTIPLE_CHOICE",
-      "question": "🌙 IV. Le passioni che mi hanno accompagnato\n\nQual è il mio anime preferito da adulto?",
+      "question": "🌙 IV. Le passioni che mi hanno accompagnato: Qual è il mio anime preferito da adulto?",
       "options": [
         "Naruto",
         "Death Note",
@@ -383,7 +383,7 @@
     {
       "id": "sultano-q19",
       "type": "MULTIPLE_CHOICE",
-      "question": "🌙 IV. Le passioni che mi hanno accompagnato\n\nDopo Il Trono di Spade, qual è la mia serie TV preferita?",
+      "question": "🌙 IV. Le passioni che mi hanno accompagnato: Dopo Il Trono di Spade, qual è la mia serie TV preferita?",
       "options": [
         "La casa di carta",
         "Lost",
@@ -404,7 +404,7 @@
     {
       "id": "sultano-q20",
       "type": "MULTIPLE_CHOICE",
-      "question": "🌙 IV. Le passioni che mi hanno accompagnato\n\nQuale cantante ascolto più spesso dopo Annalisa?",
+      "question": "🌙 IV. Le passioni che mi hanno accompagnato: Quale cantante ascolto più spesso dopo Annalisa?",
       "options": [
         "Emma",
         "Mahmood",
@@ -425,7 +425,7 @@
     {
       "id": "sultano-q21",
       "type": "MULTIPLE_CHOICE",
-      "question": "🌙 IV. Le passioni che mi hanno accompagnato\n\nChi è la mia Principessa Disney preferita?",
+      "question": "🌙 IV. Le passioni che mi hanno accompagnato: Chi è la mia Principessa Disney preferita?",
       "options": [
         "Belle",
         "Mulan",
@@ -446,7 +446,7 @@
     {
       "id": "sultano-q22",
       "type": "MULTIPLE_CHOICE",
-      "question": "🌙 IV. Le passioni che mi hanno accompagnato\n\nQuale serie TV ho rivisto più volte?",
+      "question": "🌙 IV. Le passioni che mi hanno accompagnato: Quale serie TV ho rivisto più volte?",
       "options": [
         "Modern Family",
         "Grey's Anatomy",
@@ -467,7 +467,7 @@
     {
       "id": "sultano-q23",
       "type": "MULTIPLE_CHOICE",
-      "question": "⚔️ V. Chi sono oggi\n\nIn Harry Potter, a quale Casa apparterrei?",
+      "question": "⚔️ V. Chi sono oggi: In Harry Potter, a quale Casa apparterrei?",
       "options": [
         "Tassorosso",
         "Corvonero",
@@ -488,7 +488,7 @@
     {
       "id": "sultano-q24",
       "type": "MULTIPLE_CHOICE",
-      "question": "⚔️ V. Chi sono oggi\n\nQuale animale sceglierei come Patronus?",
+      "question": "⚔️ V. Chi sono oggi: Quale animale sceglierei come Patronus?",
       "options": [
         "Aquila",
         "Lupo",
@@ -509,7 +509,7 @@
     {
       "id": "sultano-q25",
       "type": "MULTIPLE_CHOICE",
-      "question": "⚔️ V. Chi sono oggi\n\nNon amo i tatuaggi ma, se dovessi farne uno, sarebbe: 'Zaldrīzes buzdari iksos daor.' Cosa significa?",
+      "question": "⚔️ V. Chi sono oggi: Non amo i tatuaggi ma, se dovessi farne uno, sarebbe: 'Zaldrīzes buzdari iksos daor.' Cosa significa?",
       "options": [
         "Il fuoco purifica ogni cosa",
         "Il sangue del drago è eterno",
@@ -530,7 +530,7 @@
     {
       "id": "sultano-q26",
       "type": "MULTIPLE_CHOICE",
-      "question": "⚔️ V. Chi sono oggi\n\nHo Marte, Mercurio e Venere in quale segno zodiacale?",
+      "question": "⚔️ V. Chi sono oggi: Ho Marte, Mercurio e Venere in quale segno zodiacale?",
       "options": [
         "Vergine",
         "Scorpione",
@@ -551,7 +551,7 @@
     {
       "id": "sultano-q27",
       "type": "MULTIPLE_CHOICE",
-      "question": "⚔️ V. Chi sono oggi\n\nChi è la mia mentore politica e culturale?",
+      "question": "⚔️ V. Chi sono oggi: Chi è la mia mentore politica e culturale?",
       "options": [
         "Laura Boldrini",
         "Elly Schlein",
@@ -572,7 +572,7 @@
     {
       "id": "sultano-q28",
       "type": "MULTIPLE_CHOICE",
-      "question": "⚔️ V. Chi sono oggi\n\nChe ruolo ricopro in Arcigay Trapani?",
+      "question": "⚔️ V. Chi sono oggi: Che ruolo ricopro in Arcigay Trapani?",
       "options": [
         "Consigliere e delegato nazionale",
         "Tesoriere",
@@ -593,7 +593,7 @@
     {
       "id": "sultano-q29",
       "type": "MULTIPLE_CHOICE",
-      "question": "⚔️ V. Chi sono oggi\n\nSe pensi a me, quale città e squadra di calcio ti viene in mente?",
+      "question": "⚔️ V. Chi sono oggi: Se pensi a me, quale città e squadra di calcio ti viene in mente?",
       "options": [
         "Palermo",
         "Torino",
@@ -614,7 +614,7 @@
     {
       "id": "sultano-q30",
       "type": "MULTIPLE_CHOICE",
-      "question": "⚔️ V. Chi sono oggi\n\nQual è il piatto che preparo meglio?",
+      "question": "⚔️ V. Chi sono oggi: Qual è il piatto che preparo meglio?",
       "options": [
         "Carbonara",
         "Lasagne",
@@ -635,7 +635,7 @@
     {
       "id": "sultano-q31",
       "type": "MULTIPLE_CHOICE",
-      "question": "⚔️ V. Chi sono oggi\n\nQual è il mio dolce preferito?",
+      "question": "⚔️ V. Chi sono oggi: Qual è il mio dolce preferito?",
       "options": [
         "Millefoglie",
         "Tiramisù",
@@ -656,7 +656,7 @@
     {
       "id": "sultano-q32",
       "type": "MULTIPLE_CHOICE",
-      "question": "❤️ VI. Il cuore e il viaggio\n\nDopo la relazione con Enrico, per chi ho provato qualcosa?",
+      "question": "❤️ VI. Il cuore e il viaggio: Dopo la relazione con Enrico, per chi ho provato qualcosa?",
       "options": [
         "Ivan",
         "Luca",
@@ -677,7 +677,7 @@
     {
       "id": "sultano-q33",
       "type": "MULTIPLE_CHOICE",
-      "question": "❤️ VI. Il cuore e il viaggio\n\nL'ultima persona non italiana con cui ho avuto un rapporto era di quale nazione?",
+      "question": "❤️ VI. Il cuore e il viaggio: L'ultima persona non italiana con cui ho avuto un rapporto era di quale nazione?",
       "options": [
         "Mozambico",
         "Brasile",
@@ -698,7 +698,7 @@
     {
       "id": "sultano-q34",
       "type": "MULTIPLE_CHOICE",
-      "question": "❤️ VI. Il cuore e il viaggio\n\nQuale viaggio ricordo con più affetto?",
+      "question": "❤️ VI. Il cuore e il viaggio: Quale viaggio ricordo con più affetto?",
       "options": [
         "Copenaghen",
         "Madrid",
@@ -719,7 +719,7 @@
     {
       "id": "sultano-q35",
       "type": "MULTIPLE_CHOICE",
-      "question": "❤️ VI. Il cuore e il viaggio\n\nQual è il mio motto?",
+      "question": "❤️ VI. Il cuore e il viaggio: Qual è il mio motto?",
       "options": [
         "La felicità è una scelta.",
         "Rutto libero e potere alle lesbiche",
