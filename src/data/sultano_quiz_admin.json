@@ -5,7 +5,7 @@
     {
       "id": "sultano-q1",
       "type": "MULTIPLE_CHOICE",
-      "question": "Sono nato alle 12:55. Qual è il mio ascendente?",
+      "question": "👶 Ⅰ. Le Origini\n\nSono nato alle 12:55. Qual è il mio ascendente?",
       "options": [
         "Leone",
         "Scorpione",
@@ -20,12 +20,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Bilancia"
     },
     {
       "id": "sultano-q2",
       "type": "MULTIPLE_CHOICE",
-      "question": "Qual era il mio cartone animato preferito?",
+      "question": "👶 Ⅰ. Le Origini\n\nQual era il mio cartone animato preferito?",
       "options": [
         "Pokémon",
         "Sailor Moon",
@@ -40,12 +41,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Sailor Moon"
     },
     {
       "id": "sultano-q3",
       "type": "MULTIPLE_CHOICE",
-      "question": "Qual era il mio lavoro dei sogni da bambino?",
+      "question": "👶 Ⅰ. Le Origini\n\nQual era il mio lavoro dei sogni da bambino?",
       "options": [
         "Astronauta",
         "Medico",
@@ -60,12 +62,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Vigile del fuoco"
     },
     {
       "id": "sultano-q4",
       "type": "MULTIPLE_CHOICE",
-      "question": "Qual era l'unico sport a cui volevo giocare?",
+      "question": "👶 Ⅰ. Le Origini\n\nQual era l'unico sport a cui volevo giocare?",
       "options": [
         "Basket",
         "Tennis",
@@ -80,12 +83,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Pallavolo"
     },
     {
       "id": "sultano-q5",
       "type": "MULTIPLE_CHOICE",
-      "question": "Da bambino odiavo...",
+      "question": "👶 Ⅰ. Le Origini\n\nDa bambino odiavo...",
       "options": [
         "La montagna",
         "La moto",
@@ -100,12 +104,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Il mare"
     },
     {
       "id": "sultano-q6",
       "type": "MULTIPLE_CHOICE",
-      "question": "Quale ruolo politico ricoprii in terza media dopo essere stato eletto rappresentante d'istituto?",
+      "question": "📚 II. Gli anni della scuola\n\nQuale ruolo politico ricoprii in terza media dopo essere stato eletto rappresentante d'istituto?",
       "options": [
         "Assessore junior",
         "Presidente del Consiglio d'Istituto",
@@ -120,12 +125,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Baby consigliere comunale"
     },
     {
       "id": "sultano-q7",
       "type": "MULTIPLE_CHOICE",
-      "question": "Qual era il mio soprannome durante l'adolescenza?",
+      "question": "📚 II. Gli anni della scuola\n\nQual era il mio soprannome durante l'adolescenza?",
       "options": [
         "Il Filosofo",
         "L'Avvocato",
@@ -140,12 +146,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: L'Avvocato"
     },
     {
       "id": "sultano-q8",
       "type": "MULTIPLE_CHOICE",
-      "question": "Qual era la mia materia preferita al liceo?",
+      "question": "📚 II. Gli anni della scuola\n\nQual era la mia materia preferita al liceo?",
       "options": [
         "Latino",
         "Storia",
@@ -160,12 +167,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Chimica"
     },
     {
       "id": "sultano-q9",
       "type": "MULTIPLE_CHOICE",
-      "question": "Qual è stata la mia prima cotta?",
+      "question": "📚 II. Gli anni della scuola\n\nQual è stata la mia prima cotta?",
       "options": [
         "Marco",
         "Mirko",
@@ -180,12 +188,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Paolo"
     },
     {
       "id": "sultano-q10",
       "type": "MULTIPLE_CHOICE",
-      "question": "Qual è stata la mia prima esperienza lavorativa?",
+      "question": "🌱 III. I primi passi verso l'età adulta\n\nQual è stata la mia prima esperienza lavorativa?",
       "options": [
         "Lidl",
         "McDonald's",
@@ -200,12 +209,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Amazon"
     },
     {
       "id": "sultano-q11",
       "type": "MULTIPLE_CHOICE",
-      "question": "Dopo la Juventus, cronologicamente, per quale squadra simpatizzo?",
+      "question": "🌱 III. I primi passi verso l'età adulta\n\nDopo la Juventus, cronologicamente, per quale squadra simpatizzo?",
       "options": [
         "Napoli",
         "Milan",
@@ -220,12 +230,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Roma"
     },
     {
       "id": "sultano-q12",
       "type": "MULTIPLE_CHOICE",
-      "question": "Qual è stato il mio primo viaggio all'estero dopo la maturità?",
+      "question": "🌱 III. I primi passi verso l'età adulta\n\nQual è stato il mio primo viaggio all'estero dopo la maturità?",
       "options": [
         "Amsterdam",
         "Berlino",
@@ -240,12 +251,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Düsseldorf"
     },
     {
       "id": "sultano-q13",
       "type": "MULTIPLE_CHOICE",
-      "question": "La prima persona con cui feci coming out fu...",
+      "question": "🌱 III. I primi passi verso l'età adulta\n\nLa prima persona con cui feci coming out fu...",
       "options": [
         "Enrico",
         "Luisa",
@@ -260,12 +272,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Flavio"
     },
     {
       "id": "sultano-q14",
       "type": "MULTIPLE_CHOICE",
-      "question": "Dove nacque Sailor Mars?",
+      "question": "🌙 IV. Le passioni che mi hanno accompagnato\n\nDove nacque Sailor Mars?",
       "options": [
         "Malta",
         "Torino",
@@ -280,12 +293,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Malta"
     },
     {
       "id": "sultano-q15",
       "type": "MULTIPLE_CHOICE",
-      "question": "Chi mi diede il nome 'Sailor Mars_ala'?",
+      "question": "🌙 IV. Le passioni che mi hanno accompagnato\n\nChi mi diede il nome 'Sailor Mars_ala'?",
       "options": [
         "Serena",
         "Josephine",
@@ -300,12 +314,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: La Diamond"
     },
     {
       "id": "sultano-q16",
       "type": "MULTIPLE_CHOICE",
-      "question": "Oltre a Sailor Mars, qual è il personaggio di Sailor Moon in cui mi sono identificato di più?",
+      "question": "🌙 IV. Le passioni che mi hanno accompagnato\n\nOltre a Sailor Mars, qual è il personaggio di Sailor Moon in cui mi sono identificato di più?",
       "options": [
         "Sailor Venus",
         "Sailor Mercury",
@@ -320,12 +335,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Sailor Mercury"
     },
     {
       "id": "sultano-q17",
       "type": "MULTIPLE_CHOICE",
-      "question": "Dopo Sailor Moon, qual era il mio anime preferito da bambino?",
+      "question": "🌙 IV. Le passioni che mi hanno accompagnato\n\nDopo Sailor Moon, qual era il mio anime preferito da bambino?",
       "options": [
         "Pokémon",
         "Beyblade",
@@ -340,12 +356,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Digimon"
     },
     {
       "id": "sultano-q18",
       "type": "MULTIPLE_CHOICE",
-      "question": "Qual è il mio anime preferito da adulto?",
+      "question": "🌙 IV. Le passioni che mi hanno accompagnato\n\nQual è il mio anime preferito da adulto?",
       "options": [
         "Naruto",
         "Death Note",
@@ -360,12 +377,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Naruto"
     },
     {
       "id": "sultano-q19",
       "type": "MULTIPLE_CHOICE",
-      "question": "Dopo Il Trono di Spade, qual è la mia serie TV preferita?",
+      "question": "🌙 IV. Le passioni che mi hanno accompagnato\n\nDopo Il Trono di Spade, qual è la mia serie TV preferita?",
       "options": [
         "La casa di carta",
         "Lost",
@@ -380,12 +398,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Grey's Anatomy"
     },
     {
       "id": "sultano-q20",
       "type": "MULTIPLE_CHOICE",
-      "question": "Quale cantante ascolto più spesso dopo Annalisa?",
+      "question": "🌙 IV. Le passioni che mi hanno accompagnato\n\nQuale cantante ascolto più spesso dopo Annalisa?",
       "options": [
         "Emma",
         "Mahmood",
@@ -400,12 +419,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Mahmood"
     },
     {
       "id": "sultano-q21",
       "type": "MULTIPLE_CHOICE",
-      "question": "Chi è la mia Principessa Disney preferita?",
+      "question": "🌙 IV. Le passioni che mi hanno accompagnato\n\nChi è la mia Principessa Disney preferita?",
       "options": [
         "Belle",
         "Mulan",
@@ -420,12 +440,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Pocahontas"
     },
     {
       "id": "sultano-q22",
       "type": "MULTIPLE_CHOICE",
-      "question": "Quale serie TV ho rivisto più volte?",
+      "question": "🌙 IV. Le passioni che mi hanno accompagnato\n\nQuale serie TV ho rivisto più volte?",
       "options": [
         "Modern Family",
         "Grey's Anatomy",
@@ -440,12 +461,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Il Trono di Spade"
     },
     {
       "id": "sultano-q23",
       "type": "MULTIPLE_CHOICE",
-      "question": "In Harry Potter, a quale Casa apparterrei?",
+      "question": "⚔️ V. Chi sono oggi\n\nIn Harry Potter, a quale Casa apparterrei?",
       "options": [
         "Tassorosso",
         "Corvonero",
@@ -460,12 +482,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Corvonero"
     },
     {
       "id": "sultano-q24",
       "type": "MULTIPLE_CHOICE",
-      "question": "Quale animale sceglierei come Patronus?",
+      "question": "⚔️ V. Chi sono oggi\n\nQuale animale sceglierei come Patronus?",
       "options": [
         "Aquila",
         "Lupo",
@@ -480,12 +503,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Aquila"
     },
     {
       "id": "sultano-q25",
       "type": "MULTIPLE_CHOICE",
-      "question": "Non amo i tatuaggi ma, se dovessi farne uno, sarebbe: 'Zaldrīzes buzdari iksos daor.' Cosa significa?",
+      "question": "⚔️ V. Chi sono oggi\n\nNon amo i tatuaggi ma, se dovessi farne uno, sarebbe: 'Zaldrīzes buzdari iksos daor.' Cosa significa?",
       "options": [
         "Il fuoco purifica ogni cosa",
         "Il sangue del drago è eterno",
@@ -500,12 +524,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Un drago non è uno schiavo"
     },
     {
       "id": "sultano-q26",
       "type": "MULTIPLE_CHOICE",
-      "question": "Ho Marte, Mercurio e Venere in quale segno zodiacale?",
+      "question": "⚔️ V. Chi sono oggi\n\nHo Marte, Mercurio e Venere in quale segno zodiacale?",
       "options": [
         "Vergine",
         "Scorpione",
@@ -520,12 +545,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Vergine"
     },
     {
       "id": "sultano-q27",
       "type": "MULTIPLE_CHOICE",
-      "question": "Chi è la mia mentore politica e culturale?",
+      "question": "⚔️ V. Chi sono oggi\n\nChi è la mia mentore politica e culturale?",
       "options": [
         "Laura Boldrini",
         "Elly Schlein",
@@ -540,12 +566,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Michela Murgia"
     },
     {
       "id": "sultano-q28",
       "type": "MULTIPLE_CHOICE",
-      "question": "Che ruolo ricopro in Arcigay Trapani?",
+      "question": "⚔️ V. Chi sono oggi\n\nChe ruolo ricopro in Arcigay Trapani?",
       "options": [
         "Consigliere e delegato nazionale",
         "Tesoriere",
@@ -560,12 +587,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Consigliere e delegato nazionale"
     },
     {
       "id": "sultano-q29",
       "type": "MULTIPLE_CHOICE",
-      "question": "Se pensi a me, quale città e squadra di calcio ti viene in mente?",
+      "question": "⚔️ V. Chi sono oggi\n\nSe pensi a me, quale città e squadra di calcio ti viene in mente?",
       "options": [
         "Palermo",
         "Torino",
@@ -580,12 +608,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Cagliari"
     },
     {
       "id": "sultano-q30",
       "type": "MULTIPLE_CHOICE",
-      "question": "Qual è il piatto che preparo meglio?",
+      "question": "⚔️ V. Chi sono oggi\n\nQual è il piatto che preparo meglio?",
       "options": [
         "Carbonara",
         "Lasagne",
@@ -600,12 +629,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Dahl di lenticchie"
     },
     {
       "id": "sultano-q31",
       "type": "MULTIPLE_CHOICE",
-      "question": "Qual è il mio dolce preferito?",
+      "question": "⚔️ V. Chi sono oggi\n\nQual è il mio dolce preferito?",
       "options": [
         "Millefoglie",
         "Tiramisù",
@@ -620,12 +650,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Tiramisù"
     },
     {
       "id": "sultano-q32",
       "type": "MULTIPLE_CHOICE",
-      "question": "Dopo la relazione con Enrico, per chi ho provato qualcosa?",
+      "question": "❤️ VI. Il cuore e il viaggio\n\nDopo la relazione con Enrico, per chi ho provato qualcosa?",
       "options": [
         "Ivan",
         "Luca",
@@ -640,12 +671,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Ivan"
     },
     {
       "id": "sultano-q33",
       "type": "MULTIPLE_CHOICE",
-      "question": "L'ultima persona non italiana con cui ho avuto un rapporto era di quale nazione?",
+      "question": "❤️ VI. Il cuore e il viaggio\n\nL'ultima persona non italiana con cui ho avuto un rapporto era di quale nazione?",
       "options": [
         "Mozambico",
         "Brasile",
@@ -660,12 +692,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Mozambico"
     },
     {
       "id": "sultano-q34",
       "type": "MULTIPLE_CHOICE",
-      "question": "Quale viaggio ricordo con più affetto?",
+      "question": "❤️ VI. Il cuore e il viaggio\n\nQuale viaggio ricordo con più affetto?",
       "options": [
         "Copenaghen",
         "Madrid",
@@ -680,12 +713,13 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Copenaghen"
     },
     {
       "id": "sultano-q35",
       "type": "MULTIPLE_CHOICE",
-      "question": "Qual è il mio motto?",
+      "question": "❤️ VI. Il cuore e il viaggio\n\nQual è il mio motto?",
       "options": [
         "La felicità è una scelta.",
         "Rutto libero e potere alle lesbiche",
@@ -700,7 +734,8 @@
       "speedBonus": {
         "mode": "linear",
         "maxBonus": 6
-      }
+      },
+      "answerDescription": "Risposta corretta: Rutto libero e potere alle lesbiche"
     }
   ]
 }
